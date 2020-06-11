@@ -50,13 +50,18 @@ namespace GridGame
 		{
 			if (base.Move(move))
 			{
-				if (onMoved != null)
-					onMoved ();
-				if (!CheckForSafeZone ())
-					CheckForDangerZone ();
+				OnMove ();
 				return true;
 			}
 			return false;
+		}
+
+		public virtual void OnMove ()
+		{
+			if (onMoved != null)
+				onMoved ();
+			if (!CheckForSafeZone ())
+				CheckForDangerZone ();
 		}
 
 		public virtual bool CheckForSafeZone ()
@@ -83,14 +88,21 @@ namespace GridGame
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsDangerZone);
 			if (hitCollider != null)
 			{
-				DangerArea dangerArea = hitCollider.GetComponent<DangerZone>().dangerArea;
-				Enemy.enemiesInArea = dangerArea.enemies;
-				foreach (Enemy enemy in Enemy.enemiesInArea)
-					enemy.enabled = true;
-				GameManager.GetSingleton<GameCamera>().trs.position = dangerArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
-				GameManager.GetSingleton<GameCamera>().viewSize = dangerArea.cameraRect.size;
-				GameManager.GetSingleton<GameCamera>().HandleViewSize ();
-				return true;
+				DangerZone dangerZone = hitCollider.GetComponent<DangerZone>();
+				if (dangerZone != null)
+				{
+					DangerArea dangerArea = dangerZone.dangerArea;
+					if (dangerArea != null)
+					{
+						Enemy.enemiesInArea = dangerArea.enemies;
+						foreach (Enemy enemy in Enemy.enemiesInArea)
+							enemy.enabled = true;
+						GameManager.GetSingleton<GameCamera>().trs.position = dangerArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
+						GameManager.GetSingleton<GameCamera>().viewSize = dangerArea.cameraRect.size;
+						GameManager.GetSingleton<GameCamera>().HandleViewSize ();
+						return true;
+					}
+				}
 			}
 			return false;
 		}
