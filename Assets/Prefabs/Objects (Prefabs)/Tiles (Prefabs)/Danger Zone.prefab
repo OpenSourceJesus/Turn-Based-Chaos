@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baba94c816cc8074ba8057cf4e708989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trs: {fileID: 0}
+  trs: {fileID: 5930826191925270750}
   dangerArea: {fileID: 0}
 --- !u!1001 &7994647441633305704
 PrefabInstance:
@@ -106,6 +106,12 @@ PrefabInstance:
 --- !u!1 &5930826191925270744 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4376433970275957936, guid: a346c935d5957784cb5cd76865cacc5a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7994647441633305704}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5930826191925270750 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4376433970275957942, guid: a346c935d5957784cb5cd76865cacc5a,
     type: 3}
   m_PrefabInstance: {fileID: 7994647441633305704}
   m_PrefabAsset: {fileID: 0}

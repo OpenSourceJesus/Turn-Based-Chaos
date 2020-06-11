@@ -180,6 +180,7 @@ namespace GridGame
 				i ++;
 			}
 			MakeDangerAreas ();
+			MakeSafeAreas ();
 			initialized = true;
 		}
 
@@ -218,7 +219,7 @@ namespace GridGame
 									foreach (Vector2 possibleMove in possibleMoves)
 									{
 										Vector2 positionToTest = position + possibleMove;
-										if (!ContainsPoint(dangerAreaPositions, positionToTest, .7f) && !ContainsPoint(positionsRemaining, positionToTest, .7f) && !ContainsPoint(positionsTested, positionToTest, .7f))
+										if (!ContainsPoint(positionsRemaining, positionToTest, .7f) && !ContainsPoint(positionsTested, positionToTest, .7f))
 											positionsRemaining.Add(positionToTest);
 									}
 									dangerAreaPositions.Add(position);
@@ -233,6 +234,68 @@ namespace GridGame
 							dangerZonePositions.AddRange(dangerAreaPositions);
 							dangerArea.enemies = enemies.ToArray();
 							dangerArea.cameraRect = RectExtensions.FromPoints(dangerAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 2);
+						}
+					}
+				}
+			}
+		}
+
+		public virtual void MakeSafeAreas ()
+		{
+			List<Vector2> allPositions = new List<Vector2>();
+			List<Vector2> safeZonePositions = new List<Vector2>();
+			foreach (Tilemap tilemap in tilemaps)
+			{
+				foreach (Vector3Int cellPosition in tilemap.cellBounds.allPositionsWithin)
+				{
+					Vector2 position = tilemap.GetCellCenterWorld(cellPosition);
+					if (!ContainsPoint(safeZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
+					{
+						allPositions.Add(position);
+						Collider2D hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsSafeZone);
+						if (hitCollider != null)
+						{
+							SafeArea safeArea = grid.gameObject.AddComponent<SafeArea>();
+							hitCollider.GetComponent<SafeZone>().safeArea = safeArea;
+							List<Vector2> safeAreaPositions = new List<Vector2>();
+							safeAreaPositions.Add(position);
+							List<Vector2> positionsRemaining = new List<Vector2>();
+							List<Vector2> positionsTested = new List<Vector2>();
+							positionsTested.Add(position);
+							List<DangerArea> dangerAreas = new List<DangerArea>();
+							foreach (Vector2 possibleMove in possibleMoves)
+								positionsRemaining.Add(position + possibleMove);
+							do
+							{
+								position = positionsRemaining[0];
+								hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsSafeZone);
+								if (hitCollider != null)
+								{
+									hitCollider.GetComponent<SafeZone>().safeArea = safeArea;
+									foreach (Vector2 possibleMove in possibleMoves)
+									{
+										Vector2 positionToTest = position + possibleMove;
+										if (!ContainsPoint(positionsRemaining, positionToTest, .7f) && !ContainsPoint(positionsTested, positionToTest, .7f))
+											positionsRemaining.Add(positionToTest);
+									}
+									safeAreaPositions.Add(position);
+								}
+								else
+								{
+									hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsDangerZone);
+									if (hitCollider != null)
+										dangerAreas.Add(hitCollider.GetComponent<DangerZone>().dangerArea);
+								}
+								positionsTested.Add(position);
+								allPositions.Add(position);
+								positionsRemaining.RemoveAt(0);
+							} while (positionsRemaining.Count > 0);
+							safeZonePositions.AddRange(safeAreaPositions);
+							safeArea.cameraRect = RectExtensions.FromPoints(safeAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 2);
+							Rect[] dangerAreaCameraRects = new Rect[dangerAreas.Count];
+							for (int i = 0; i < dangerAreas.Count; i ++)
+								dangerAreaCameraRects[i] = dangerAreas[i].cameraRect;
+							safeArea.cameraRect = RectExtensions.Combine(dangerAreaCameraRects.Add(safeArea.cameraRect));
 						}
 					}
 				}

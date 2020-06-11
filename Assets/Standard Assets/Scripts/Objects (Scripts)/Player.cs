@@ -61,13 +61,18 @@ namespace GridGame
 
 		public virtual bool CheckForSafeZone ()
 		{
-			if (Physics2D.OverlapPoint(trs.position, whatIsSafeZone) != null)
+			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsSafeZone);
+			if (hitCollider != null)
 			{
 				foreach (Enemy enemy in Enemy.enemiesInArea)
 				{
 					enemy.Reset ();
 					enemy.enabled = false;
 				}
+				SafeArea safeArea = hitCollider.GetComponent<SafeZone>().safeArea;
+				GameManager.GetSingleton<GameCamera>().trs.position = safeArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
+				GameManager.GetSingleton<GameCamera>().viewSize = safeArea.cameraRect.size;
+				GameManager.GetSingleton<GameCamera>().HandleViewSize ();
 				return true;
 			}
 			return false;
