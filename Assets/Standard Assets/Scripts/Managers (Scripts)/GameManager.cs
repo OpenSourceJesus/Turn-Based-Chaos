@@ -181,6 +181,7 @@ namespace GridGame
 			}
 			MakeDangerAreas ();
 			MakeSafeAreas ();
+			GetSingleton<Player>().OnMove ();
 			initialized = true;
 		}
 
