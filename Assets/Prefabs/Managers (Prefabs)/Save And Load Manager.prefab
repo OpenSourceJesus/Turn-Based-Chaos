@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6261211721116968936}
   - component: {fileID: 2031125162235524230}
   m_Layer: 0
-  m_Name: Save Manager
+  m_Name: Save And Load Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handleMultipleInstances: 0
-  persistant: 0
+  persistant: 1
   saveAndLoadObjects: []
   displayOnSave:
     obj: {fileID: 0}
@@ -53,5 +53,5 @@ MonoBehaviour:
     text: {fileID: 0}
     durationPerCharacter: 0
   pastSaveEntryPreserveCount: 0
-  usePlayerPrefs: 0
+  usePlayerPrefs: 1
   savedData: 

@@ -29,6 +29,8 @@ namespace GridGame
 				{
 					if (attackPointGroup.enabled)
 					{
+						foreach (LineRenderer lineRenderer in attackPointGroup.lineRenderers)
+							lineRenderer.enabled = true;
 						foreach (AttackPoint attackPoint in attackPointGroup.attackPoints)
 						{
 							if (attackPointGroup.destroy)
@@ -36,6 +38,11 @@ namespace GridGame
 							else
 								attackPoint.enabled = false;
 						}
+					}
+					else
+					{
+						foreach (LineRenderer lineRenderer in attackPointGroup.lineRenderers)
+							lineRenderer.enabled = false;
 					}
 				}
 			}

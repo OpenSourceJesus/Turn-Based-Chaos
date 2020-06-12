@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//[ExecuteInEditMode]
+[ExecuteInEditMode]
 [RequireComponent(typeof(LineRenderer))]
 public class _LineRenderer : MonoBehaviour, IUpdatable
 {
@@ -23,6 +23,7 @@ public class _LineRenderer : MonoBehaviour, IUpdatable
 		{
 			if (lineRenderer == null)
 				lineRenderer = GetComponent<LineRenderer>();
+			DoUpdate ();
 			return;
 		}
 #endif

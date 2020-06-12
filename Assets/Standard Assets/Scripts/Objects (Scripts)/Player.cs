@@ -3,7 +3,7 @@ using Extensions;
 
 namespace GridGame
 {
-	public class Player : Entity
+	public class Player : Entity, ISaveableAndLoadable
 	{
 		int moveInput;
 		int previousMoveInput;
@@ -13,6 +13,35 @@ namespace GridGame
 		public Transform hpIconParent;
 		public LayerMask whatIsSafeZone;
 		public LayerMask whatIsDangerZone;
+		public LayerMask whatIsScroll;
+		public LayerMask whatIsFlag;
+		Scroll currentlyReading;
+		bool inSafeZone;
+		public Vector2 defaultSpawnPosition;
+		public int uniqueId;
+		[SaveAndLoadValue(false)]
+		public Vector2 SpawnPosition
+		{
+			get
+			{
+				return defaultSpawnPosition;
+			}
+			set
+			{
+				trs.position = value;
+			}
+		}
+		public int UniqueId
+		{
+			get
+			{
+				return uniqueId;
+			}
+			set
+			{
+				uniqueId = value;
+			}
+		}
 
 		public override void OnEnable ()
 		{
@@ -60,8 +89,10 @@ namespace GridGame
 		{
 			if (onMoved != null)
 				onMoved ();
-			if (!CheckForSafeZone ())
+			inSafeZone = CheckForSafeZone ();
+			if (!inSafeZone)
 				CheckForDangerZone ();
+			CheckForScroll ();
 		}
 
 		public virtual bool CheckForSafeZone ()
@@ -74,6 +105,7 @@ namespace GridGame
 					enemy.Reset ();
 					enemy.enabled = false;
 				}
+				Enemy.enemiesInArea = new Enemy[0];
 				SafeArea safeArea = hitCollider.GetComponent<SafeZone>().safeArea;
 				GameManager.GetSingleton<GameCamera>().trs.position = safeArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
 				GameManager.GetSingleton<GameCamera>().viewSize = safeArea.cameraRect.size;
@@ -88,21 +120,47 @@ namespace GridGame
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsDangerZone);
 			if (hitCollider != null)
 			{
-				DangerZone dangerZone = hitCollider.GetComponent<DangerZone>();
-				if (dangerZone != null)
+				DangerArea dangerArea = hitCollider.GetComponent<DangerZone>().dangerArea;
+				if (dangerArea != null)
 				{
-					DangerArea dangerArea = dangerZone.dangerArea;
-					if (dangerArea != null)
+					if (Enemy.enemiesInArea.Length == 0)
 					{
 						Enemy.enemiesInArea = dangerArea.enemies;
 						foreach (Enemy enemy in Enemy.enemiesInArea)
 							enemy.enabled = true;
-						GameManager.GetSingleton<GameCamera>().trs.position = dangerArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
-						GameManager.GetSingleton<GameCamera>().viewSize = dangerArea.cameraRect.size;
-						GameManager.GetSingleton<GameCamera>().HandleViewSize ();
-						return true;
 					}
+					GameManager.GetSingleton<GameCamera>().trs.position = dangerArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
+					GameManager.GetSingleton<GameCamera>().viewSize = dangerArea.cameraRect.size;
+					GameManager.GetSingleton<GameCamera>().HandleViewSize ();
 				}
+				return true;
+			}
+			return false;
+		}
+
+		public virtual bool CheckForScroll ()
+		{
+			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsScroll);
+			if (hitCollider != null)
+			{
+				currentlyReading = hitCollider.GetComponent<Scroll>();
+				currentlyReading.displayText.text.text = currentlyReading.text;
+				currentlyReading.displayText.text.enabled = true;
+				return true;
+			}
+			else if (currentlyReading != null)
+				currentlyReading.displayText.text.enabled = false;
+			return false;
+		}
+
+		public virtual bool CheckForFlag ()
+		{
+			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsFlag);
+			if (hitCollider != null)
+			{
+				SpawnPosition = trs.position;
+				GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+				return true;
 			}
 			return false;
 		}
@@ -117,6 +175,8 @@ namespace GridGame
 		public override void Death ()
 		{
 			base.Death ();
+			EventManager.events.Clear();
+			Enemy.enemiesInArea = new Enemy[0];
 			GameManager.GetSingleton<GameManager>().ReloadActiveScene ();
 		}
 	}
