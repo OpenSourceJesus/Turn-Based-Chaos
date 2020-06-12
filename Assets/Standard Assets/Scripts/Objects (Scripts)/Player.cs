@@ -158,6 +158,7 @@ namespace GridGame
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsSavePoint);
 			if (hitCollider != null)
 			{
+				hp = maxHp;
 				SpawnPosition = trs.position;
 				GameManager.GetSingleton<SaveAndLoadManager>().Save ();
 				return true;
