@@ -39,6 +39,10 @@ namespace GridGame
 		{
 			base.Death ();
 			gameObject.SetActive(false);
+			if (activeEnemies.Count == 0)
+			{
+				Player.currentDangerArea.IsDefeated = true;
+			}
 		}
 
 		public override void OnDisable ()

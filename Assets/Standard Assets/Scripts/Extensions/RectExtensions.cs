@@ -80,7 +80,7 @@ namespace Extensions
 			return Rect.MinMaxRect(bounds.min.x, bounds.min.y, bounds.max.x, bounds.max.y);
 		}
 
-		public static Rect Combine (Rect[] rectsArray)
+		public static Rect Combine (params Rect[] rectsArray)
 		{
 			Rect output = rectsArray[0];
 			for (int i = 1; i < rectsArray.Length; i ++)
@@ -97,7 +97,7 @@ namespace Extensions
 			return output;
 		}
 
-		public static Rect FromPoints (Vector2[] points)
+		public static Rect FromPoints (params Vector2[] points)
 		{
 			Vector2 point = points[0];
 			Rect output = Rect.MinMaxRect(point.x, point.y, point.x, point.y);

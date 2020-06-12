@@ -210,13 +210,11 @@ namespace GridGame
 
 		public static string Serialize (object value, Type type)
 		{
-			GameManager.Log("Serialized: " + JsonSerializer.NonGeneric.ToJsonString(type, value));
 			return JsonSerializer.NonGeneric.ToJsonString(type, value);
 		}
 
 		public static object Deserialize (string serializedState, Type type)
 		{
-			GameManager.Log("Deserialized: " + serializedState);
 			return JsonSerializer.NonGeneric.Deserialize(type, serializedState);
 		}
 		
