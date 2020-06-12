@@ -1,5 +1,5 @@
 public interface IIdentifiable
 {
-	string Name { get; set; }
+	// string Name { get; set; }
 	int UniqueId { get; set; }
 }

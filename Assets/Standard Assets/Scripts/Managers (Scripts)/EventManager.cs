@@ -64,6 +64,11 @@ namespace GridGame
 				this.onEvent = onEvent;
 				this.time = time;
 			}
+
+			public virtual void Remove ()
+			{
+				onEvent -= onEvent;
+			}
 		}
 
 		public class Event<T> : Event

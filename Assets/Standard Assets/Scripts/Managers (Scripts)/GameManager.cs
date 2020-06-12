@@ -208,6 +208,9 @@ namespace GridGame
 							List<Vector2> positionsTested = new List<Vector2>();
 							positionsTested.Add(position);
 							List<Enemy> enemies = new List<Enemy>();
+							hitCollider = Physics2D.OverlapPoint(position, whatIsEnemy);
+							if (hitCollider != null)
+								enemies.Add(hitCollider.GetComponentInParent<Enemy>());
 							foreach (Vector2 possibleMove in possibleMoves)
 								positionsRemaining.Add(position + possibleMove);
 							do
@@ -388,6 +391,7 @@ namespace GridGame
 			else
 				GetSingleton<SaveAndLoadManager>().LoadMostRecent ();
 			yield return new WaitForEndOfFrame();
+			yield return new WaitForEndOfFrame();
 			Init ();
 			yield break;
 		}
@@ -525,6 +529,8 @@ namespace GridGame
 				return;
 			}
 			string[] stringSeperators = { STRING_SEPERATOR };
+			if (enabledGosString == null)
+				enabledGosString = "";
 			string[] enabledGos = enabledGosString.Split(stringSeperators, StringSplitOptions.None);
 			foreach (string goName in enabledGos)
 			{
@@ -537,6 +543,8 @@ namespace GridGame
 					}
 				}
 			}
+			if (disabledGosString == null)
+				disabledGosString = "";
 			string[] disabledGos = disabledGosString.Split(stringSeperators, StringSplitOptions.None);
 			foreach (string goName in disabledGos)
 			{
