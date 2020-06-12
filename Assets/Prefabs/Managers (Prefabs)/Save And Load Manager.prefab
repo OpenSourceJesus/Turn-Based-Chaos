@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df2e0162c2617340bc725c072aac953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handleMultipleInstances: 0
+  handleMultipleInstances: 2
   persistant: 1
   saveAndLoadObjects: []
   displayOnSave:

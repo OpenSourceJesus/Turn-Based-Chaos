@@ -237,7 +237,7 @@ namespace GridGame
 							} while (positionsRemaining.Count > 0);
 							dangerZonePositions.AddRange(dangerAreaPositions);
 							dangerArea.enemies = enemies.ToArray();
-							dangerArea.cameraRect = RectExtensions.FromPoints(dangerAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 2);
+							dangerArea.cameraRect = RectExtensions.FromPoints(dangerAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 3);
 						}
 					}
 				}
@@ -295,7 +295,7 @@ namespace GridGame
 								positionsRemaining.RemoveAt(0);
 							} while (positionsRemaining.Count > 0);
 							safeZonePositions.AddRange(safeAreaPositions);
-							safeArea.cameraRect = RectExtensions.FromPoints(safeAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 2);
+							safeArea.cameraRect = RectExtensions.FromPoints(safeAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 3);
 							Rect[] dangerAreaCameraRects = new Rect[dangerAreas.Count];
 							for (int i = 0; i < dangerAreas.Count; i ++)
 								dangerAreaCameraRects[i] = dangerAreas[i].cameraRect;
@@ -391,7 +391,6 @@ namespace GridGame
 			else
 				GetSingleton<SaveAndLoadManager>().LoadMostRecent ();
 			yield return new WaitForEndOfFrame();
-			yield return new WaitForEndOfFrame();
 			Init ();
 			yield break;
 		}
@@ -485,7 +484,7 @@ namespace GridGame
 			if (AccountManager.lastUsedAccountIndex == -1)
 				return;
 			AccountManager.CurrentlyPlaying.PlayTime += Time.time;
-			GetSingleton<SaveAndLoadManager>().Save ();
+			// GetSingleton<SaveAndLoadManager>().Save ();
 		}
 
 		public virtual void OnApplicationFocus (bool isFocused)
@@ -604,14 +603,14 @@ namespace GridGame
 			// SceneManager.sceneLoaded -= OnSceneLoaded;
 		}
 
-		public virtual void _Debug (object o)
+		public virtual void _Log (object o)
 		{
-			UnityEngine.Debug.LogError(o);
+			print(o);
 		}
 
-		public static void Debug (object o)
+		public static void Log (object o)
 		{
-			UnityEngine.Debug.LogError(o);
+			print(o);
 		}
 
 		public static Object Clone (Object obj)

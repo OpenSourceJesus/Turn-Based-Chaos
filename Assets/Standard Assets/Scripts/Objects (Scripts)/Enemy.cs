@@ -21,9 +21,9 @@ namespace GridGame
 
 		public virtual void Reset ()
 		{
-			gameObject.SetActive(true);
 			trs.position = initPosition;
 			trs.eulerAngles = Vector3.forward * initRotation;
+			gameObject.SetActive(true);
 		}
 
 		public override void HandleMoving ()

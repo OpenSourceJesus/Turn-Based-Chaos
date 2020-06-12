@@ -14,17 +14,16 @@ namespace GridGame
 		public LayerMask whatIsSafeZone;
 		public LayerMask whatIsDangerZone;
 		public LayerMask whatIsScroll;
-		public LayerMask whatIsFlag;
+		public LayerMask whatIsSavePoint;
 		Scroll currentlyReading;
 		bool inSafeZone;
-		public Vector2 defaultSpawnPosition;
 		public int uniqueId;
 		[SaveAndLoadValue(false)]
 		public Vector2 SpawnPosition
 		{
 			get
 			{
-				return defaultSpawnPosition;
+				return trs.position;
 			}
 			set
 			{
@@ -53,7 +52,7 @@ namespace GridGame
 
 		public override void DoUpdate ()
 		{
-			if (GameManager.paused || this == null)
+			if (GameManager.paused)
 				return;
 			moveInput = InputManager.MoveInput;
 			HandleMoving ();
@@ -102,8 +101,11 @@ namespace GridGame
 			{
 				foreach (Enemy enemy in Enemy.enemiesInArea)
 				{
-					enemy.Reset ();
-					enemy.enabled = false;
+					if (enemy != null)
+					{
+						enemy.Reset ();
+						enemy.enabled = false;
+					}
 				}
 				Enemy.enemiesInArea = new Enemy[0];
 				SafeArea safeArea = hitCollider.GetComponent<SafeZone>().safeArea;
@@ -153,9 +155,9 @@ namespace GridGame
 			return false;
 		}
 
-		public virtual bool CheckForFlag ()
+		public virtual bool CheckForSavePoint ()
 		{
-			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsFlag);
+			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsSavePoint);
 			if (hitCollider != null)
 			{
 				SpawnPosition = trs.position;
@@ -174,7 +176,10 @@ namespace GridGame
 
 		public override void Death ()
 		{
+			GameManager.paused = true;
 			base.Death ();
+			for (int i = 0; i < EventManager.events.Count; i ++)
+				EventManager.events[i].time = Mathf.Infinity;
 			EventManager.events.Clear();
 			Enemy.enemiesInArea = new Enemy[0];
 			GameManager.GetSingleton<GameManager>().ReloadActiveScene ();

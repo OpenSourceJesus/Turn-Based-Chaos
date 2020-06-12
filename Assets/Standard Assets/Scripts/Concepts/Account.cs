@@ -5,20 +5,20 @@ using UnityEngine;
 namespace GridGame
 {
 	[Serializable]
-	public class Account : IDefaultable<Account>, ISaveableAndLoadable
+	public class Account : IDefaultable<Account>//, ISaveableAndLoadable
 	{
-		public int uniqueId;
-		public int UniqueId
-		{
-			get
-			{
-				return uniqueId;
-			}
-			set
-			{
-				uniqueId = value;
-			}
-		}
+		// public int uniqueId;
+		// public int UniqueId
+		// {
+		// 	get
+		// 	{
+		// 		return uniqueId;
+		// 	}
+		// 	set
+		// 	{
+		// 		uniqueId = value;
+		// 	}
+		// }
 		// public string Name
 		// {
 		// 	get
@@ -123,14 +123,13 @@ namespace GridGame
 		
 		public Account GetDefault ()
 		{
-			Account account = this;
-			account.Name = "";
-			account.PlayTime = 0;
-			account.TotalMoney = 0;
-			account.CurrentMoney = 0;
-			account.ObelisksTouched = 0;
-			// account.isPlaying = false;
-			return account;
+			Name = "";
+			PlayTime = 0;
+			TotalMoney = 0;
+			CurrentMoney = 0;
+			ObelisksTouched = 0;
+			// isPlaying = false;
+			return this;
 		}
 	}
 }

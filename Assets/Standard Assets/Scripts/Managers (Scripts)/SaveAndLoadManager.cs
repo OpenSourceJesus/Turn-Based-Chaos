@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Reflection;
 using Extensions;
-// using Utf8Json;
+using Utf8Json;
 using System;
 using Random = UnityEngine.Random;
 using System.IO;
@@ -148,7 +148,7 @@ namespace GridGame
 		{
 			GameManager.GetSingleton<GameManager>().SetGosActive ();
 			// GameManager.GetSingleton<AudioManager>().Awake ();
-			// GameManager.GetSingleton<Player>().trs.position = GameManager.GetSingleton<Player>().spawnPosition;
+			// GameManager.GetSingleton<Player>().trs.position = GameManager.GetSingleton<Player>().SpawnPosition;
 			GameManager.GetSingleton<GameCamera>().Awake ();
 			// GameManager.GetSingleton<World>().Init ();
 			// GameManager.GetSingleton<WorldMap>().Init ();
@@ -210,14 +210,14 @@ namespace GridGame
 
 		public static string Serialize (object value, Type type)
 		{
-			return "";
-			// return JsonSerializer.NonGeneric.ToJsonString(type, value);
+			GameManager.Log("Serialized: " + JsonSerializer.NonGeneric.ToJsonString(type, value));
+			return JsonSerializer.NonGeneric.ToJsonString(type, value);
 		}
 
 		public static object Deserialize (string serializedState, Type type)
 		{
-			return null;
-			// return JsonSerializer.NonGeneric.Deserialize(type, serializedState);
+			GameManager.Log("Deserialized: " + serializedState);
+			return JsonSerializer.NonGeneric.Deserialize(type, serializedState);
 		}
 		
 		public class SaveEntry

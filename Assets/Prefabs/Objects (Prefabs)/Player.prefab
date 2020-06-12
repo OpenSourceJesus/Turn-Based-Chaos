@@ -371,11 +371,11 @@ MonoBehaviour:
   whatIsScroll:
     serializedVersion: 2
     m_Bits: 8192
-  whatIsFlag:
+  whatIsSavePoint:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 16384
   defaultSpawnPosition: {x: 0, y: 0}
-  uniqueId: 0
+  uniqueId: 2
 --- !u!212 &6538567050952870432
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -415,8 +415,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e611bf01eb6d55b4291f6b5a1d45b1bd, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c2d54b826acb98349bf5b147df85e00f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -468,7 +468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 677e7dbf7c4ff6a47935abce0120a9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 1234567890
+  uniqueId: 2
 --- !u!1 &9187190813507142146
 GameObject:
   m_ObjectHideFlags: 0
