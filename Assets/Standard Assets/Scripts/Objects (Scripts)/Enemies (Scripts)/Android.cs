@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace GridGame
 {
-	public class Scorp : Enemy
+	public class Android : Enemy
 	{
 		public AttackPoint[] attackPoints = new AttackPoint[0];
 		public float attackDuration;
