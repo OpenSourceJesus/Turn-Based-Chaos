@@ -47,9 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handleMultipleInstances: 0
   persistant: 0
-  uniqueId: 0
+  uniqueId: 1
   registeredGos: []
-  timeScale: 0
+  timeScale: 1
   teams: []
   doEditorUpdates: 0
   screenEffectAnimator: {fileID: 0}
@@ -74,9 +74,17 @@ MonoBehaviour:
     realtime: 0
     text: {fileID: 0}
     durationPerCharacter: 0
-  possibleMoves: []
+  possibleMoves:
+  - {x: 0.866, y: 0}
+  - {x: 0.43299997, y: 0.749978}
+  - {x: -0.43300006, y: 0.749978}
+  - {x: -0.866, y: -0.00000007570812}
+  - {x: -0.4329999, y: -0.749978}
+  - {x: 0.4329999, y: -0.749978}
   grid: {fileID: 0}
-  tilemaps: []
+  tilemaps:
+  - {fileID: 0}
+  - {fileID: 0}
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 1024
@@ -92,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 677e7dbf7c4ff6a47935abce0120a9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 1234567890
+  uniqueId: 1
 --- !u!1001 &6649884776946386346
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -70,7 +70,7 @@ namespace GridGame
 
 		public virtual void DoUpdate ()
 		{
-			if (GameManager.paused || this == null)
+			if (GameManager.paused)
 				return;
 			HandleMoving ();
 		}

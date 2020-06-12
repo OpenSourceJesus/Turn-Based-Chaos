@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using GridGame;
 
@@ -12,3 +13,4 @@ public class SetRandomUniqueIds : EditorScript
 		saveAndLoadObjects = new SaveAndLoadObject[0];
 	}
 }
+#endif
