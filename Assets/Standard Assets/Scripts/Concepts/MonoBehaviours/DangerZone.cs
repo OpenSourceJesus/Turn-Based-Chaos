@@ -6,5 +6,6 @@ namespace GridGame
 	{
 		public Transform trs;
 		public DangerArea dangerArea;
+		public SafeZone correspondingSafeZone;
 	}
 }

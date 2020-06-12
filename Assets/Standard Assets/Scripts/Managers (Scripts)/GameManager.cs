@@ -200,8 +200,13 @@ namespace GridGame
 						Collider2D hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsDangerZone);
 						if (hitCollider != null)
 						{
-							DangerArea dangerArea = grid.gameObject.AddComponent<DangerArea>();
-							hitCollider.GetComponent<DangerZone>().dangerArea = dangerArea;
+							DangerArea dangerArea = new GameObject().AddComponent<DangerArea>();
+							dangerArea.correspondingSafeArea = new GameObject().AddComponent<SafeArea>();
+							List<DangerZone> dangerZones = new List<DangerZone>();
+							DangerZone dangerZone = hitCollider.GetComponent<DangerZone>();
+							dangerZone.correspondingSafeZone.safeArea = dangerArea.correspondingSafeArea;
+							dangerZone.dangerArea = dangerArea;
+							dangerZones.Add(dangerZone);
 							List<Vector2> dangerAreaPositions = new List<Vector2>();
 							dangerAreaPositions.Add(position);
 							List<Vector2> positionsRemaining = new List<Vector2>();
@@ -219,7 +224,10 @@ namespace GridGame
 								hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsDangerZone);
 								if (hitCollider != null)
 								{
-									hitCollider.GetComponent<DangerZone>().dangerArea = dangerArea;
+									dangerZone = hitCollider.GetComponent<DangerZone>();
+									dangerZone.correspondingSafeZone.safeArea = dangerArea.correspondingSafeArea;
+									dangerZone.dangerArea = dangerArea;
+									dangerZones.Add(dangerZone);
 									foreach (Vector2 possibleMove in possibleMoves)
 									{
 										Vector2 positionToTest = position + possibleMove;
@@ -237,7 +245,9 @@ namespace GridGame
 							} while (positionsRemaining.Count > 0);
 							dangerZonePositions.AddRange(dangerAreaPositions);
 							dangerArea.enemies = enemies.ToArray();
+							dangerArea.dangerZones = dangerZones.ToArray();
 							dangerArea.cameraRect = RectExtensions.FromPoints(dangerAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 3);
+							dangerArea.correspondingSafeArea.cameraRect = dangerArea.cameraRect;
 						}
 					}
 				}
@@ -259,7 +269,7 @@ namespace GridGame
 						Collider2D hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsSafeZone);
 						if (hitCollider != null)
 						{
-							SafeArea safeArea = grid.gameObject.AddComponent<SafeArea>();
+							SafeArea safeArea = new GameObject().AddComponent<SafeArea>();
 							hitCollider.GetComponent<SafeZone>().safeArea = safeArea;
 							List<Vector2> safeAreaPositions = new List<Vector2>();
 							safeAreaPositions.Add(position);
@@ -288,7 +298,14 @@ namespace GridGame
 								{
 									hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsDangerZone);
 									if (hitCollider != null)
-										dangerAreas.Add(hitCollider.GetComponent<DangerZone>().dangerArea);
+									{
+										DangerArea dangerArea = hitCollider.GetComponent<DangerZone>().dangerArea;
+										dangerAreas.Add(dangerArea);
+										if (!safeArea.surroundingSafeAreas.Contains(dangerArea.correspondingSafeArea))
+											safeArea.surroundingSafeAreas.Add(dangerArea.correspondingSafeArea);
+										if (!dangerArea.correspondingSafeArea.surroundingSafeAreas.Contains(safeArea))
+											dangerArea.correspondingSafeArea.surroundingSafeAreas.Add(safeArea);
+									}
 								}
 								positionsTested.Add(position);
 								allPositions.Add(position);

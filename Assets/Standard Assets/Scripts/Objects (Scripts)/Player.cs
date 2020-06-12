@@ -16,6 +16,7 @@ namespace GridGame
 		public LayerMask whatIsScroll;
 		public LayerMask whatIsSavePoint;
 		Scroll currentlyReading;
+		public static DangerArea currentDangerArea;
 		bool inSafeZone;
 		public int uniqueId;
 		[SaveAndLoadValue(false)]
@@ -122,17 +123,14 @@ namespace GridGame
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsDangerZone);
 			if (hitCollider != null)
 			{
-				DangerArea dangerArea = hitCollider.GetComponent<DangerZone>().dangerArea;
-				if (dangerArea != null)
+				if (Enemy.enemiesInArea.Length == 0)
 				{
-					if (Enemy.enemiesInArea.Length == 0)
-					{
-						Enemy.enemiesInArea = dangerArea.enemies;
-						foreach (Enemy enemy in Enemy.enemiesInArea)
-							enemy.enabled = true;
-					}
-					GameManager.GetSingleton<GameCamera>().trs.position = dangerArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
-					GameManager.GetSingleton<GameCamera>().viewSize = dangerArea.cameraRect.size;
+					currentDangerArea = hitCollider.GetComponent<DangerZone>().dangerArea;
+					Enemy.enemiesInArea = currentDangerArea.enemies;
+					foreach (Enemy enemy in Enemy.enemiesInArea)
+						enemy.enabled = true;
+					GameManager.GetSingleton<GameCamera>().trs.position = currentDangerArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
+					GameManager.GetSingleton<GameCamera>().viewSize = currentDangerArea.cameraRect.size;
 					GameManager.GetSingleton<GameCamera>().HandleViewSize ();
 				}
 				return true;
