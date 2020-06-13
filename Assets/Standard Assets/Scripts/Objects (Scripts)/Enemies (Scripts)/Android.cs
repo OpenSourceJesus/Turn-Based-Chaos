@@ -10,6 +10,8 @@ namespace GridGame
 
 		public override bool Move (Vector2 move)
 		{
+			if (!moveIsReady)
+				return false;
 			if (base.Move(move))
 			{
 				Attack ();
@@ -27,14 +29,14 @@ namespace GridGame
 			foreach (AttackPoint attackPoint in attackPoints)
 			{
 				attackPoint.enabled = true;
-				_event = new EventManager.Event(delegate { attackPoint.enabled = false; }, Time.time + attackDuration);
+				_event = new EventManager.Event(delegate { if (attackPoint != null) attackPoint.enabled = false; }, Time.time + attackDuration);
 				EventManager.events.Add(_event);
 			}
 		}
 
-		public override void Death ()
+		public override void OnDisable ()
 		{
-			base.Death ();
+			base.OnDisable ();
 			if (_event != null)
 				_event.Remove ();
 		}

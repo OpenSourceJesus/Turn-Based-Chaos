@@ -67,7 +67,7 @@ namespace GridGame
 
 			public virtual void Remove ()
 			{
-				time = Mathf.Infinity;
+				// time = Mathf.Infinity;
 				events.Remove(this);
 			}
 		}

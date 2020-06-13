@@ -8,18 +8,19 @@ namespace GridGame
 	{
 		public Enemy[] enemies = new Enemy[0];
 		public Trap[] traps = new Trap[0];
-		public ITurnTaker[] turnTakers = new ITurnTaker[0];
 		public Rect cameraRect;
 		public DangerZone[] dangerZones = new DangerZone[0];
+		public bool isDefeated;
 		[SaveAndLoadValue(false)]
 		public bool IsDefeated
 		{
 			get
 			{
-				return false;
+				return isDefeated;
 			}
 			set
 			{
+				isDefeated = value;
 				if (value)
 					OnDefeated ();
 			}
@@ -40,6 +41,8 @@ namespace GridGame
 
 		public virtual void OnDefeated ()
 		{
+			foreach (Enemy enemy in enemies)
+				Destroy(enemy.gameObject);
 			for (int i = 0; i < dangerZones.Length; i ++)
 			{
 				DangerZone dangerZone = dangerZones[i];

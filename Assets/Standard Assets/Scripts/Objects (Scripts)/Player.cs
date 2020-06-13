@@ -50,6 +50,7 @@ namespace GridGame
 			hp = maxHp;
 			for (int i = 1; i < hp; i ++)
 				Instantiate(hpIcon, hpIconParent);
+			moveTimer.Reset ();
 		}
 
 		public override void DoUpdate ()
@@ -78,6 +79,7 @@ namespace GridGame
 
 		public override bool Move (Vector2 move)
 		{
+			moveIsReady = true;
 			if (base.Move(move))
 			{
 				OnMove ();
@@ -94,6 +96,7 @@ namespace GridGame
 			if (!inSafeZone)
 				CheckForDangerZone ();
 			CheckForScroll ();
+			CheckForSavePoint ();
 		}
 
 		public virtual bool CheckForSafeZone ()
@@ -208,6 +211,7 @@ namespace GridGame
 			EventManager.events.Clear();
 			Enemy.enemiesInArea = new Enemy[0];
 			Trap.trapsInArea = new Trap[0];
+			SaveAndLoadManager.lastUniqueId = SaveAndLoadManager.INIT_LAST_UNIQUE_ID;
 			GameManager.GetSingleton<GameManager>().ReloadActiveScene ();
 		}
 	}

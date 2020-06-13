@@ -7,7 +7,7 @@ namespace GridGame
 	public class Scroll : MonoBehaviour
 	{
 		public Transform trs;
-		[Multiline(10)]
+		[Multiline(15)]
 		public string text;
 		public _Text displayText;
 	}

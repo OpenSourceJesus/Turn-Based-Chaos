@@ -128,6 +128,7 @@ namespace GridGame
 		public const float WORLD_SCALE_SQR = WORLD_SCALE * WORLD_SCALE;
 		public LayerMask whatIsEnemy;
 		public LayerMask whatIsTrap;
+		public bool makeAreas;
 
 		public override void Awake ()
 		{
@@ -173,15 +174,6 @@ namespace GridGame
 
 		public virtual void Init ()
 		{
-			possibleMoves = new Vector2[6];
-			int i = 0;
-			for (float angle = 0; angle < 360; angle += 360f / 6)
-			{
-				possibleMoves[i] = VectorExtensions.FromFacingAngle(angle) * WORLD_SCALE;
-				i ++;
-			}
-			MakeDangerAreas ();
-			MakeSafeAreas ();
 			GetSingleton<Player>().OnMove ();
 			initialized = true;
 		}
@@ -213,27 +205,14 @@ namespace GridGame
 							List<Vector2> positionsRemaining = new List<Vector2>();
 							List<Vector2> positionsTested = new List<Vector2>();
 							positionsTested.Add(position);
-							List<ITurnTaker> turnTakers = new List<ITurnTaker>();
 							List<Enemy> enemies = new List<Enemy>();
 							hitCollider = Physics2D.OverlapPoint(position, whatIsEnemy);
 							if (hitCollider != null)
-							{
-								Enemy enemy = hitCollider.GetComponent<Enemy>();
-								enemies.Add(enemy);
-								ITurnTaker turnTaker = enemy as ITurnTaker;
-								if (turnTaker != null)
-									turnTakers.Add(turnTaker);
-							}
+								enemies.Add(hitCollider.GetComponent<Enemy>());
 							List<Trap> traps = new List<Trap>();
 							hitCollider = Physics2D.OverlapPoint(position, whatIsTrap);
 							if (hitCollider != null)
-							{
-								Trap trap = hitCollider.GetComponent<Trap>();
-								traps.Add(trap);
-								ITurnTaker turnTaker = trap as ITurnTaker;
-								if (turnTaker != null)
-									turnTakers.Add(turnTaker);
-							}
+								traps.Add(hitCollider.GetComponent<Trap>());
 							foreach (Vector2 possibleMove in possibleMoves)
 								positionsRemaining.Add(position + possibleMove);
 							do
@@ -255,22 +234,10 @@ namespace GridGame
 									dangerAreaPositions.Add(position);
 									hitCollider = Physics2D.OverlapPoint(position, whatIsEnemy);
 									if (hitCollider != null)
-									{
-										Enemy enemy = hitCollider.GetComponent<Enemy>();
-										enemies.Add(enemy);
-										ITurnTaker turnTaker = enemy as ITurnTaker;
-										if (turnTaker != null)
-											turnTakers.Add(turnTaker);
-									}
+										enemies.Add(hitCollider.GetComponent<Enemy>());
 									hitCollider = Physics2D.OverlapPoint(position, whatIsTrap);
 									if (hitCollider != null)
-									{
-										Trap trap = hitCollider.GetComponent<Trap>();
-										traps.Add(trap);
-										ITurnTaker turnTaker = trap as ITurnTaker;
-										if (turnTaker != null)
-											turnTakers.Add(turnTaker);
-									}
+										traps.Add(hitCollider.GetComponent<Trap>());
 								}
 								positionsTested.Add(position);
 								allPositions.Add(position);
@@ -280,9 +247,11 @@ namespace GridGame
 							dangerArea.enemies = enemies.ToArray();
 							dangerArea.traps = traps.ToArray();
 							dangerArea.dangerZones = dangerZones.ToArray();
-							dangerArea.turnTakers = turnTakers.ToArray();
 							dangerArea.cameraRect = RectExtensions.FromPoints(dangerAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 3);
 							dangerArea.correspondingSafeArea.cameraRect = dangerArea.cameraRect;
+							SaveAndLoadManager.lastUniqueId ++;
+							dangerArea.uniqueId = SaveAndLoadManager.lastUniqueId;
+							dangerArea.gameObject.AddComponent<SaveAndLoadObject>();
 						}
 					}
 				}
@@ -434,6 +403,20 @@ namespace GridGame
 
 		public virtual IEnumerator LoadRoutine ()
 		{
+			yield return new WaitForEndOfFrame();
+			possibleMoves = new Vector2[6];
+			int i = 0;
+			for (float angle = 0; angle < 360; angle += 360f / 6)
+			{
+				possibleMoves[i] = VectorExtensions.FromFacingAngle(angle) * WORLD_SCALE;
+				i ++;
+			}
+			if (makeAreas)
+			{
+				MakeDangerAreas ();
+				MakeSafeAreas ();
+			}
+			GameManager.GetSingleton<SaveAndLoadManager>().Setup ();
 			if (!HasPlayedBefore)
 			{
 				GetSingleton<SaveAndLoadManager>().DeleteAll ();
@@ -442,7 +425,6 @@ namespace GridGame
 			}
 			else
 				GetSingleton<SaveAndLoadManager>().LoadMostRecent ();
-			yield return new WaitForEndOfFrame();
 			Init ();
 			yield break;
 		}
