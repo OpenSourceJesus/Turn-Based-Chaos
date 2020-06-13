@@ -127,6 +127,7 @@ namespace GridGame
 		public const float WORLD_SCALE = .866f;
 		public const float WORLD_SCALE_SQR = WORLD_SCALE * WORLD_SCALE;
 		public LayerMask whatIsEnemy;
+		public LayerMask whatIsTrap;
 
 		public override void Awake ()
 		{
@@ -215,7 +216,11 @@ namespace GridGame
 							List<Enemy> enemies = new List<Enemy>();
 							hitCollider = Physics2D.OverlapPoint(position, whatIsEnemy);
 							if (hitCollider != null)
-								enemies.Add(hitCollider.GetComponentInParent<Enemy>());
+								enemies.Add(hitCollider.GetComponent<Enemy>());
+							List<Trap> traps = new List<Trap>();
+							hitCollider = Physics2D.OverlapPoint(position, whatIsTrap);
+							if (hitCollider != null)
+								traps.Add(hitCollider.GetComponent<Trap>());
 							foreach (Vector2 possibleMove in possibleMoves)
 								positionsRemaining.Add(position + possibleMove);
 							do
@@ -237,7 +242,10 @@ namespace GridGame
 									dangerAreaPositions.Add(position);
 									hitCollider = Physics2D.OverlapPoint(position, whatIsEnemy);
 									if (hitCollider != null)
-										enemies.Add(hitCollider.GetComponentInParent<Enemy>());
+										enemies.Add(hitCollider.GetComponent<Enemy>());
+									hitCollider = Physics2D.OverlapPoint(position, whatIsTrap);
+									if (hitCollider != null)
+										traps.Add(hitCollider.GetComponent<Trap>());
 								}
 								positionsTested.Add(position);
 								allPositions.Add(position);
@@ -245,6 +253,7 @@ namespace GridGame
 							} while (positionsRemaining.Count > 0);
 							dangerZonePositions.AddRange(dangerAreaPositions);
 							dangerArea.enemies = enemies.ToArray();
+							dangerArea.traps = traps.ToArray();
 							dangerArea.dangerZones = dangerZones.ToArray();
 							dangerArea.cameraRect = RectExtensions.FromPoints(dangerAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 3);
 							dangerArea.correspondingSafeArea.cameraRect = dangerArea.cameraRect;

@@ -6,6 +6,7 @@ namespace GridGame
 {
 	public class Trap : MonoBehaviour, IUpdatable, IResetable
 	{
+		public static Trap[] trapsInArea = new Trap[0];
 		public bool PauseWhileUnfocused
 		{
 			get

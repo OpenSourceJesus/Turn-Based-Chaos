@@ -24,7 +24,6 @@ namespace GridGame
 
 		public virtual void Init ()
 		{
-			// moveTimer.Reset ();
 			attackTimer.timeRemaining = initTimeRemaining;
 			attackTimer.Start ();
 		}
