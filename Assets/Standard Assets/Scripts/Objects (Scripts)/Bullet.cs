@@ -9,6 +9,8 @@ namespace GridGame
 	{
 		[HideInInspector]
 		public Vector2 moveDirection;
+		public int range;
+		int rangeRemaining;
 		public int prefabIndex;
 		public int PrefabIndex
 		{
@@ -17,11 +19,15 @@ namespace GridGame
 				return prefabIndex;
 			}
 		}
+		public static List<Bullet> activeBullets = new List<Bullet>();
 
 		public override void OnEnable ()
 		{
 			base.OnEnable ();
 			moveDirection = ((Vector2) trs.up).GetClosestPoint(GameManager.GetSingleton<GameManager>().possibleMoves);
+			trs.up = moveDirection;
+			rangeRemaining = range;
+			activeBullets.Add(this);
 		}
 
 		public override void HandleMoving ()
@@ -39,11 +45,16 @@ namespace GridGame
 					return false;
 				}
 				else
+				{
+					rangeRemaining --;
+					if (rangeRemaining == 0)
+						Death ();
 					return true;
+				}
 			}
 			else
 			{
-				Death ();
+				// Death ();
 				return false;
 			}
 		}
@@ -52,6 +63,12 @@ namespace GridGame
 		{
 			base.Death ();
 			GameManager.GetSingleton<ObjectPool>().Despawn(prefabIndex, gameObject, trs);
+		}
+
+		public override void OnDisable ()
+		{
+			base.OnDisable ();
+			activeBullets.Remove(this);
 		}
 	}
 }

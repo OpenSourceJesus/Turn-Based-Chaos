@@ -8,6 +8,7 @@ namespace GridGame
 	{
 		public Enemy[] enemies = new Enemy[0];
 		public Trap[] traps = new Trap[0];
+		public ITurnTaker[] turnTakers = new ITurnTaker[0];
 		public Rect cameraRect;
 		public DangerZone[] dangerZones = new DangerZone[0];
 		[SaveAndLoadValue(false)]

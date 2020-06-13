@@ -213,14 +213,27 @@ namespace GridGame
 							List<Vector2> positionsRemaining = new List<Vector2>();
 							List<Vector2> positionsTested = new List<Vector2>();
 							positionsTested.Add(position);
+							List<ITurnTaker> turnTakers = new List<ITurnTaker>();
 							List<Enemy> enemies = new List<Enemy>();
 							hitCollider = Physics2D.OverlapPoint(position, whatIsEnemy);
 							if (hitCollider != null)
-								enemies.Add(hitCollider.GetComponent<Enemy>());
+							{
+								Enemy enemy = hitCollider.GetComponent<Enemy>();
+								enemies.Add(enemy);
+								ITurnTaker turnTaker = enemy as ITurnTaker;
+								if (turnTaker != null)
+									turnTakers.Add(turnTaker);
+							}
 							List<Trap> traps = new List<Trap>();
 							hitCollider = Physics2D.OverlapPoint(position, whatIsTrap);
 							if (hitCollider != null)
-								traps.Add(hitCollider.GetComponent<Trap>());
+							{
+								Trap trap = hitCollider.GetComponent<Trap>();
+								traps.Add(trap);
+								ITurnTaker turnTaker = trap as ITurnTaker;
+								if (turnTaker != null)
+									turnTakers.Add(turnTaker);
+							}
 							foreach (Vector2 possibleMove in possibleMoves)
 								positionsRemaining.Add(position + possibleMove);
 							do
@@ -242,10 +255,22 @@ namespace GridGame
 									dangerAreaPositions.Add(position);
 									hitCollider = Physics2D.OverlapPoint(position, whatIsEnemy);
 									if (hitCollider != null)
-										enemies.Add(hitCollider.GetComponent<Enemy>());
+									{
+										Enemy enemy = hitCollider.GetComponent<Enemy>();
+										enemies.Add(enemy);
+										ITurnTaker turnTaker = enemy as ITurnTaker;
+										if (turnTaker != null)
+											turnTakers.Add(turnTaker);
+									}
 									hitCollider = Physics2D.OverlapPoint(position, whatIsTrap);
 									if (hitCollider != null)
-										traps.Add(hitCollider.GetComponent<Trap>());
+									{
+										Trap trap = hitCollider.GetComponent<Trap>();
+										traps.Add(trap);
+										ITurnTaker turnTaker = trap as ITurnTaker;
+										if (turnTaker != null)
+											turnTakers.Add(turnTaker);
+									}
 								}
 								positionsTested.Add(position);
 								allPositions.Add(position);
@@ -255,6 +280,7 @@ namespace GridGame
 							dangerArea.enemies = enemies.ToArray();
 							dangerArea.traps = traps.ToArray();
 							dangerArea.dangerZones = dangerZones.ToArray();
+							dangerArea.turnTakers = turnTakers.ToArray();
 							dangerArea.cameraRect = RectExtensions.FromPoints(dangerAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 3);
 							dangerArea.correspondingSafeArea.cameraRect = dangerArea.cameraRect;
 						}
