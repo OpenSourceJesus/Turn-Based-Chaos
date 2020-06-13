@@ -43,6 +43,7 @@ namespace GridGame
 				uniqueId = value;
 			}
 		}
+		Vector2[] possibleMoves = new Vector2[0];
 
 		public override void OnEnable ()
 		{
@@ -51,6 +52,7 @@ namespace GridGame
 			for (int i = 1; i < hp; i ++)
 				Instantiate(hpIcon, hpIconParent);
 			moveTimer.Reset ();
+			possibleMoves = GameManager.GetSingleton<GameManager>().possibleMoves.Add(Vector2.zero);
 		}
 
 		public override void DoUpdate ()
@@ -69,8 +71,8 @@ namespace GridGame
 				for (int i = 0; i < moveInput - previousMoveInput; i ++)
 				{
 					Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(InputManager.MousePosition) - trs.position;
-					int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(GameManager.GetSingleton<GameManager>().possibleMoves);
-					Vector2 move = GameManager.GetSingleton<GameManager>().possibleMoves[indexOfClosestPossibleMove];
+					int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(possibleMoves);
+					Vector2 move = possibleMoves[indexOfClosestPossibleMove];
 					if (Physics2D.OverlapPoint((Vector2) trs.position + move, whatICantMoveTo) == null)
 						Move (move);
 				}
