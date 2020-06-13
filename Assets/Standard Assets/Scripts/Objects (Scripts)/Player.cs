@@ -113,7 +113,13 @@ namespace GridGame
 					trap.enabled = false;
 				}
 				Trap.trapsInArea = new Trap[0];
-				SafeArea safeArea = hitCollider.GetComponent<SafeZone>().safeArea;
+                for (int i = 0; i < Bullet.activeBullets.Count; i ++)
+                {
+                    Bullet bullet = Bullet.activeBullets[i];
+                    GameManager.GetSingleton<ObjectPool>().Despawn (bullet.prefabIndex, bullet.gameObject, bullet.trs);
+					i --;
+                }
+                SafeArea safeArea = hitCollider.GetComponent<SafeZone>().safeArea;
 				GameManager.GetSingleton<GameCamera>().trs.position = safeArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
 				GameManager.GetSingleton<GameCamera>().viewSize = safeArea.cameraRect.size;
 				GameManager.GetSingleton<GameCamera>().HandleViewSize ();

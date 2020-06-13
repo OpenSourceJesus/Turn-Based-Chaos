@@ -56,7 +56,6 @@ namespace GridGame
 
 		public virtual void Init ()
 		{
-			// moveTimer.Reset ();
 			moveTimer.timeRemaining = 0;
 			moveTimer.Start ();
 			isDead = false;

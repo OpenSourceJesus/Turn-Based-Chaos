@@ -12,15 +12,24 @@ namespace GridGame
 		{
 			if (base.Move(move))
 			{
-				foreach (AttackPoint attackPoint in attackPoints)
-				{
-					attackPoint.enabled = true;
-					_event = new EventManager.Event(delegate { attackPoint.enabled = false; }, Time.time + attackDuration);
-					EventManager.events.Add(_event);
-				}
+				Attack ();
 				return true;
 			}
-			return false;
+			else
+			{
+				Attack ();
+				return false;
+			}
+		}
+
+		public virtual void Attack ()
+		{
+			foreach (AttackPoint attackPoint in attackPoints)
+			{
+				attackPoint.enabled = true;
+				_event = new EventManager.Event(delegate { attackPoint.enabled = false; }, Time.time + attackDuration);
+				EventManager.events.Add(_event);
+			}
 		}
 
 		public override void Death ()

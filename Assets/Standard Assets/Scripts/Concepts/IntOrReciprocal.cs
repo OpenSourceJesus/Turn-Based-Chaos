@@ -7,20 +7,25 @@ using System;
 [Serializable]
 public class IntOrReciprocal
 {
-    public int integer;
-    public bool isReciprocal;
+	public int integer;
+	public bool isReciprocal;
 
-    public virtual float GetValue ()
-    {
-        if (isReciprocal)
-            return 1f / integer;
-        else
-            return integer;
-    }
+	public virtual float GetValue ()
+	{
+		if (isReciprocal)
+			return 1f / integer;
+		else
+			return integer;
+	}
 
-    public override string ToString ()
-    {
-        return "" + GetValue();
-    }
+	// public virtual float SetClosestValue (float value)
+	// {
+		
+	// }
+
+	public override string ToString ()
+	{
+		return "" + GetValue();
+	}
 }
 #endif
