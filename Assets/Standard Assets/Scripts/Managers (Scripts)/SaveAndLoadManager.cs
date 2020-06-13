@@ -21,6 +21,8 @@ namespace GridGame
 		public bool usePlayerPrefs;
 		[Multiline]
 		public string savedData;
+		public const int INIT_LAST_UNIQUE_ID = 2;
+		public static int lastUniqueId = INIT_LAST_UNIQUE_ID;
 		
 #if UNITY_EDITOR
 		public virtual void OnEnable ()
@@ -54,7 +56,7 @@ namespace GridGame
 			if (!usePlayerPrefs)
 				print(Application.persistentDataPath);
 #endif
-			Setup ();
+			// Setup ();
 		}
 
 		public virtual void Setup ()

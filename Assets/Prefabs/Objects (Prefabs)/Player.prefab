@@ -342,9 +342,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 6538567050952870462}
   moveTimer:
-    duration: 0
+    duration: Infinity
     timeRemaining: 0
-    loop: 1
+    loop: 0
     pauseIfCan: 0
     realtime: 0
     canBePaused: 1
@@ -374,7 +374,9 @@ MonoBehaviour:
   whatIsSavePoint:
     serializedVersion: 2
     m_Bits: 16384
-  defaultSpawnPosition: {x: 0, y: 0}
+  whatIsBullet:
+    serializedVersion: 2
+    m_Bits: 32768
   uniqueId: 2
 --- !u!212 &6538567050952870432
 SpriteRenderer:

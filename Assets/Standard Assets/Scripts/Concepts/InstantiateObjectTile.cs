@@ -18,7 +18,7 @@ namespace GridGame
 				SpriteRenderer spriteRenderer = go.GetComponent<SpriteRenderer>();
 				if (spriteRenderer != null)
 				{
-					spriteRenderer.material.mainTextureOffset = tilemap.GetTransformMatrix(location).lossyScale;
+					// spriteRenderer.material.mainTextureOffset = tilemap.GetTransformMatrix(location).lossyScale;
 					spriteRenderer.color = tilemap.GetColor(location);
 					spriteRenderer.sortingOrder += (int) tilemap.GetTransformMatrix(location).m23;
 				}

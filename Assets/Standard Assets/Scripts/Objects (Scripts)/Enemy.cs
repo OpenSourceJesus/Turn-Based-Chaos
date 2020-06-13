@@ -10,12 +10,17 @@ namespace GridGame
 		public float initRotation;
 		public static List<Enemy> activeEnemies = new List<Enemy>();
 		public static Enemy[] enemiesInArea = new Enemy[0];
+		bool initialized;
 		
 		public override void OnEnable ()
 		{
 			base.OnEnable ();
-			initPosition = trs.position;
-			initRotation = trs.eulerAngles.z;
+			if (!initialized)
+			{
+				initPosition = trs.position;
+				initRotation = trs.eulerAngles.z;
+				initialized = true;
+			}
 			activeEnemies.Add(this);
 		}
 
