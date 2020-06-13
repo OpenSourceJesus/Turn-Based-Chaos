@@ -88,6 +88,9 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 1024
+  whatIsTrap:
+    serializedVersion: 2
+    m_Bits: 65536
 --- !u!114 &6085537320792788065
 MonoBehaviour:
   m_ObjectHideFlags: 0

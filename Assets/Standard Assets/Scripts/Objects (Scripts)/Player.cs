@@ -15,6 +15,7 @@ namespace GridGame
 		public LayerMask whatIsDangerZone;
 		public LayerMask whatIsScroll;
 		public LayerMask whatIsSavePoint;
+		public LayerMask whatIsBullet;
 		Scroll currentlyReading;
 		public static DangerArea currentDangerArea;
 		bool inSafeZone;
@@ -102,13 +103,16 @@ namespace GridGame
 			{
 				foreach (Enemy enemy in Enemy.enemiesInArea)
 				{
-					if (enemy != null)
-					{
-						enemy.Reset ();
-						enemy.enabled = false;
-					}
+					enemy.Reset ();
+					enemy.enabled = false;
 				}
 				Enemy.enemiesInArea = new Enemy[0];
+				foreach (Trap trap in Trap.trapsInArea)
+				{
+					trap.Reset ();
+					trap.enabled = false;
+				}
+				Trap.trapsInArea = new Trap[0];
 				SafeArea safeArea = hitCollider.GetComponent<SafeZone>().safeArea;
 				GameManager.GetSingleton<GameCamera>().trs.position = safeArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
 				GameManager.GetSingleton<GameCamera>().viewSize = safeArea.cameraRect.size;
@@ -123,12 +127,15 @@ namespace GridGame
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsDangerZone);
 			if (hitCollider != null)
 			{
-				if (Enemy.enemiesInArea.Length == 0)
+				if (Enemy.enemiesInArea.Length == 0 && Trap.trapsInArea.Length == 0)
 				{
 					currentDangerArea = hitCollider.GetComponent<DangerZone>().dangerArea;
 					Enemy.enemiesInArea = currentDangerArea.enemies;
 					foreach (Enemy enemy in Enemy.enemiesInArea)
 						enemy.enabled = true;
+					Trap.trapsInArea = currentDangerArea.traps;
+					foreach (Trap trap in Trap.trapsInArea)
+						trap.enabled = true;
 					GameManager.GetSingleton<GameCamera>().trs.position = currentDangerArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
 					GameManager.GetSingleton<GameCamera>().viewSize = currentDangerArea.cameraRect.size;
 					GameManager.GetSingleton<GameCamera>().HandleViewSize ();
@@ -166,6 +173,19 @@ namespace GridGame
 			return false;
 		}
 
+		public virtual bool CheckForBullet ()
+		{
+			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsBullet);
+			if (hitCollider != null)
+			{
+				Bullet bullet = hitCollider.GetComponent<Bullet>();
+				TakeDamage (bullet.damage);
+				bullet.Death ();
+				return true;
+			}
+			return false;
+		}
+
 		public override void TakeDamage (float amount)
 		{
 			if ((int) (hp - amount) < (int) hp)
@@ -181,6 +201,7 @@ namespace GridGame
 				EventManager.events[i].time = Mathf.Infinity;
 			EventManager.events.Clear();
 			Enemy.enemiesInArea = new Enemy[0];
+			Trap.trapsInArea = new Trap[0];
 			GameManager.GetSingleton<GameManager>().ReloadActiveScene ();
 		}
 	}
