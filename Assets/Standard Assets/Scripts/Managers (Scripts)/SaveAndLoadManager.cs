@@ -23,7 +23,7 @@ namespace GridGame
 		public bool usePlayerPrefs;
 		[Multiline]
 		public string savedData;
-		public const int INIT_LAST_UNIQUE_ID = 2;
+		public const int INIT_LAST_UNIQUE_ID = 4;
 		public static int lastUniqueId = INIT_LAST_UNIQUE_ID;
 		private static readonly fsSerializer _serializer = new fsSerializer();
 

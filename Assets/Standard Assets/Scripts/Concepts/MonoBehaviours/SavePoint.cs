@@ -2,7 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SavePoint : MonoBehaviour
+namespace GridGame
 {
-    public Transform trs;
+	public class SavePoint : MonoBehaviour, ISaveableAndLoadable
+	{
+		public int uniqueId;
+		public int UniqueId
+		{
+			get
+			{
+				return uniqueId;
+			}
+			set
+			{
+				uniqueId = value;
+			}
+		}
+		public Transform trs;
+		[SaveAndLoadValue(false)]
+		public bool hasVisited;
+	}
 }

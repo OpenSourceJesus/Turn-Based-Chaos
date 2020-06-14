@@ -201,12 +201,17 @@ namespace GridGame
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsSavePoint);
 			if (hitCollider != null)
 			{
-				Transform hpIconTrs = hpIconParent.GetChild(0);
-				for (int i = (int) hp; i < maxHp; i ++)
-					Instantiate(hpIconTrs, hpIconParent);
-				hp = maxHp;
-				SpawnPosition = trs.position;
-				GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+				SavePoint savePoint = hitCollider.GetComponent<SavePoint>();
+				if (!savePoint.hasVisited)
+				{
+					savePoint.hasVisited = true;
+					Transform hpIconTrs = hpIconParent.GetChild(0);
+					for (int i = (int) hp; i < maxHp; i ++)
+						Instantiate(hpIconTrs, hpIconParent);
+					hp = maxHp;
+					SpawnPosition = trs.position;
+					GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+				}
 				return true;
 			}
 			return false;
