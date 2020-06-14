@@ -2,10 +2,12 @@
 using UnityEngine;
 using System.Reflection;
 using Extensions;
-using Utf8Json;
 using System;
 using Random = UnityEngine.Random;
 using System.IO;
+// using ZeroFormatter;
+// using OdinSerializer;
+using FullSerializer;
 
 namespace GridGame
 {
@@ -23,7 +25,8 @@ namespace GridGame
 		public string savedData;
 		public const int INIT_LAST_UNIQUE_ID = 2;
 		public static int lastUniqueId = INIT_LAST_UNIQUE_ID;
-		
+		private static readonly fsSerializer _serializer = new fsSerializer();
+
 #if UNITY_EDITOR
 		public virtual void OnEnable ()
 		{
@@ -212,12 +215,32 @@ namespace GridGame
 
 		public static string Serialize (object value, Type type)
 		{
-			return JsonSerializer.NonGeneric.ToJsonString(type, value);
+			fsData data;
+			_serializer.TrySerialize(type, value, out data).AssertSuccessWithoutWarnings();
+			return fsJsonPrinter.CompressedJson(data);
+			// byte[] bytes = ZeroFormatter.ZeroFormatterSerializer.NonGeneric.Serialize(type, value);
+			// byte[] bytes = SerializationUtility.SerializeValue(value, DataFormat.Binary);
+			// string output = "";
+			// foreach (byte b in bytes)
+			// 	output += "," + b;
+			// return output;
 		}
 
 		public static object Deserialize (string serializedState, Type type)
 		{
-			return JsonSerializer.NonGeneric.Deserialize(type, serializedState);
+			fsData data = fsJsonParser.Parse(serializedState);
+			object deserialized = null;
+			_serializer.TryDeserialize(data, type, ref deserialized).AssertSuccessWithoutWarnings();
+			return deserialized;
+			// string[] strings = serializedState.Split(new string[1] { "," }, StringSplitOptions.RemoveEmptyEntries);
+			// byte[] bytes = new byte[strings.Length];
+			// for (int i = 0; i < strings.Length; i ++)
+			// {
+			// 	string str = strings[i];
+			// 	bytes[i] = byte.Parse(str);
+			// }
+			// return ZeroFormatter.ZeroFormatterSerializer.NonGeneric.Deserialize(type, bytes);
+			// return SerializationUtility.DeserializeValue<object>(bytes, DataFormat.Binary);
 		}
 		
 		public class SaveEntry

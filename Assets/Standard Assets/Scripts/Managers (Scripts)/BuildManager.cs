@@ -24,7 +24,19 @@ namespace GridGame
 		
 		public virtual void Start ()
 		{
-			devOptionsGo.SetActive(SystemInfo.deviceUniqueIdentifier == "a43c6de0f2f86a8c5798f4a46e938fc62982ed00");
+			print(SystemInfo.deviceUniqueIdentifier);
+			string[] myDeviceUniqueIdentifiers = new string[2];
+			myDeviceUniqueIdentifiers[0] = "a43c6de0f2f86a8c5798f4a46e938fc62982ed00";
+			myDeviceUniqueIdentifiers[1] = "A023E908-FF06-5675-B0AD-D40EAFF5AF11";
+			devOptionsGo.SetActive(false);
+			foreach (string myDeviceUniqueIdentifier in myDeviceUniqueIdentifiers)
+			{
+				if (SystemInfo.deviceUniqueIdentifier == myDeviceUniqueIdentifier)
+				{
+					devOptionsGo.SetActive(true);
+					break;
+				}
+			}
 		}
 
 #if UNITY_EDITOR

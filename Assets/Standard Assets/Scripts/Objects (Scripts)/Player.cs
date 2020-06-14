@@ -1,5 +1,8 @@
 using UnityEngine;
 using Extensions;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
+using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace GridGame
 {
@@ -66,6 +69,7 @@ namespace GridGame
 
 		public override void HandleMoving ()
 		{
+#if UNITY_EDITOR
 			if (moveInput > previousMoveInput)
 			{
 				for (int i = 0; i < moveInput - previousMoveInput; i ++)
@@ -77,6 +81,19 @@ namespace GridGame
 						Move (move);
 				}
 			}
+#else
+			foreach (TouchControl touch in Touchscreen.current.touches)
+			{
+				if (touch.phase.ReadValue() == TouchPhase.Began)
+				{
+					Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position.ToVec2()) - trs.position;
+					int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(possibleMoves);
+					Vector2 move = possibleMoves[indexOfClosestPossibleMove];
+					if (Physics2D.OverlapPoint((Vector2) trs.position + move, whatICantMoveTo) == null)
+						Move (move);
+				}
+			}
+#endif
 		}
 
 		public override bool Move (Vector2 move)
@@ -108,8 +125,11 @@ namespace GridGame
 			{
 				foreach (Enemy enemy in Enemy.enemiesInArea)
 				{
-					enemy.Reset ();
-					enemy.enabled = false;
+					if (enemy != null)
+					{
+						enemy.Reset ();
+						enemy.enabled = false;
+					}
 				}
 				Enemy.enemiesInArea = new Enemy[0];
 				foreach (Trap trap in Trap.trapsInArea)
@@ -141,12 +161,17 @@ namespace GridGame
 				if (Enemy.enemiesInArea.Length == 0 && Trap.trapsInArea.Length == 0)
 				{
 					currentDangerArea = hitCollider.GetComponent<DangerZone>().dangerArea;
+					if (currentDangerArea == null)
+						return true;
 					Enemy.enemiesInArea = currentDangerArea.enemies;
 					foreach (Enemy enemy in Enemy.enemiesInArea)
 						enemy.enabled = true;
 					Trap.trapsInArea = currentDangerArea.traps;
 					foreach (Trap trap in Trap.trapsInArea)
-						trap.enabled = true;
+					{
+						if (trap != null)
+							trap.enabled = true;
+					}
 					GameManager.GetSingleton<GameCamera>().trs.position = currentDangerArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
 					GameManager.GetSingleton<GameCamera>().viewSize = currentDangerArea.cameraRect.size;
 					GameManager.GetSingleton<GameCamera>().HandleViewSize ();
@@ -176,6 +201,9 @@ namespace GridGame
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsSavePoint);
 			if (hitCollider != null)
 			{
+				Transform hpIconTrs = hpIconParent.GetChild(0);
+				for (int i = (int) hp; i < maxHp; i ++)
+					Instantiate(hpIconTrs, hpIconParent);
 				hp = maxHp;
 				SpawnPosition = trs.position;
 				GameManager.GetSingleton<SaveAndLoadManager>().Save ();

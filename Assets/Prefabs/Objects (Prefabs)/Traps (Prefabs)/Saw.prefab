@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1440913184}
   - component: {fileID: 1440913185}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Collider For Path
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 330419962378619126}
   - component: {fileID: 330419962378619128}
   - component: {fileID: 8093904684755736496}
-  m_Layer: 15
+  m_Layer: 16
   m_Name: Saw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330419962378619125}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36fd73d9fdf5a0a4f92d014a33472dea, type: 3}
   m_Name: 
@@ -106,6 +106,16 @@ MonoBehaviour:
   isBacktracking: 0
   wrapMode: 0
   damage: 1
+  initTimeRemaining: 0
+  moveTimer:
+    duration: 1
+    timeRemaining: 0
+    loop: 1
+    pauseIfCan: 0
+    realtime: 0
+    canBePaused: 1
+    finishAction: 0
+  useTimer: 0
 --- !u!114 &6448375020595690168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3002963419312950043}
   - component: {fileID: 8521552670880207889}
-  m_Layer: 15
+  m_Layer: 16
   m_Name: Waypoint
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
@@ -264,7 +274,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8611074828056711403}
   - component: {fileID: 3863785845059966823}
-  m_Layer: 15
+  m_Layer: 16
   m_Name: Waypoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
@@ -308,7 +318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7240885445360700177}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Waypoints Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
