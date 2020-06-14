@@ -43,10 +43,9 @@ namespace GridGame
 		{
 			foreach (Enemy enemy in enemies)
 				Destroy(enemy.gameObject);
-			for (int i = 0; i < dangerZones.Length; i ++)
+			foreach (DangerZone dangerZone in dangerZones)
 			{
-				DangerZone dangerZone = dangerZones[i];
-				dangerZone.correspondingSafeZone.trs.gameObject.SetActive(true);
+                dangerZone.correspondingSafeZone.trs.gameObject.SetActive(true);
 				dangerZone.correspondingSafeZone.trs.SetParent(null);
 				Destroy(dangerZone.gameObject);
 			}

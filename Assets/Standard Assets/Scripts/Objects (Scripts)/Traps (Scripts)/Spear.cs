@@ -9,15 +9,14 @@ namespace GridGame
 	{
 		public float initTimeRemaining;
 		public Timer attackTimer;
-		[HideInInspector]
-		public bool attackIsReady;
+		bool attackIsReady;
 		public AttackPoint attackPoint;
 		public float attackDuration;
 		EventManager.Event _event;
 
 		public virtual void OnEnable ()
 		{
-			attackTimer.onFinished += OnMoveReady;
+			attackTimer.onFinished += OnAttackReady;
 			Init ();
 			GameManager.updatables = GameManager.updatables.Add(this);
 		}
@@ -28,7 +27,7 @@ namespace GridGame
 			attackTimer.Start ();
 		}
 
-		public virtual void OnMoveReady (params object[] args)
+		public virtual void OnAttackReady (params object[] args)
 		{
 			attackIsReady = true;
 		}
@@ -48,7 +47,7 @@ namespace GridGame
 		{
 			if (this == null)
 			{
-				attackTimer.onFinished -= OnMoveReady;
+				attackTimer.onFinished -= OnAttackReady;
 				attackTimer.Stop ();
 			}
 			if (_event != null)

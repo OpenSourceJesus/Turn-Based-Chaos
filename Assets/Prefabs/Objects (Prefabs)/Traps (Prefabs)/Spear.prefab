@@ -108,7 +108,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3275073098403368666}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40c8d22e625c03747bc9cd9dd16649cc, type: 3}
+  m_Script: {fileID: 11500000, guid: c1472f35bd0477f4fbb17eadd5a5722e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   initTimeRemaining: 0
@@ -120,7 +120,6 @@ MonoBehaviour:
     realtime: 0
     canBePaused: 1
     finishAction: 0
-  attackIsReady: 0
   attackPoint: {fileID: 353456947608959653}
   attackDuration: 0.2
 --- !u!58 &7079344225287112407

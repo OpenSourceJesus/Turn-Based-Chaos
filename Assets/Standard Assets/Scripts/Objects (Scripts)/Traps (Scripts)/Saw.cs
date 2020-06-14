@@ -57,13 +57,46 @@ namespace GridGame
 		bool isMoving = true;
 		public float damage;
 		Coroutine applyDamageRoutine;
+		public float initTimeRemaining;
+		public Timer moveTimer;
+		bool moveIsReady;
+		public bool useTimer;
+
+		public virtual void Init ()
+		{
+			moveTimer.timeRemaining = initTimeRemaining;
+			moveTimer.Start ();
+		}
+
+		public virtual void OnMoveReady (params object[] args)
+		{
+			moveIsReady = true;
+		}
 
 		public virtual void OnEnable ()
 		{
 			turnCooldown = 0;
 			isMoving = true;
-			GameManager.GetSingleton<Player>().onMoved += TakeTurn;
-			TakeTurn ();
+			if (!useTimer)
+			{
+				GameManager.GetSingleton<Player>().onMoved += TakeTurn;
+				TakeTurn ();
+			}
+			else
+			{
+				moveTimer.onFinished += OnMoveReady;
+				Init ();
+				GameManager.updatables = GameManager.updatables.Add(this);
+			}
+		}
+
+		public override void DoUpdate ()
+		{
+			if (moveIsReady)
+			{
+				moveIsReady = false;
+				TakeTurn ();
+			}
 		}
 
 		public virtual void TakeTurn ()
@@ -143,11 +176,15 @@ namespace GridGame
 
 		public virtual void OnDisable ()
 		{
-			if (this == null)
+			if (this == null && useTimer)
 			{
+				moveTimer.onFinished -= OnMoveReady;
+				moveTimer.Stop ();
 			}
 			if (_event != null)
 				_event.Remove ();
+			if (useTimer)
+				GameManager.updatables = GameManager.updatables.Remove(this);
 		}
 
 		public enum WrapMode

@@ -39,11 +39,16 @@ namespace GridGame
 		{
 			get
 			{
-				int output = 0;
+				int output;
+#if UNITY_EDITOR
+				output = 0;
 				if (Mouse.current.leftButton.isPressed)
 					output ++;
 				if (Mouse.current.rightButton.isPressed)
 					output ++;
+#else
+				output = Touchscreen.current.touches.Count;
+#endif
 				return output;
 			}
 		}
@@ -179,10 +184,10 @@ namespace GridGame
 		{
 			get
 			{
-				if (UsingGamepad)
-					return false;
-				else
+				if (UsingMouse)
 					return Mouse.current.leftButton.isPressed;
+				else
+					return false;
 			}
 		}
 		public bool _LeftClickInput
@@ -196,10 +201,10 @@ namespace GridGame
 		{
 			get
 			{
-				if (UsingGamepad)
-					return false;
-				else
+				if (UsingMouse)
 					return Mouse.current.rightButton.isPressed;
+				else
+					return false;
 			}
 		}
 		public bool _RightClickInput
