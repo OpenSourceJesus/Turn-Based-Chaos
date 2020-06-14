@@ -84,7 +84,7 @@ namespace GridGame
 #else
 			foreach (TouchControl touch in Touchscreen.current.touches)
 			{
-				if (touch.phase.ReadValue() == TouchPhase.Began)
+				if (touch.phase.ReadValue() == TouchPhase.Began || touch.phase.ReadValue() == TouchPhase.None)
 				{
 					Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position.ToVec2()) - trs.position;
 					int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(possibleMoves);
