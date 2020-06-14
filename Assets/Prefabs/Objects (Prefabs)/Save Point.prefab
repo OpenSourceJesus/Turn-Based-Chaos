@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2486010373096259207}
   - component: {fileID: 7882104215645355736}
   - component: {fileID: 8818504800567846567}
+  - component: {fileID: 8883437790723453130}
   m_Layer: 14
   m_Name: Save Point
   m_TagString: Untagged
@@ -46,7 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c2f723ba1d3e154c97458d26ac276b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uniqueId: 0
   trs: {fileID: 2486010373096259206}
+  hasVisited: 0
 --- !u!114 &2486010373096259207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,3 +130,16 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
+--- !u!114 &8883437790723453130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2486010373096259204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 677e7dbf7c4ff6a47935abce0120a9b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 1234567890
