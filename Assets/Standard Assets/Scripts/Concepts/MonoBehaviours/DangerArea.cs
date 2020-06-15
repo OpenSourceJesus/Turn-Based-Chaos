@@ -44,13 +44,14 @@ namespace GridGame
 		{
 			foreach (Enemy enemy in enemies)
 				Destroy(enemy.gameObject);
+			if (GameManager.GetSingleton<Survival>() != null)
+				return;
 			foreach (DangerZone dangerZone in dangerZones)
 			{
                 dangerZone.correspondingSafeZone.trs.gameObject.SetActive(true);
 				dangerZone.correspondingSafeZone.trs.SetParent(null);
 				Destroy(dangerZone.gameObject);
 			}
-			print(redDoors.Length);
 			foreach (RedDoor redDoor in redDoors)
 				Destroy(redDoor.gameObject);
 			List<SafeArea> remainingSafeAreas = new List<SafeArea>();
