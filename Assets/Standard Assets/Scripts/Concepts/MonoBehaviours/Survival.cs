@@ -1,7 +1,6 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Extensions;
 using System;
 using Random = UnityEngine.Random;
 
@@ -93,20 +92,29 @@ namespace GridGame
 #else
 			do
 			{
-				moveInput = InputManager.MoveInput;
-				foreach (TouchControl touch in Touchscreen.current.touches)
+				// foreach (TouchControl touch in Touchscreen.current.touches)
+				// {
+				// 	if (touch.phase.ReadValue() == TouchPhase.Began)
+				// 	{
+				// 		Vector2 spawnPosition = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position.ToVec2());
+				// 		if (Physics2D.OverlapPoint(spawnPosition, GameManager.GetSingleton<GameManager>().whatIsEnemy) == null)
+				// 		{
+				// 			SpawnPlayer (spawnPosition);
+				// 			yield break;
+				// 		}
+				// 	}
+				// }
+				foreach (Touch touch in Input.touches)
 				{
-					if (touch.phase.ReadValue() == TouchPhase.Began)
+					if (touch.phase == UnityEngine.TouchPhase.Began)
 					{
-						Vector2 spawnPosition = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position.ToVec2());
-						if (Physics2D.OverlapPoint(spawnPosition, GameManager.GetSingleton<GameManager>().whatIsEnemy) == null)
-						{
-							SpawnPlayer (spawnPosition);
-							yield break;
-						}
+						Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position) - trs.position;
+						int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(possibleMoves);
+						Vector2 move = possibleMoves[indexOfClosestPossibleMove];
+						if (Physics2D.OverlapPoint((Vector2) trs.position + move, whatICantMoveTo) == null)
+							Move (move);
 					}
 				}
-				previousMoveInput = moveInput;
 				yield return new WaitForEndOfFrame();
 			} while (true);
 #endif

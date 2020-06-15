@@ -99,11 +99,22 @@ namespace GridGame
 				}
 			}
 #else
-			foreach (TouchControl touch in Touchscreen.current.touches)
+			// foreach (TouchControl touch in Touchscreen.current.touches)
+			// {
+			// 	if (touch.phase.ReadValue() == TouchPhase.Began)
+			// 	{
+			// 		Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position.ToVec2()) - trs.position;
+			// 		int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(possibleMoves);
+			// 		Vector2 move = possibleMoves[indexOfClosestPossibleMove];
+			// 		if (Physics2D.OverlapPoint((Vector2) trs.position + move, whatICantMoveTo) == null)
+			// 			Move (move);
+			// 	}
+			// }
+			foreach (Touch touch in Input.touches)
 			{
-				if (touch.phase.ReadValue() == TouchPhase.Began)
+				if (touch.phase == UnityEngine.TouchPhase.Began)
 				{
-					Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position.ToVec2()) - trs.position;
+					Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position) - trs.position;
 					int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(possibleMoves);
 					Vector2 move = possibleMoves[indexOfClosestPossibleMove];
 					if (Physics2D.OverlapPoint((Vector2) trs.position + move, whatICantMoveTo) == null)
