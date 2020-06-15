@@ -108,11 +108,12 @@ namespace GridGame
 				{
 					if (touch.phase == UnityEngine.TouchPhase.Began)
 					{
-						Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position) - trs.position;
-						int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(possibleMoves);
-						Vector2 move = possibleMoves[indexOfClosestPossibleMove];
-						if (Physics2D.OverlapPoint((Vector2) trs.position + move, whatICantMoveTo) == null)
-							Move (move);
+						Vector2 spawnPosition = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position);
+						if (Physics2D.OverlapPoint(spawnPosition, GameManager.GetSingleton<GameManager>().whatIsEnemy) == null)
+						{
+							SpawnPlayer (spawnPosition);
+							yield break;
+						}
 					}
 				}
 				yield return new WaitForEndOfFrame();
