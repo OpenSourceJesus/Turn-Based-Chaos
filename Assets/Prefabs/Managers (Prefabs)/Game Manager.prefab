@@ -92,6 +92,9 @@ MonoBehaviour:
   whatIsTrap:
     serializedVersion: 2
     m_Bits: 65536
+  whatIsRedDoor:
+    serializedVersion: 2
+    m_Bits: 131072
   makeAreas: 0
 --- !u!114 &6085537320792788065
 MonoBehaviour:

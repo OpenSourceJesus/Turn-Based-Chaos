@@ -81,10 +81,24 @@ namespace GridGame
 						Move (move);
 				}
 			}
+			else
+			{
+				foreach (Touch touch in Input.touches)
+				{
+					if (touch.phase == UnityEngine.TouchPhase.Began)
+					{
+						Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position) - trs.position;
+						int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(possibleMoves);
+						Vector2 move = possibleMoves[indexOfClosestPossibleMove];
+						if (Physics2D.OverlapPoint((Vector2) trs.position + move, whatICantMoveTo) == null)
+							Move (move);
+					}
+				}
+			}
 #else
 			foreach (TouchControl touch in Touchscreen.current.touches)
 			{
-				if (touch.phase.ReadValue() == TouchPhase.Began || touch.phase.ReadValue() == TouchPhase.None)
+				if (touch.phase.ReadValue() == TouchPhase.Began)
 				{
 					Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position.ToVec2()) - trs.position;
 					int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(possibleMoves);
@@ -144,6 +158,7 @@ namespace GridGame
                     GameManager.GetSingleton<ObjectPool>().Despawn (bullet.prefabIndex, bullet.gameObject, bullet.trs);
 					i --;
                 }
+				RedDoor.redDoorsInArea = new RedDoor[0];
                 SafeArea safeArea = hitCollider.GetComponent<SafeZone>().safeArea;
 				GameManager.GetSingleton<GameCamera>().trs.position = safeArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
 				GameManager.GetSingleton<GameCamera>().viewSize = safeArea.cameraRect.size;
@@ -158,7 +173,7 @@ namespace GridGame
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsDangerZone);
 			if (hitCollider != null)
 			{
-				if (Enemy.enemiesInArea.Length == 0 && Trap.trapsInArea.Length == 0)
+				if (Enemy.enemiesInArea.Length == 0)
 				{
 					currentDangerArea = hitCollider.GetComponent<DangerZone>().dangerArea;
 					if (currentDangerArea == null)
@@ -172,6 +187,7 @@ namespace GridGame
 						if (trap != null)
 							trap.enabled = true;
 					}
+					RedDoor.redDoorsInArea = currentDangerArea.redDoors;
 					GameManager.GetSingleton<GameCamera>().trs.position = currentDangerArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
 					GameManager.GetSingleton<GameCamera>().viewSize = currentDangerArea.cameraRect.size;
 					GameManager.GetSingleton<GameCamera>().HandleViewSize ();
