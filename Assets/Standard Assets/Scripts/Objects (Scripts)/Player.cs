@@ -12,7 +12,7 @@ namespace GridGame
 		int previousMoveInput;
 		public delegate void OnMoved();
 		public event OnMoved onMoved;
-		public Transform hpIcon;
+		Transform hpIcon;
 		public Transform hpIconParent;
 		public LayerMask whatIsSafeZone;
 		public LayerMask whatIsDangerZone;
@@ -32,7 +32,8 @@ namespace GridGame
 			}
 			set
 			{
-				trs.position = value;
+				if (GameManager.GetSingleton<Survival>() == null)
+					trs.position = value;
 			}
 		}
 		public int UniqueId
@@ -52,7 +53,9 @@ namespace GridGame
 		{
 			base.OnEnable ();
 			hp = maxHp;
-			for (int i = 1; i < hp; i ++)
+			hpIcon = hpIconParent.GetChild(0);
+			int hpIconCount = hpIconParent.childCount;
+			for (int i = hpIconCount; i < hp; i ++)
 				Instantiate(hpIcon, hpIconParent);
 			moveTimer.Reset ();
 			possibleMoves = GameManager.GetSingleton<GameManager>().possibleMoves.Add(Vector2.zero);
@@ -118,6 +121,8 @@ namespace GridGame
 				OnMove ();
 				return true;
 			}
+			else
+				OnMove ();
 			return false;
 		}
 
@@ -221,10 +226,7 @@ namespace GridGame
 				if (!savePoint.hasVisited)
 				{
 					savePoint.hasVisited = true;
-					Transform hpIconTrs = hpIconParent.GetChild(0);
-					for (int i = (int) hp; i < maxHp; i ++)
-						Instantiate(hpIconTrs, hpIconParent);
-					hp = maxHp;
+					FullHeal ();
 					SpawnPosition = trs.position;
 					GameManager.GetSingleton<SaveAndLoadManager>().Save ();
 				}
@@ -251,6 +253,19 @@ namespace GridGame
 			if ((int) (hp - amount) < (int) hp)
 				Destroy(hpIconParent.GetChild(0).gameObject);
 			base.TakeDamage (amount);
+		}
+
+		public virtual void FullHeal ()
+		{
+			if (hp <= 0)
+			{
+				Death ();
+				return;
+			}
+			Transform hpIconTrs = hpIconParent.GetChild(0);
+			for (int i = (int) hp; i < maxHp; i ++)
+				Instantiate(hpIconTrs, hpIconParent);
+			hp = maxHp;
 		}
 
 		public override void Death ()
