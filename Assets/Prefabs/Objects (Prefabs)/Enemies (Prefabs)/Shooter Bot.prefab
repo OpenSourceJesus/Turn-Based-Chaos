@@ -24,7 +24,7 @@ MonoBehaviour:
   moveIsReady: 0
   whatICantMoveTo:
     serializedVersion: 2
-    m_Bits: 3328
+    m_Bits: 134400
   whatIDamage:
     serializedVersion: 2
     m_Bits: 512
