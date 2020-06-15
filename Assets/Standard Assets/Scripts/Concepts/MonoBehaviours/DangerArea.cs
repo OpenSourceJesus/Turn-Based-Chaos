@@ -8,6 +8,7 @@ namespace GridGame
 	{
 		public Enemy[] enemies = new Enemy[0];
 		public Trap[] traps = new Trap[0];
+		public RedDoor[] redDoors = new RedDoor[0];
 		public Rect cameraRect;
 		public DangerZone[] dangerZones = new DangerZone[0];
 		public bool isDefeated;
@@ -43,12 +44,16 @@ namespace GridGame
 		{
 			foreach (Enemy enemy in enemies)
 				Destroy(enemy.gameObject);
+			if (GameManager.GetSingleton<Survival>() != null)
+				return;
 			foreach (DangerZone dangerZone in dangerZones)
 			{
                 dangerZone.correspondingSafeZone.trs.gameObject.SetActive(true);
 				dangerZone.correspondingSafeZone.trs.SetParent(null);
 				Destroy(dangerZone.gameObject);
 			}
+			foreach (RedDoor redDoor in redDoors)
+				Destroy(redDoor.gameObject);
 			List<SafeArea> remainingSafeAreas = new List<SafeArea>();
 			List<SafeArea> updatedSafeAreas = new List<SafeArea>();
 			remainingSafeAreas.Add(correspondingSafeArea);
@@ -70,6 +75,7 @@ namespace GridGame
 			} while (remainingSafeAreas.Count > 0);
 			Enemy.enemiesInArea = new Enemy[0];
 			Trap.trapsInArea = new Trap[0];
+			RedDoor.redDoorsInArea = new RedDoor[0];
 			GameManager.GetSingleton<Player>().OnMove ();
 		}
 	}

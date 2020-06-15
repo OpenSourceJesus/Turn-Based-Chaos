@@ -12,7 +12,7 @@ namespace GridGame
 		int previousMoveInput;
 		public delegate void OnMoved();
 		public event OnMoved onMoved;
-		public Transform hpIcon;
+		Transform hpIcon;
 		public Transform hpIconParent;
 		public LayerMask whatIsSafeZone;
 		public LayerMask whatIsDangerZone;
@@ -32,7 +32,8 @@ namespace GridGame
 			}
 			set
 			{
-				trs.position = value;
+				if (GameManager.GetSingleton<Survival>() == null)
+					trs.position = value;
 			}
 		}
 		public int UniqueId
@@ -52,7 +53,9 @@ namespace GridGame
 		{
 			base.OnEnable ();
 			hp = maxHp;
-			for (int i = 1; i < hp; i ++)
+			hpIcon = hpIconParent.GetChild(0);
+			int hpIconCount = hpIconParent.childCount;
+			for (int i = hpIconCount; i < hp; i ++)
 				Instantiate(hpIcon, hpIconParent);
 			moveTimer.Reset ();
 			possibleMoves = GameManager.GetSingleton<GameManager>().possibleMoves.Add(Vector2.zero);
@@ -81,6 +84,20 @@ namespace GridGame
 						Move (move);
 				}
 			}
+			else
+			{
+				foreach (Touch touch in Input.touches)
+				{
+					if (touch.phase == UnityEngine.TouchPhase.Began)
+					{
+						Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position) - trs.position;
+						int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(possibleMoves);
+						Vector2 move = possibleMoves[indexOfClosestPossibleMove];
+						if (Physics2D.OverlapPoint((Vector2) trs.position + move, whatICantMoveTo) == null)
+							Move (move);
+					}
+				}
+			}
 #else
 			// foreach (TouchControl touch in Touchscreen.current.touches)
 			// {
@@ -95,11 +112,7 @@ namespace GridGame
 			// }
 			foreach (Touch touch in Input.touches)
 			{
-<<<<<<< Updated upstream
-				if (touch.phase.ReadValue() == TouchPhase.Began || touch.phase.ReadValue() == TouchPhase.None)
-=======
 				if (touch.phase == UnityEngine.TouchPhase.Began)
->>>>>>> Stashed changes
 				{
 					Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position) - trs.position;
 					int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(possibleMoves);
@@ -119,6 +132,8 @@ namespace GridGame
 				OnMove ();
 				return true;
 			}
+			else
+				OnMove ();
 			return false;
 		}
 
@@ -159,6 +174,7 @@ namespace GridGame
                     GameManager.GetSingleton<ObjectPool>().Despawn (bullet.prefabIndex, bullet.gameObject, bullet.trs);
 					i --;
                 }
+				RedDoor.redDoorsInArea = new RedDoor[0];
                 SafeArea safeArea = hitCollider.GetComponent<SafeZone>().safeArea;
 				GameManager.GetSingleton<GameCamera>().trs.position = safeArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
 				GameManager.GetSingleton<GameCamera>().viewSize = safeArea.cameraRect.size;
@@ -173,7 +189,7 @@ namespace GridGame
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsDangerZone);
 			if (hitCollider != null)
 			{
-				if (Enemy.enemiesInArea.Length == 0 && Trap.trapsInArea.Length == 0)
+				if (Enemy.enemiesInArea.Length == 0)
 				{
 					currentDangerArea = hitCollider.GetComponent<DangerZone>().dangerArea;
 					if (currentDangerArea == null)
@@ -187,6 +203,7 @@ namespace GridGame
 						if (trap != null)
 							trap.enabled = true;
 					}
+					RedDoor.redDoorsInArea = currentDangerArea.redDoors;
 					GameManager.GetSingleton<GameCamera>().trs.position = currentDangerArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
 					GameManager.GetSingleton<GameCamera>().viewSize = currentDangerArea.cameraRect.size;
 					GameManager.GetSingleton<GameCamera>().HandleViewSize ();
@@ -220,10 +237,7 @@ namespace GridGame
 				if (!savePoint.hasVisited)
 				{
 					savePoint.hasVisited = true;
-					Transform hpIconTrs = hpIconParent.GetChild(0);
-					for (int i = (int) hp; i < maxHp; i ++)
-						Instantiate(hpIconTrs, hpIconParent);
-					hp = maxHp;
+					FullHeal ();
 					SpawnPosition = trs.position;
 					GameManager.GetSingleton<SaveAndLoadManager>().Save ();
 				}
@@ -250,6 +264,19 @@ namespace GridGame
 			if ((int) (hp - amount) < (int) hp)
 				Destroy(hpIconParent.GetChild(0).gameObject);
 			base.TakeDamage (amount);
+		}
+
+		public virtual void FullHeal ()
+		{
+			if (hp <= 0)
+			{
+				Death ();
+				return;
+			}
+			Transform hpIconTrs = hpIconParent.GetChild(0);
+			for (int i = (int) hp; i < maxHp; i ++)
+				Instantiate(hpIconTrs, hpIconParent);
+			hp = maxHp;
 		}
 
 		public override void Death ()

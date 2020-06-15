@@ -128,6 +128,7 @@ namespace GridGame
 		public const float WORLD_SCALE_SQR = WORLD_SCALE * WORLD_SCALE;
 		public LayerMask whatIsEnemy;
 		public LayerMask whatIsTrap;
+		public LayerMask whatIsRedDoor;
 		public bool makeAreas;
 
 		public override void Awake ()
@@ -213,6 +214,10 @@ namespace GridGame
 							hitCollider = Physics2D.OverlapPoint(position, whatIsTrap);
 							if (hitCollider != null)
 								traps.Add(hitCollider.GetComponent<Trap>());
+							List<RedDoor> redDoors = new List<RedDoor>();
+							hitCollider = Physics2D.OverlapPoint(position, whatIsRedDoor);
+							if (hitCollider != null)
+								redDoors.Add(hitCollider.GetComponent<RedDoor>());
 							foreach (Vector2 possibleMove in possibleMoves)
 								positionsRemaining.Add(position + possibleMove);
 							do
@@ -238,6 +243,9 @@ namespace GridGame
 									hitCollider = Physics2D.OverlapPoint(position, whatIsTrap);
 									if (hitCollider != null)
 										traps.Add(hitCollider.GetComponent<Trap>());
+									hitCollider = Physics2D.OverlapPoint(position, whatIsRedDoor);
+									if (hitCollider != null)
+										redDoors.Add(hitCollider.GetComponent<RedDoor>());
 								}
 								positionsTested.Add(position);
 								allPositions.Add(position);
@@ -247,6 +255,7 @@ namespace GridGame
 							dangerArea.enemies = enemies.ToArray();
 							dangerArea.traps = traps.ToArray();
 							dangerArea.dangerZones = dangerZones.ToArray();
+							dangerArea.redDoors = redDoors.ToArray();
 							dangerArea.cameraRect = RectExtensions.FromPoints(dangerAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 3);
 							dangerArea.correspondingSafeArea.cameraRect = dangerArea.cameraRect;
 							SaveAndLoadManager.lastUniqueId ++;

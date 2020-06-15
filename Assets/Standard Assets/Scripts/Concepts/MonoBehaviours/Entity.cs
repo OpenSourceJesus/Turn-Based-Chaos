@@ -21,7 +21,7 @@ namespace GridGame
 		{
 			get
 			{
-				return false;
+				return true;
 			}
 		}
 		public uint MaxHp
