@@ -8260,6 +8260,9 @@ MonoBehaviour:
     difficulty: 1
   - enemyPrefab: {fileID: 836074173, guid: e7fdfe0dbfa0ab14bacba86ade7313b5, type: 3}
     difficulty: 2
+  - enemyPrefab: {fileID: 4921490998981763232, guid: c0ede1943a9d91f41abf0318bb4582bc,
+      type: 3}
+    difficulty: 3
   wave: 0
   difficulty: 0
   addToDifficulty: 1
