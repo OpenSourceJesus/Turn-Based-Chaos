@@ -6,6 +6,7 @@ using Extensions;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.SceneManagement;
 #endif
 using System.Collections;
 using UnityEngine.InputSystem;
@@ -173,7 +174,7 @@ namespace GridGame
 				StartCoroutine(OnGameSceneLoadedRoutine ());
 		}
 
-		public virtual void Init ()
+		void Init ()
 		{
 			GetSingleton<Player>().OnMove ();
 			initialized = true;
@@ -181,156 +182,169 @@ namespace GridGame
 
 		public virtual void MakeDangerAreas ()
 		{
+#if UNITY_EDITOR
+			if (!Application.isPlaying)
+			{
+				MakeDangerAreas_Editor ();
+				return;
+			}
+#endif
 			List<Vector2> allPositions = new List<Vector2>();
 			List<Vector2> dangerZonePositions = new List<Vector2>();
-			foreach (Tilemap tilemap in tilemaps)
+			Tilemap tilemap = tilemaps[0];
+			foreach (Vector3Int cellPosition in tilemap.cellBounds.allPositionsWithin)
 			{
-				foreach (Vector3Int cellPosition in tilemap.cellBounds.allPositionsWithin)
+				Vector2 position = tilemap.GetCellCenterWorld(cellPosition);
+				if (!ContainsPoint(dangerZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
 				{
-					Vector2 position = tilemap.GetCellCenterWorld(cellPosition);
-					if (!ContainsPoint(dangerZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
+					allPositions.Add(position);
+					Collider2D hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsDangerZone);
+					if (hitCollider != null)
 					{
-						allPositions.Add(position);
-						Collider2D hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsDangerZone);
+						DangerArea dangerArea = new GameObject().AddComponent<DangerArea>();
+						dangerArea.GetComponent<Transform>().SetParent(GetSingleton<World>().piecesParent);
+						dangerArea.correspondingSafeArea = new GameObject().AddComponent<SafeArea>();
+						dangerArea.correspondingSafeArea.GetComponent<Transform>().SetParent(GetSingleton<World>().piecesParent);
+						List<DangerZone> dangerZones = new List<DangerZone>();
+						DangerZone dangerZone = hitCollider.GetComponent<DangerZone>();
+						dangerZone.correspondingSafeZone.safeArea = dangerArea.correspondingSafeArea;
+						dangerZone.dangerArea = dangerArea;
+						dangerZones.Add(dangerZone);
+						List<Vector2> dangerAreaPositions = new List<Vector2>();
+						dangerAreaPositions.Add(position);
+						List<Vector2> positionsRemaining = new List<Vector2>();
+						List<Vector2> positionsTested = new List<Vector2>();
+						positionsTested.Add(position);
+						List<Enemy> enemies = new List<Enemy>();
+						hitCollider = Physics2D.OverlapPoint(position, whatIsEnemy);
 						if (hitCollider != null)
+							enemies.Add(hitCollider.GetComponent<Enemy>());
+						List<Trap> traps = new List<Trap>();
+						hitCollider = Physics2D.OverlapPoint(position, whatIsTrap);
+						if (hitCollider != null)
+							traps.Add(hitCollider.GetComponent<Trap>());
+						List<RedDoor> redDoors = new List<RedDoor>();
+						hitCollider = Physics2D.OverlapPoint(position, whatIsRedDoor);
+						if (hitCollider != null)
+							redDoors.Add(hitCollider.GetComponent<RedDoor>());
+						foreach (Vector2 possibleMove in possibleMoves)
+							positionsRemaining.Add(position + possibleMove);
+						do
 						{
-							DangerArea dangerArea = new GameObject().AddComponent<DangerArea>();
-							dangerArea.correspondingSafeArea = new GameObject().AddComponent<SafeArea>();
-							List<DangerZone> dangerZones = new List<DangerZone>();
-							DangerZone dangerZone = hitCollider.GetComponent<DangerZone>();
-							dangerZone.correspondingSafeZone.safeArea = dangerArea.correspondingSafeArea;
-							dangerZone.dangerArea = dangerArea;
-							dangerZones.Add(dangerZone);
-							List<Vector2> dangerAreaPositions = new List<Vector2>();
-							dangerAreaPositions.Add(position);
-							List<Vector2> positionsRemaining = new List<Vector2>();
-							List<Vector2> positionsTested = new List<Vector2>();
-							positionsTested.Add(position);
-							List<Enemy> enemies = new List<Enemy>();
-							hitCollider = Physics2D.OverlapPoint(position, whatIsEnemy);
+							position = positionsRemaining[0];
+							hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsDangerZone);
 							if (hitCollider != null)
-								enemies.Add(hitCollider.GetComponent<Enemy>());
-							List<Trap> traps = new List<Trap>();
-							hitCollider = Physics2D.OverlapPoint(position, whatIsTrap);
-							if (hitCollider != null)
-								traps.Add(hitCollider.GetComponent<Trap>());
-							List<RedDoor> redDoors = new List<RedDoor>();
-							hitCollider = Physics2D.OverlapPoint(position, whatIsRedDoor);
-							if (hitCollider != null)
-								redDoors.Add(hitCollider.GetComponent<RedDoor>());
-							foreach (Vector2 possibleMove in possibleMoves)
-								positionsRemaining.Add(position + possibleMove);
-							do
 							{
-								position = positionsRemaining[0];
-								hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsDangerZone);
-								if (hitCollider != null)
+								dangerZone = hitCollider.GetComponent<DangerZone>();
+								dangerZone.correspondingSafeZone.safeArea = dangerArea.correspondingSafeArea;
+								dangerZone.dangerArea = dangerArea;
+								dangerZones.Add(dangerZone);
+								foreach (Vector2 possibleMove in possibleMoves)
 								{
-									dangerZone = hitCollider.GetComponent<DangerZone>();
-									dangerZone.correspondingSafeZone.safeArea = dangerArea.correspondingSafeArea;
-									dangerZone.dangerArea = dangerArea;
-									dangerZones.Add(dangerZone);
-									foreach (Vector2 possibleMove in possibleMoves)
-									{
-										Vector2 positionToTest = position + possibleMove;
-										if (!ContainsPoint(positionsRemaining, positionToTest, .7f) && !ContainsPoint(positionsTested, positionToTest, .7f))
-											positionsRemaining.Add(positionToTest);
-									}
-									dangerAreaPositions.Add(position);
-									hitCollider = Physics2D.OverlapPoint(position, whatIsEnemy);
-									if (hitCollider != null)
-										enemies.Add(hitCollider.GetComponent<Enemy>());
-									hitCollider = Physics2D.OverlapPoint(position, whatIsTrap);
-									if (hitCollider != null)
-										traps.Add(hitCollider.GetComponent<Trap>());
-									hitCollider = Physics2D.OverlapPoint(position, whatIsRedDoor);
-									if (hitCollider != null)
-										redDoors.Add(hitCollider.GetComponent<RedDoor>());
+									Vector2 positionToTest = position + possibleMove;
+									if (!ContainsPoint(positionsRemaining, positionToTest, .7f) && !ContainsPoint(positionsTested, positionToTest, .7f))
+										positionsRemaining.Add(positionToTest);
 								}
-								positionsTested.Add(position);
-								allPositions.Add(position);
-								positionsRemaining.RemoveAt(0);
-							} while (positionsRemaining.Count > 0);
-							dangerZonePositions.AddRange(dangerAreaPositions);
-							dangerArea.enemies = enemies.ToArray();
-							dangerArea.traps = traps.ToArray();
-							dangerArea.dangerZones = dangerZones.ToArray();
-							dangerArea.redDoors = redDoors.ToArray();
-							dangerArea.cameraRect = RectExtensions.FromPoints(dangerAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 3);
-							dangerArea.correspondingSafeArea.cameraRect = dangerArea.cameraRect;
-							SaveAndLoadManager.lastUniqueId ++;
-							dangerArea.uniqueId = SaveAndLoadManager.lastUniqueId;
-							dangerArea.gameObject.AddComponent<SaveAndLoadObject>();
-						}
+								dangerAreaPositions.Add(position);
+								hitCollider = Physics2D.OverlapPoint(position, whatIsEnemy);
+								if (hitCollider != null)
+									enemies.Add(hitCollider.GetComponent<Enemy>());
+								hitCollider = Physics2D.OverlapPoint(position, whatIsTrap);
+								if (hitCollider != null)
+									traps.Add(hitCollider.GetComponent<Trap>());
+								hitCollider = Physics2D.OverlapPoint(position, whatIsRedDoor);
+								if (hitCollider != null)
+									redDoors.Add(hitCollider.GetComponent<RedDoor>());
+							}
+							positionsTested.Add(position);
+							allPositions.Add(position);
+							positionsRemaining.RemoveAt(0);
+						} while (positionsRemaining.Count > 0);
+						dangerZonePositions.AddRange(dangerAreaPositions);
+						dangerArea.enemies = enemies.ToArray();
+						dangerArea.traps = traps.ToArray();
+						dangerArea.dangerZones = dangerZones.ToArray();
+						dangerArea.redDoors = redDoors.ToArray();
+						dangerArea.cameraRect = RectExtensions.FromPoints(dangerAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 3);
+						dangerArea.correspondingSafeArea.cameraRect = dangerArea.cameraRect;
+						SaveAndLoadManager.lastUniqueId ++;
+						dangerArea.uniqueId = SaveAndLoadManager.lastUniqueId;
+						dangerArea.gameObject.AddComponent<SaveAndLoadObject>();
 					}
 				}
 			}
 		}
-
+		
 		public virtual void MakeSafeAreas ()
 		{
+#if UNITY_EDITOR
+			if (!Application.isPlaying)
+			{
+				MakeSafeAreas_Editor ();
+				return;
+			}
+#endif
 			List<Vector2> allPositions = new List<Vector2>();
 			List<Vector2> safeZonePositions = new List<Vector2>();
-			foreach (Tilemap tilemap in tilemaps)
+			Tilemap tilemap = tilemaps[0];
+			foreach (Vector3Int cellPosition in tilemap.cellBounds.allPositionsWithin)
 			{
-				foreach (Vector3Int cellPosition in tilemap.cellBounds.allPositionsWithin)
+				Vector2 position = tilemap.GetCellCenterWorld(cellPosition);
+				if (!ContainsPoint(safeZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
 				{
-					Vector2 position = tilemap.GetCellCenterWorld(cellPosition);
-					if (!ContainsPoint(safeZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
+					allPositions.Add(position);
+					Collider2D hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsSafeZone);
+					if (hitCollider != null)
 					{
-						allPositions.Add(position);
-						Collider2D hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsSafeZone);
-						if (hitCollider != null)
+						SafeArea safeArea = new GameObject().AddComponent<SafeArea>();
+						safeArea.GetComponent<Transform>().SetParent(GetSingleton<World>().piecesParent);
+						hitCollider.GetComponent<SafeZone>().safeArea = safeArea;
+						List<Vector2> safeAreaPositions = new List<Vector2>();
+						safeAreaPositions.Add(position);
+						List<Vector2> positionsRemaining = new List<Vector2>();
+						List<Vector2> positionsTested = new List<Vector2>();
+						positionsTested.Add(position);
+						List<DangerArea> dangerAreas = new List<DangerArea>();
+						foreach (Vector2 possibleMove in possibleMoves)
+							positionsRemaining.Add(position + possibleMove);
+						do
 						{
-							SafeArea safeArea = new GameObject().AddComponent<SafeArea>();
-							hitCollider.GetComponent<SafeZone>().safeArea = safeArea;
-							List<Vector2> safeAreaPositions = new List<Vector2>();
-							safeAreaPositions.Add(position);
-							List<Vector2> positionsRemaining = new List<Vector2>();
-							List<Vector2> positionsTested = new List<Vector2>();
-							positionsTested.Add(position);
-							List<DangerArea> dangerAreas = new List<DangerArea>();
-							foreach (Vector2 possibleMove in possibleMoves)
-								positionsRemaining.Add(position + possibleMove);
-							do
+							position = positionsRemaining[0];
+							hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsSafeZone);
+							if (hitCollider != null)
 							{
-								position = positionsRemaining[0];
-								hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsSafeZone);
+								hitCollider.GetComponent<SafeZone>().safeArea = safeArea;
+								foreach (Vector2 possibleMove in possibleMoves)
+								{
+									Vector2 positionToTest = position + possibleMove;
+									if (!ContainsPoint(positionsRemaining, positionToTest, .7f) && !ContainsPoint(positionsTested, positionToTest, .7f))
+										positionsRemaining.Add(positionToTest);
+								}
+								safeAreaPositions.Add(position);
+							}
+							else
+							{
+								hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsDangerZone);
 								if (hitCollider != null)
 								{
-									hitCollider.GetComponent<SafeZone>().safeArea = safeArea;
-									foreach (Vector2 possibleMove in possibleMoves)
-									{
-										Vector2 positionToTest = position + possibleMove;
-										if (!ContainsPoint(positionsRemaining, positionToTest, .7f) && !ContainsPoint(positionsTested, positionToTest, .7f))
-											positionsRemaining.Add(positionToTest);
-									}
-									safeAreaPositions.Add(position);
+									DangerArea dangerArea = hitCollider.GetComponent<DangerZone>().dangerArea;
+									dangerAreas.Add(dangerArea);
+									if (!safeArea.surroundingSafeAreas.Contains(dangerArea.correspondingSafeArea))
+										safeArea.surroundingSafeAreas.Add(dangerArea.correspondingSafeArea);
+									if (!dangerArea.correspondingSafeArea.surroundingSafeAreas.Contains(safeArea))
+										dangerArea.correspondingSafeArea.surroundingSafeAreas.Add(safeArea);
 								}
-								else
-								{
-									hitCollider = Physics2D.OverlapPoint(position, GetSingleton<Player>().whatIsDangerZone);
-									if (hitCollider != null)
-									{
-										DangerArea dangerArea = hitCollider.GetComponent<DangerZone>().dangerArea;
-										dangerAreas.Add(dangerArea);
-										if (!safeArea.surroundingSafeAreas.Contains(dangerArea.correspondingSafeArea))
-											safeArea.surroundingSafeAreas.Add(dangerArea.correspondingSafeArea);
-										if (!dangerArea.correspondingSafeArea.surroundingSafeAreas.Contains(safeArea))
-											dangerArea.correspondingSafeArea.surroundingSafeAreas.Add(safeArea);
-									}
-								}
-								positionsTested.Add(position);
-								allPositions.Add(position);
-								positionsRemaining.RemoveAt(0);
-							} while (positionsRemaining.Count > 0);
-							safeZonePositions.AddRange(safeAreaPositions);
-							safeArea.cameraRect = RectExtensions.FromPoints(safeAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 3);
-							Rect[] dangerAreaCameraRects = new Rect[dangerAreas.Count];
-							for (int i = 0; i < dangerAreas.Count; i ++)
-								dangerAreaCameraRects[i] = dangerAreas[i].cameraRect;
-							safeArea.cameraRect = RectExtensions.Combine(dangerAreaCameraRects.Add(safeArea.cameraRect));
-						}
+							}
+							positionsTested.Add(position);
+							allPositions.Add(position);
+							positionsRemaining.RemoveAt(0);
+						} while (positionsRemaining.Count > 0);
+						safeZonePositions.AddRange(safeAreaPositions);
+						safeArea.cameraRect = RectExtensions.FromPoints(safeAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 3);
+						Rect[] dangerAreaCameraRects = new Rect[dangerAreas.Count];
+						for (int i = 0; i < dangerAreas.Count; i ++)
+							dangerAreaCameraRects[i] = dangerAreas[i].cameraRect;
+						safeArea.cameraRect = RectExtensions.Combine(dangerAreaCameraRects.Add(safeArea.cameraRect));
 					}
 				}
 			}
@@ -345,6 +359,205 @@ namespace GridGame
 			}
 			return false;
 		}
+
+#if UNITY_EDITOR
+		void MakeDangerAreas_Editor ()
+		{
+			GameObject[] gos = FindObjectsOfType<GameObject>();
+			List<Vector2> allPositions = new List<Vector2>();
+			List<Vector2> dangerZonePositions = new List<Vector2>();
+			Tilemap tilemap = tilemaps[0];
+			foreach (Vector3Int cellPosition in tilemap.cellBounds.allPositionsWithin)
+			{
+				Vector2 position = tilemap.GetCellCenterWorld(cellPosition);
+				if (!ContainsPoint(dangerZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
+				{
+					allPositions.Add(position);
+					DangerZone dangerZone;
+					if (GetComponent<DangerZone>(gos, position, out dangerZone, .7f))
+					{
+						DangerArea dangerArea = new GameObject().AddComponent<DangerArea>();
+						dangerArea.GetComponent<Transform>().SetParent(GetSingleton<World>().piecesParent);
+						dangerArea.correspondingSafeArea = new GameObject().AddComponent<SafeArea>();
+						dangerArea.correspondingSafeArea.GetComponent<Transform>().SetParent(GetSingleton<World>().piecesParent);
+						List<DangerZone> dangerZones = new List<DangerZone>();
+						dangerZone.correspondingSafeZone.safeArea = dangerArea.correspondingSafeArea;
+						dangerZone.dangerArea = dangerArea;
+						dangerZones.Add(dangerZone);
+						List<Vector2> dangerAreaPositions = new List<Vector2>();
+						dangerAreaPositions.Add(position);
+						List<Vector2> positionsRemaining = new List<Vector2>();
+						List<Vector2> positionsTested = new List<Vector2>();
+						positionsTested.Add(position);
+						List<Enemy> enemies = new List<Enemy>();
+						Enemy enemy;
+						if (GetComponent<Enemy>(gos, position, out enemy, .7f))
+							enemies.Add(enemy);
+						List<Trap> traps = new List<Trap>();
+						Trap trap;
+						if (GetComponent<Trap>(gos, position, out trap, .7f))
+							traps.Add(trap);
+						List<RedDoor> redDoors = new List<RedDoor>();
+						RedDoor redDoor;
+						if (GetComponent<RedDoor>(gos, position, out redDoor, .7f))
+							redDoors.Add(redDoor);
+						foreach (Vector2 possibleMove in possibleMoves)
+							positionsRemaining.Add(position + possibleMove);
+						do
+						{
+							position = positionsRemaining[0];
+							if (GetComponent<DangerZone>(gos, position, out dangerZone, .7f))
+							{
+								dangerZone.correspondingSafeZone.safeArea = dangerArea.correspondingSafeArea;
+								dangerZone.dangerArea = dangerArea;
+								dangerZones.Add(dangerZone);
+								foreach (Vector2 possibleMove in possibleMoves)
+								{
+									Vector2 positionToTest = position + possibleMove;
+									if (!ContainsPoint(positionsRemaining, positionToTest, .7f) && !ContainsPoint(positionsTested, positionToTest, .7f))
+										positionsRemaining.Add(positionToTest);
+								}
+								dangerAreaPositions.Add(position);
+								if (GetComponent<Enemy>(gos, position, out enemy, .7f))
+									enemies.Add(enemy);
+								if (GetComponent<Trap>(gos, position, out trap, .7f))
+									traps.Add(trap);
+								if (GetComponent<RedDoor>(gos, position, out redDoor, .7f))
+									redDoors.Add(redDoor);
+							}
+							positionsTested.Add(position);
+							allPositions.Add(position);
+							positionsRemaining.RemoveAt(0);
+						} while (positionsRemaining.Count > 0);
+						dangerZonePositions.AddRange(dangerAreaPositions);
+						dangerArea.enemies = enemies.ToArray();
+						dangerArea.traps = traps.ToArray();
+						dangerArea.dangerZones = dangerZones.ToArray();
+						dangerArea.redDoors = redDoors.ToArray();
+						dangerArea.cameraRect = RectExtensions.FromPoints(dangerAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 3);
+						dangerArea.correspondingSafeArea.cameraRect = dangerArea.cameraRect;
+						SaveAndLoadManager.lastUniqueId ++;
+						dangerArea.uniqueId = SaveAndLoadManager.lastUniqueId;
+						dangerArea.gameObject.AddComponent<SaveAndLoadObject>();
+					}
+				}
+			}
+		}
+
+		void MakeSafeAreas_Editor ()
+		{
+			GameObject[] gos = FindObjectsOfType<GameObject>();
+			List<Vector2> allPositions = new List<Vector2>();
+			List<Vector2> safeZonePositions = new List<Vector2>();
+			Tilemap tilemap = tilemaps[0];
+			foreach (Vector3Int cellPosition in tilemap.cellBounds.allPositionsWithin)
+			{
+				Vector2 position = tilemap.GetCellCenterWorld(cellPosition);
+				if (!ContainsPoint(safeZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
+				{
+					allPositions.Add(position);
+					SafeZone safeZone;
+					if (GetComponent<SafeZone>(gos, position, out safeZone, .7f))
+					{
+						SafeArea safeArea = new GameObject().AddComponent<SafeArea>();
+						safeArea.GetComponent<Transform>().SetParent(GetSingleton<World>().piecesParent);
+						safeZone.safeArea = safeArea;
+						List<Vector2> safeAreaPositions = new List<Vector2>();
+						safeAreaPositions.Add(position);
+						List<Vector2> positionsRemaining = new List<Vector2>();
+						List<Vector2> positionsTested = new List<Vector2>();
+						positionsTested.Add(position);
+						List<DangerArea> dangerAreas = new List<DangerArea>();
+						foreach (Vector2 possibleMove in possibleMoves)
+							positionsRemaining.Add(position + possibleMove);
+						do
+						{
+							position = positionsRemaining[0];
+							if (GetComponent<SafeZone>(gos, position, out safeZone, .7f))
+							{
+								safeZone.safeArea = safeArea;
+								foreach (Vector2 possibleMove in possibleMoves)
+								{
+									Vector2 positionToTest = position + possibleMove;
+									if (!ContainsPoint(positionsRemaining, positionToTest, .7f) && !ContainsPoint(positionsTested, positionToTest, .7f))
+										positionsRemaining.Add(positionToTest);
+								}
+								safeAreaPositions.Add(position);
+							}
+							else
+							{
+								DangerZone dangerZone;
+								if (GetComponent(gos, position, out dangerZone, .7f))
+								{
+									DangerArea dangerArea = dangerZone.dangerArea;
+									dangerAreas.Add(dangerArea);
+									if (!safeArea.surroundingSafeAreas.Contains(dangerArea.correspondingSafeArea))
+										safeArea.surroundingSafeAreas.Add(dangerArea.correspondingSafeArea);
+									if (!dangerArea.correspondingSafeArea.surroundingSafeAreas.Contains(safeArea))
+										dangerArea.correspondingSafeArea.surroundingSafeAreas.Add(safeArea);
+								}
+							}
+							positionsTested.Add(position);
+							allPositions.Add(position);
+							positionsRemaining.RemoveAt(0);
+						} while (positionsRemaining.Count > 0);
+						safeZonePositions.AddRange(safeAreaPositions);
+						safeArea.cameraRect = RectExtensions.FromPoints(safeAreaPositions.ToArray()).Expand(Vector2.one * WORLD_SCALE * 3);
+						Rect[] dangerAreaCameraRects = new Rect[dangerAreas.Count];
+						for (int i = 0; i < dangerAreas.Count; i ++)
+							dangerAreaCameraRects[i] = dangerAreas[i].cameraRect;
+						safeArea.cameraRect = RectExtensions.Combine(dangerAreaCameraRects.Add(safeArea.cameraRect));
+					}
+				}
+			}
+		}
+
+		Component GetComponent (Type type, Vector2 position, float threshold = 0)
+		{
+			GameObject[] gos = EditorSceneManager.GetActiveScene().GetRootGameObjects();
+			foreach (GameObject go in gos)
+			{
+				if (((Vector2) go.GetComponent<Transform>().position - position).sqrMagnitude <= threshold)
+				{
+					Component output = go.GetComponent(type);
+					if (output != null)
+						return output;
+				}
+			}
+			return null;
+		}
+
+		bool GetComponent<T> (Vector2 position, out T output, float threshold = 0)
+		{
+			output = default(T);
+			GameObject[] gos = EditorSceneManager.GetActiveScene().GetRootGameObjects();
+			foreach (GameObject go in gos)
+			{
+				if (((Vector2) go.GetComponent<Transform>().position - position).sqrMagnitude <= threshold)
+				{
+					output = go.GetComponent<T>();
+					if (output != null)
+						return true;
+				}
+			}
+			return false;
+		}
+
+		bool GetComponent<T> (GameObject[] gos, Vector2 position, out T output, float threshold = 0)
+		{
+			output = default(T);
+			foreach (GameObject go in gos)
+			{
+				if (((Vector2) go.GetComponent<Transform>().position - position).sqrMagnitude <= threshold)
+				{
+					output = go.GetComponent<T>();
+					if (output != null)
+						return true;
+				}
+			}
+			return false;
+		}
+#endif
 
 		public virtual IEnumerator OnGameSceneLoadedRoutine ()
 		{
@@ -387,7 +600,7 @@ namespace GridGame
 					updatable.DoUpdate ();
 				Physics2D.Simulate(Time.deltaTime);
 				GetSingleton<ObjectPool>().DoUpdate ();
-				// GetSingleton<GameCamera>().DoUpdate ();
+				GetSingleton<GameCamera>().DoUpdate ();
 				framesSinceLoadedScene ++;
 				previousMousePosition = InputManager.MousePosition;
 			// }
