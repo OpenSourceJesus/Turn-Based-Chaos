@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -92,6 +92,7 @@ namespace GridGame
 #else
 			do
 			{
+				moveInput = InputManager.MoveInput;
 				// foreach (TouchControl touch in Touchscreen.current.touches)
 				// {
 				// 	if (touch.phase.ReadValue() == TouchPhase.Began)
@@ -116,6 +117,7 @@ namespace GridGame
 						}
 					}
 				}
+				previousMoveInput = moveInput;
 				yield return new WaitForEndOfFrame();
 			} while (true);
 #endif
