@@ -35,19 +35,23 @@ namespace GridGame
 				return Keyboard.current != null;
 			}
 		}
+		public static bool UsingTouchscreen
+		{
+			get
+			{
+				return Touchscreen.current != null;
+			}
+		}
 		public static int MoveInput
 		{
 			get
 			{
-				int output;
+				int output = Input.touchCount;
 #if UNITY_EDITOR
-				output = 0;
 				if (Mouse.current.leftButton.isPressed)
 					output ++;
 				if (Mouse.current.rightButton.isPressed)
 					output ++;
-#else
-				output = Touchscreen.current.touches.Count;
 #endif
 				return output;
 			}

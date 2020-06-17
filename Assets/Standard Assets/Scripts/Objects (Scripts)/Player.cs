@@ -72,20 +72,21 @@ namespace GridGame
 
 		public override void HandleMoving ()
 		{
-#if UNITY_EDITOR
 			if (moveInput > previousMoveInput)
 			{
-				for (int i = 0; i < moveInput - previousMoveInput; i ++)
+#if UNITY_EDITOR
+				if (InputManager.LeftClickInput || InputManager.RightClickInput)
 				{
-					Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(InputManager.MousePosition) - trs.position;
-					int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(possibleMoves);
-					Vector2 move = possibleMoves[indexOfClosestPossibleMove];
-					if (Physics2D.OverlapPoint((Vector2) trs.position + move, whatICantMoveTo) == null)
-						Move (move);
+					for (int i = 0; i < moveInput - previousMoveInput; i ++)
+					{
+						Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(InputManager.MousePosition) - trs.position;
+						int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(possibleMoves);
+						Vector2 move = possibleMoves[indexOfClosestPossibleMove];
+						if (Physics2D.OverlapPoint((Vector2) trs.position + move, whatICantMoveTo) == null)
+							Move (move);
+					}
 				}
-			}
-			else
-			{
+#endif
 				foreach (Touch touch in Input.touches)
 				{
 					if (touch.phase == UnityEngine.TouchPhase.Began)
@@ -98,7 +99,6 @@ namespace GridGame
 					}
 				}
 			}
-#else
 			// foreach (TouchControl touch in Touchscreen.current.touches)
 			// {
 			// 	if (touch.phase.ReadValue() == TouchPhase.Began)
@@ -110,18 +110,6 @@ namespace GridGame
 			// 			Move (move);
 			// 	}
 			// }
-			foreach (Touch touch in Input.touches)
-			{
-				if (touch.phase == UnityEngine.TouchPhase.Began)
-				{
-					Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position) - trs.position;
-					int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(possibleMoves);
-					Vector2 move = possibleMoves[indexOfClosestPossibleMove];
-					if (Physics2D.OverlapPoint((Vector2) trs.position + move, whatICantMoveTo) == null)
-						Move (move);
-				}
-			}
-#endif
 		}
 
 		public override bool Move (Vector2 move)
