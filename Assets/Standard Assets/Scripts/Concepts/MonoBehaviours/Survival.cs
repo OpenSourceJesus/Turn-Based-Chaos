@@ -50,7 +50,10 @@ namespace GridGame
 				{
 					Enemy enemy = spawnEntry.Spawn();
 					if (enemy != null)
+					{
+						enemy.enabled = false;
 						enemies.Add(enemy);
+					}
 					remainingDifficulty -= spawnEntry.difficulty;
 				}
 			} while (remainingSpawnEntries.Count > 0);
@@ -58,21 +61,22 @@ namespace GridGame
 
 		IEnumerator SpawnPlayerRoutine ()
 		{
-#if UNITY_EDITOR
 			do
 			{
 				moveInput = InputManager.MoveInput;
 				if (moveInput > previousMoveInput)
 				{
-					Vector2 spawnPosition = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(InputManager.MousePosition);
-					if (Physics2D.OverlapPoint(spawnPosition, GameManager.GetSingleton<GameManager>().whatIsEnemy) == null)
+#if UNITY_EDITOR
+					if (InputManager.LeftClickInput || InputManager.RightClickInput)
 					{
-						SpawnPlayer (spawnPosition);
-						yield break;
+						Vector2 spawnPosition = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(InputManager.MousePosition);
+						if (Physics2D.OverlapPoint(spawnPosition, GameManager.GetSingleton<GameManager>().whatIsEnemy) == null)
+						{
+							SpawnPlayer (spawnPosition);
+							yield break;
+						}
 					}
-				}
-				else
-				{
+#endif
 					foreach (Touch touch in Input.touches)
 					{
 						if (touch.phase == UnityEngine.TouchPhase.Began)
@@ -89,38 +93,6 @@ namespace GridGame
 				previousMoveInput = moveInput;
 				yield return new WaitForEndOfFrame();
 			} while (true);
-#else
-			do
-			{
-				moveInput = InputManager.MoveInput;
-				// foreach (TouchControl touch in Touchscreen.current.touches)
-				// {
-				// 	if (touch.phase.ReadValue() == TouchPhase.Began)
-				// 	{
-				// 		Vector2 spawnPosition = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position.ToVec2());
-				// 		if (Physics2D.OverlapPoint(spawnPosition, GameManager.GetSingleton<GameManager>().whatIsEnemy) == null)
-				// 		{
-				// 			SpawnPlayer (spawnPosition);
-				// 			yield break;
-				// 		}
-				// 	}
-				// }
-				foreach (Touch touch in Input.touches)
-				{
-					if (touch.phase == UnityEngine.TouchPhase.Began)
-					{
-						Vector2 spawnPosition = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position);
-						if (Physics2D.OverlapPoint(spawnPosition, GameManager.GetSingleton<GameManager>().whatIsEnemy) == null)
-						{
-							SpawnPlayer (spawnPosition);
-							yield break;
-						}
-					}
-				}
-				previousMoveInput = moveInput;
-				yield return new WaitForEndOfFrame();
-			} while (true);
-#endif
 		}
 
 		void SpawnPlayer (Vector2 spawnPosition)

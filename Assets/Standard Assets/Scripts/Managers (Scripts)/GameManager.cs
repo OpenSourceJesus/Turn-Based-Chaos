@@ -130,7 +130,9 @@ namespace GridGame
 		public LayerMask whatIsEnemy;
 		public LayerMask whatIsTrap;
 		public LayerMask whatIsRedDoor;
+#if UNITY_EDITOR
 		public bool makeAreas;
+#endif
 
 		public override void Awake ()
 		{
@@ -180,15 +182,14 @@ namespace GridGame
 			initialized = true;
 		}
 
+#if UNITY_EDITOR
 		public virtual void MakeDangerAreas ()
 		{
-#if UNITY_EDITOR
 			if (!Application.isPlaying)
 			{
 				MakeDangerAreas_Editor ();
 				return;
 			}
-#endif
 			List<Vector2> allPositions = new List<Vector2>();
 			List<Vector2> dangerZonePositions = new List<Vector2>();
 			Tilemap tilemap = tilemaps[0];
@@ -277,13 +278,11 @@ namespace GridGame
 		
 		public virtual void MakeSafeAreas ()
 		{
-#if UNITY_EDITOR
 			if (!Application.isPlaying)
 			{
 				MakeSafeAreas_Editor ();
 				return;
 			}
-#endif
 			List<Vector2> allPositions = new List<Vector2>();
 			List<Vector2> safeZonePositions = new List<Vector2>();
 			Tilemap tilemap = tilemaps[0];
@@ -360,7 +359,6 @@ namespace GridGame
 			return false;
 		}
 
-#if UNITY_EDITOR
 		void MakeDangerAreas_Editor ()
 		{
 			GameObject[] gos = FindObjectsOfType<GameObject>();
@@ -633,11 +631,13 @@ namespace GridGame
 				possibleMoves[i] = VectorExtensions.FromFacingAngle(angle) * WORLD_SCALE;
 				i ++;
 			}
+#if UNITY_EDITOR
 			if (makeAreas)
 			{
 				MakeDangerAreas ();
 				MakeSafeAreas ();
 			}
+#endif
 			GameManager.GetSingleton<SaveAndLoadManager>().Setup ();
 			if (!HasPlayedBefore)
 			{
