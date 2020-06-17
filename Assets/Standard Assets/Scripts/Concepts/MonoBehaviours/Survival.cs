@@ -30,7 +30,7 @@ namespace GridGame
 
 		IEnumerator Start ()
 		{
-			yield return new WaitForEndOfFrame();
+			yield return new WaitUntil(() => (GameManager.initialized));
 			GameManager.GetSingleton<Player>().onMoved += CheckForWaveEnd;
 			NextWave ();
 		}

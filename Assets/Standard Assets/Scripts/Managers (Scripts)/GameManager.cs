@@ -109,7 +109,7 @@ namespace GridGame
 		public static event OnGameScenesLoaded onGameScenesLoaded;
 		public GameObject emptyGoPrefab;
 		public TemporaryActiveText notificationText;
-		static bool initialized;
+		public static bool initialized;
 		public static bool HasPlayedBefore
 		{
 			get
@@ -179,7 +179,7 @@ namespace GridGame
 		void Init ()
 		{
 			GetSingleton<Player>().OnMove ();
-			initialized = true;
+			// initialized = true;
 		}
 
 #if UNITY_EDITOR
@@ -647,6 +647,8 @@ namespace GridGame
 			}
 			else
 				GetSingleton<SaveAndLoadManager>().LoadMostRecent ();
+			// yield return GetSingleton<AdsManager>().StartCoroutine(GetSingleton<AdsManager>().ShowAddRoutine ());
+			GetSingleton<AdsManager>().ShowAdd ();
 			Init ();
 			yield break;
 		}
@@ -725,6 +727,7 @@ namespace GridGame
 
 		public virtual void PauseGame (bool pause)
 		{
+			print(pause);
 			paused = pause;
 			Time.timeScale = timeScale * (1 - paused.GetHashCode());
 			AudioListener.pause = paused;
