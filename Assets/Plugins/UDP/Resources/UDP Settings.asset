@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -107981364, guid: 2c3078f85c1a94a82b179c36ee13484f, type: 3}
+  m_Name: UDP Settings
+  m_EditorClassIdentifier: 
+  UnityProjectID: 5bb5244e-d795-42db-ace1-c839c66fb995
+  UnityClientID: nw1-yTN3pBP5sjjv0vO0RQ
+  UnityClientKey: eYIvnc79k2yzJYQp6ZMUhJRwpjfcH4v87OrqC1E3stY
+  UnityClientRSAPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjF5/zkByrpjUVYK/g+jJNMCk3pz/Li9XWC9ntktGgdLGmRrj8DJ09+MaJ4+HwaUui6z4NBr4Vf4jZm04xUVR4d1GYGT1kPwENi4ou3gXt8m/TOpCX0Nc467f+VwAGC73xnqzVtRpasohVhghKDyFalQ8l+yFhOMh2TcunJKqoNkR5eGuDFe1g2PMSyRGk5sYO/Z3X1KOgeOKEN6Y8vcLbvnnFaWWGhn4i1ANlEdRuhwsS7Xl3rW7lcyN0O/dU2edkHwS2cwZFwkQJcaMg0OCq7lDZeKkCCuVYEqSGW9MVqiikQQb5eG09hASARKrMOIoiNjCayMKYHAa/CqJHBULWwIDAQAB
+  AppName: '"Turn-Based" Chaos'
+  AppSlug: 8d44f122-9407-4c42-83f5-dfaf46c58c2c
+  AppItemId: 5eea6189363238001fe05aac
+  Permission: 
