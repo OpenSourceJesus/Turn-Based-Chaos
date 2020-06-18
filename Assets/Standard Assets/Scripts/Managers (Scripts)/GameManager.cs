@@ -133,6 +133,12 @@ namespace GridGame
 #if UNITY_EDITOR
 		public bool makeAreas;
 #endif
+		public float accelerometerUpdateInterval = 1.0f / 60.0f;
+		public float lowPassKernelWidthInSeconds = 1.0f;
+		public float shakeDetectionThreshold = 2.0f;
+		static float lowPassFilterFactor;
+		static Vector3 lowPassValue;
+		Vector3 acceleration;
 
 		public override void Awake ()
 		{
@@ -174,6 +180,9 @@ namespace GridGame
 				LoadGameScenes ();
 			else if (GetSingleton<GameCamera>() != null)
 				StartCoroutine(OnGameSceneLoadedRoutine ());
+			lowPassFilterFactor = accelerometerUpdateInterval / lowPassKernelWidthInSeconds;
+			shakeDetectionThreshold *= shakeDetectionThreshold;
+			lowPassValue = InputManager.Acceleration;
 		}
 
 		void Init ()
@@ -599,6 +608,10 @@ namespace GridGame
 				Physics2D.Simulate(Time.deltaTime);
 				GetSingleton<ObjectPool>().DoUpdate ();
 				GetSingleton<GameCamera>().DoUpdate ();
+				acceleration = InputManager.Acceleration;
+				lowPassValue = Vector3.Lerp(lowPassValue, acceleration, lowPassFilterFactor);
+				if ((acceleration - lowPassValue).sqrMagnitude >= shakeDetectionThreshold)
+					GetSingleton<PauseMenu>().Open ();
 				framesSinceLoadedScene ++;
 				previousMousePosition = InputManager.MousePosition;
 			// }
@@ -727,7 +740,6 @@ namespace GridGame
 
 		public virtual void PauseGame (bool pause)
 		{
-			print(pause);
 			paused = pause;
 			Time.timeScale = timeScale * (1 - paused.GetHashCode());
 			AudioListener.pause = paused;

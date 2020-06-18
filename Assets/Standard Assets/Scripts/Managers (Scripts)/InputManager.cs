@@ -167,6 +167,20 @@ namespace GridGame
 				return UIMovementInput;
 			}
 		}
+		public static Vector2 Acceleration
+		{
+			get
+			{
+				return Input.acceleration;
+			}
+		}
+		public Vector3 _Acceleration
+		{
+			get
+			{
+				return Acceleration;
+			}
+		}
 		public static bool PauseInput
 		{
 			get
