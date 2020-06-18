@@ -20,6 +20,17 @@ public class PaymentManager : SingletonMonoBehaviour<PaymentManager>, IStoreList
 		base.Awake ();
 		if (storeController == null)
 			InitializePurchasing ();
+		gameObject.SetActive(false);
+	}
+
+	public void ShowUI ()
+	{
+		gameObject.SetActive(true);
+	}
+
+	public void HideUI ()
+	{
+		gameObject.SetActive(false);
 	}
 
 	public void InitializePurchasing () 

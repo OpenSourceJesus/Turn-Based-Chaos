@@ -51,6 +51,12 @@ namespace GridGame
 					Enemy enemy = spawnEntry.Spawn();
 					if (enemy != null)
 					{
+						SpeederBot speederBot = enemy as SpeederBot;
+						if (speederBot != null)
+						{
+							speederBot.OnEnable ();
+							speederBot.OnDisable ();
+						}
 						enemy.enabled = false;
 						enemies.Add(enemy);
 					}

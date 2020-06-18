@@ -357,10 +357,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   damage: 1
-  maxHp: 5
+  maxHp: 7
   hp: 0
   isDead: 0
-  hpIcon: {fileID: 476123494}
   hpIconParent: {fileID: 526198111}
   whatIsSafeZone:
     serializedVersion: 2

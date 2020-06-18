@@ -19,7 +19,7 @@ public class _Canvas : MonoBehaviour
 			return;
 		}
 #endif
-		if (canvas.worldCamera == null)
+		if (canvas.worldCamera == null && GameManager.GetSingleton<CameraScript>() != null)
 			canvas.worldCamera = GameManager.GetSingleton<CameraScript>().camera;
 	}
 }
