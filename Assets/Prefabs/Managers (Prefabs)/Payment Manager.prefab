@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 889099294428299887}
   - component: {fileID: 6128037846744562936}
   - component: {fileID: 579948115122612392}
+  - component: {fileID: 3229683742568565551}
   m_Layer: 5
   m_Name: Payment Canvas (Camera)
   m_TagString: Untagged
@@ -100,6 +101,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 130871
+--- !u!225 &3229683742568565551
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882663848717816734}
+  m_Enabled: 1
+  m_Alpha: 0.5
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8996942780990816288
 GameObject:
   m_ObjectHideFlags: 0

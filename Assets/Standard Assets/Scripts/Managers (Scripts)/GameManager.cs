@@ -610,7 +610,7 @@ namespace GridGame
 				GetSingleton<GameCamera>().DoUpdate ();
 				acceleration = InputManager.Acceleration;
 				lowPassValue = Vector3.Lerp(lowPassValue, acceleration, lowPassFilterFactor);
-				if ((acceleration - lowPassValue).sqrMagnitude >= shakeDetectionThreshold)
+				if ((acceleration - lowPassValue).sqrMagnitude >= shakeDetectionThreshold || Input.GetKeyDown(KeyCode.Escape))
 					GetSingleton<PauseMenu>().Open ();
 				framesSinceLoadedScene ++;
 				previousMousePosition = InputManager.MousePosition;
@@ -742,7 +742,7 @@ namespace GridGame
 		{
 			paused = pause;
 			Time.timeScale = timeScale * (1 - paused.GetHashCode());
-			AudioListener.pause = paused;
+			// AudioListener.pause = paused;
 		}
 
 		public virtual void Quit ()
@@ -752,6 +752,7 @@ namespace GridGame
 
 		public virtual void OnApplicationQuit ()
 		{
+			StopAllCoroutines();
 			if (AccountManager.lastUsedAccountIndex == -1)
 				return;
 			AccountManager.CurrentlyPlaying.PlayTime += Time.time;

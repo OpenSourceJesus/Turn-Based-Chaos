@@ -16,12 +16,15 @@ namespace GridGame
 		{
 			base.OnEnable ();
 			if (!initialized)
-			{
-				initPosition = trs.position;
-				initRotation = trs.eulerAngles.z;
-				initialized = true;
-			}
+				Init ();
 			activeEnemies.Add(this);
+		}
+
+		public virtual void Init ()
+		{
+			initPosition = trs.position;
+			initRotation = trs.eulerAngles.z;
+			initialized = true;
 		}
 
 		public virtual void Reset ()

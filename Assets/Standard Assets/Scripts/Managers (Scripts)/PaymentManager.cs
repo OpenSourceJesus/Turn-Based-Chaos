@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Purchasing;
+using GridGame;
 
 public class PaymentManager : SingletonMonoBehaviour<PaymentManager>, IStoreListener
 {
@@ -18,6 +19,8 @@ public class PaymentManager : SingletonMonoBehaviour<PaymentManager>, IStoreList
 	public override void Awake ()
 	{
 		base.Awake ();
+		GameManager.singletons.Remove(GetType());
+		GameManager.singletons.Add(GetType(), this);
 		if (storeController == null)
 			InitializePurchasing ();
 		gameObject.SetActive(false);

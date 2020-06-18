@@ -5,27 +5,23 @@ namespace GridGame
 {
 	public class SpeederBot : Enemy
 	{
-		bool isInitialized;
 		[HideInInspector]
 		public float maxTurnAngle;
 
-		public override void OnEnable ()
+		public override void Init ()
 		{
-			base.OnEnable ();
-			if (isInitialized)
-				return;
+			base.Init ();
 			trs.up = GameManager.GetSingleton<GameManager>().possibleMoves[Random.Range(0, GameManager.GetSingleton<GameManager>().possibleMoves.Length)];
 			maxTurnAngle = Vector2.Angle(GameManager.GetSingleton<GameManager>().possibleMoves[0], GameManager.GetSingleton<GameManager>().possibleMoves[1]);
-			isInitialized = true;
 		}
-		
+
 		public override bool Move (Vector2 move)
 		{
 			if (!moveIsReady)
 				return false;
 			move = trs.up.RotateTo(move, maxTurnAngle) * move.magnitude;
 			trs.up = move;
-			if (base.Move(move))
+			if (Physics2D.OverlapPoint((Vector2) trs.position + move, whatICantMoveTo) == null && base.Move(move))
 				return true;
 			else
 				return false;

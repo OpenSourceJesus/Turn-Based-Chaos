@@ -65,7 +65,11 @@ MonoBehaviour:
     realtime: 0
     canBePaused: 1
     finishAction: 0
-  gameScenes: []
+  gameScenes:
+  - name: Survival
+    use: 1
+  - name: Campaign
+    use: 0
   canvases: []
   cursorMoveSpeedPerScreenArea: 0
   emptyGoPrefab: {fileID: 0}
@@ -96,6 +100,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 131072
   makeAreas: 0
+  accelerometerUpdateInterval: 0.016666668
+  lowPassKernelWidthInSeconds: 1
+  shakeDetectionThreshold: 1.75
 --- !u!114 &6085537320792788065
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -27,11 +27,15 @@ namespace GridGame
 		public virtual void Attack ()
 		{
 			foreach (AttackPoint attackPoint in attackPoints)
-			{
 				attackPoint.enabled = true;
-				_event = new EventManager.Event(delegate { if (attackPoint != null) attackPoint.enabled = false; }, Time.time + attackDuration);
-				EventManager.events.Add(_event);
-			}
+			_event = new EventManager.Event(DisableAttackPoints, Time.time + attackDuration);
+			EventManager.events.Add(_event);
+		}
+
+		public virtual void DisableAttackPoints ()
+		{
+			foreach (AttackPoint attackPoint in attackPoints)
+				attackPoint.enabled = false;
 		}
 
 		public override void OnDisable ()

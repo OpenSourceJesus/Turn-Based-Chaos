@@ -50,16 +50,11 @@ namespace GridGame
 		public virtual void OnEnable ()
 		{
 			moveTimer.onFinished += OnMoveReady;
-			Init ();
-			GameManager.updatables = GameManager.updatables.Add(this);
-		}
-
-		public virtual void Init ()
-		{
 			moveTimer.timeRemaining = 0;
 			moveTimer.Start ();
 			isDead = false;
 			hp = maxHp;
+			GameManager.updatables = GameManager.updatables.Add(this);
 		}
 
 		public virtual void OnMoveReady (params object[] args)
@@ -96,7 +91,7 @@ namespace GridGame
 
 		public virtual void OnDisable ()
 		{
-			if (this == null)
+			if (this != null)
 			{
 				moveTimer.onFinished -= OnMoveReady;
 				moveTimer.Stop ();
