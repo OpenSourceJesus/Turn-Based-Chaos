@@ -62,7 +62,7 @@ namespace GridGame
 		public override void Death ()
 		{
 			base.Death ();
-			GameManager.GetSingleton<ObjectPool>().Despawn(prefabIndex, gameObject, trs);
+			GameManager.GetSingleton<ObjectPool>().Despawn (prefabIndex, gameObject, trs);
 		}
 
 		public override void OnDisable ()

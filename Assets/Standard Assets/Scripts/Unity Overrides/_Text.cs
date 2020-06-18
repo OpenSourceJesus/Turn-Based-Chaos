@@ -44,8 +44,8 @@ namespace GridGame
 			if (!Application.isPlaying)
 				return;
 #endif
-			UpdateText ();
-			instances = instances.Add(this);
+			// UpdateText ();
+			// instances = instances.Add(this);
 		}
 		
 		public virtual void UpdateText ()
@@ -69,7 +69,7 @@ namespace GridGame
 			else
 				EditorApplication.update -= DoEditorUpdate;
 #endif
-			instances = instances.Remove(this);
+			// instances = instances.Remove(this);
 		}
 
 #if UNITY_EDITOR

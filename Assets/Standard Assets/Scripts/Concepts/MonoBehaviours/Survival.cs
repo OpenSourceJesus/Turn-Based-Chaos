@@ -76,7 +76,8 @@ namespace GridGame
 					if (InputManager.LeftClickInput || InputManager.RightClickInput)
 					{
 						Vector2 spawnPosition = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(InputManager.MousePosition);
-						if (Physics2D.OverlapPoint(spawnPosition, GameManager.GetSingleton<GameManager>().whatIsEnemy) == null)
+						spawnPosition = GameManager.GetSingleton<GameManager>().grid.GetCellCenterWorld(GameManager.GetSingleton<GameManager>().grid.WorldToCell(spawnPosition));
+						if (Physics2D.OverlapPoint(spawnPosition, GameManager.GetSingleton<GameManager>().whatIsEnemy) == null && Physics2D.OverlapPoint(spawnPosition, GameManager.GetSingleton<Player>().whatIsDangerZone) != null)
 						{
 							SpawnPlayer (spawnPosition);
 							yield break;
@@ -88,7 +89,8 @@ namespace GridGame
 						if (touch.phase == UnityEngine.TouchPhase.Began)
 						{
 							Vector2 spawnPosition = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(touch.position);
-							if (Physics2D.OverlapPoint(spawnPosition, GameManager.GetSingleton<GameManager>().whatIsEnemy) == null)
+							spawnPosition = GameManager.GetSingleton<GameManager>().grid.GetCellCenterWorld(GameManager.GetSingleton<GameManager>().grid.WorldToCell(spawnPosition));
+							if (Physics2D.OverlapPoint(spawnPosition, GameManager.GetSingleton<GameManager>().whatIsEnemy) == null && Physics2D.OverlapPoint(spawnPosition, GameManager.GetSingleton<Player>().whatIsDangerZone) != null)
 							{
 								SpawnPlayer (spawnPosition);
 								yield break;
@@ -103,7 +105,6 @@ namespace GridGame
 
 		void SpawnPlayer (Vector2 spawnPosition)
 		{
-			spawnPosition = GameManager.GetSingleton<GameManager>().grid.GetCellCenterWorld(GameManager.GetSingleton<GameManager>().grid.WorldToCell(spawnPosition));
 			GameManager.GetSingleton<Player>().trs.position = spawnPosition;
 			GameManager.GetSingleton<Player>().gameObject.SetActive(true);
 			foreach (Enemy enemy in enemies)
@@ -119,10 +120,10 @@ namespace GridGame
 				{
 					enemies.RemoveAt(i);
 					i --;
-					if (enemies.Count == 0)
-						NextWave ();
 				}
 			}
+			if (enemies.Count == 0 && Bullet.activeBullets.Count == 0)
+				NextWave ();
 		}
 
 		void NextWave ()
@@ -132,10 +133,24 @@ namespace GridGame
 				HighestWave = wave;
 			infoText.text.text = "Wave: " + wave + "\nHighest Wave: " + HighestWave;
 			difficulty += addToDifficulty;
+			RemoveBullets ();
 			SpawnEnemies ();
 			GameManager.GetSingleton<Player>().gameObject.SetActive(false);
 			previousMoveInput = InputManager.MoveInput;
 			StartCoroutine(SpawnPlayerRoutine ());
+		}
+
+		void RemoveBullets ()
+		{
+			for (int i = 0; i < Bullet.activeBullets.Count; i ++)
+			{
+				Bullet bullet = Bullet.activeBullets[i];
+				if (bullet != null)
+				{
+					GameManager.GetSingleton<ObjectPool>().Despawn (bullet.prefabIndex, bullet.gameObject, bullet.trs);
+					i --;
+				}
+			}
 		}
 
 		void OnDestroy ()

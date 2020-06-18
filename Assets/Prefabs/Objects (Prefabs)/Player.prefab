@@ -355,7 +355,7 @@ MonoBehaviour:
     m_Bits: 131328
   whatIDamage:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 263168
   damage: 1
   maxHp: 7
   hp: 0
@@ -593,6 +593,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UI Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 2111772114861010523, guid: b672e30a6a71146478d075cb4618a2c1,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 125.3
       objectReference: {fileID: 0}
     - target: {fileID: 2632679096226738073, guid: b672e30a6a71146478d075cb4618a2c1,
         type: 3}

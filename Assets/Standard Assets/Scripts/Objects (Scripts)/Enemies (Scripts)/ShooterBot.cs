@@ -72,10 +72,9 @@ namespace GridGame
 		{
 			if (!moveIsReady)
 				return false;
-			bool output = base.Move(move);
 			Quaternion toPlayer = Quaternion.LookRotation(Vector3.forward, GameManager.GetSingleton<Player>().trs.position - trs.position);
 			GameManager.GetSingleton<ObjectPool>().SpawnComponent<Bullet>(bulletPrefab.prefabIndex, trs.position, toPlayer);
-			return output;
+			return base.Move(move);
 		}
 
 		public override void OnDisable ()

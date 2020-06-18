@@ -129,11 +129,17 @@ namespace GridGame
 		{
 			if (onMoved != null)
 				onMoved ();
-			inSafeZone = CheckForSafeZone ();
-			if (!inSafeZone)
-				CheckForDangerZone ();
 			CheckForScroll ();
-			CheckForSavePoint ();
+			inSafeZone = CheckForSafeZone ();
+			if (inSafeZone)
+			{
+				CheckForSavePoint ();
+			}
+			else
+			{
+				CheckForDangerZone ();
+				CheckForBullet ();
+			}
 		}
 
 		public virtual bool CheckForSafeZone ()
@@ -249,6 +255,8 @@ namespace GridGame
 
 		public override void TakeDamage (float amount)
 		{
+			if (isDead)
+				return;
 			if ((int) (hp - amount) < (int) hp)
 				Destroy(hpIconParent.GetChild(0).gameObject);
 			base.TakeDamage (amount);
@@ -277,7 +285,8 @@ namespace GridGame
 			Enemy.enemiesInArea = new Enemy[0];
 			Trap.trapsInArea = new Trap[0];
 			SaveAndLoadManager.lastUniqueId = SaveAndLoadManager.INIT_LAST_UNIQUE_ID;
-			GameManager.GetSingleton<GameManager>().ReloadActiveScene ();
+			GameManager.GetSingleton<GameOverScreen>().Open ();
+			// GameManager.GetSingleton<GameManager>().ReloadActiveScene ();
 		}
 	}
 }

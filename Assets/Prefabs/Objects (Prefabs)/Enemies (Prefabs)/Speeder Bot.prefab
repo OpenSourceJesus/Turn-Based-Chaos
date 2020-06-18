@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 4338317552424133335}
   moveTimer:
-    duration: 0.5
+    duration: 0.75
     timeRemaining: 0
     loop: 1
     pauseIfCan: 0

@@ -7,6 +7,8 @@ namespace GridGame
 		public override void Awake ()
 		{
 			base.Awake ();
+			GameManager.singletons.Remove(GetType());
+			GameManager.singletons.Add(GetType(), this);
 			gameObject.SetActive(false);
 		}
 
