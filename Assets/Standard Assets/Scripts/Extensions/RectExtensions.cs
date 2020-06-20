@@ -152,12 +152,9 @@ namespace Extensions
 			return Vector2.one.Divide(rect.size.ToVec2()).Multiply(point.ToVec2() - rect.min.ToVec2());
 		}
 
-		public static Rect SetToPositiveSize (this Rect rect)
+		public static Rect SetPositiveSize (this Rect rect)
 		{
-			Rect output = rect;
-			output.size = new Vector2(Mathf.Abs(output.size.x), Mathf.Abs(output.size.y));
-			output.center = rect.center;
-			return output;
+			return rect.SetSize(new Vector2(Mathf.Abs(rect.size.x),  Mathf.Abs(rect.size.y)));
 		}
 
 		public static Circle2D GetSmallestCircleAround (this Rect rect)
@@ -201,6 +198,30 @@ namespace Extensions
 			rect.min = rect.min.SetToMinComponents(point);
 			rect.max = rect.max.SetToMaxComponents(point);
 			return rect;
+		}
+
+		public static Rect SetSize (this Rect rect, Vector2 size)
+		{
+			Rect output = rect;
+			output.size = new Vector2(size.x, size.y);
+			output.center = rect.center;
+			return output;
+		}
+
+		public static Rect MultiplySize (this Rect rect, Vector2 multiplySize)
+		{
+			Rect output = rect;
+			output.size = output.size.Multiply(multiplySize);
+			output.center = rect.center;
+			return output;
+		}
+
+		public static Rect MultiplySize (this Rect rect, float edgeLength)
+		{
+			Rect output = rect;
+			output.size *= edgeLength;
+			output.center = rect.center;
+			return output;
 		}
 	}
 }

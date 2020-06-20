@@ -45,3 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handleMultipleInstances: 1
   persistant: 1
+  timeWithoutAds: Infinity

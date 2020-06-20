@@ -66,9 +66,9 @@ MonoBehaviour:
     canBePaused: 1
     finishAction: 0
   gameScenes:
-  - name: Survival
-    use: 1
   - name: Campaign
+    use: 1
+  - name: Survival
     use: 0
   canvases: []
   cursorMoveSpeedPerScreenArea: 0

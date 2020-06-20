@@ -7,5 +7,6 @@ namespace GridGame
 	{
 		public Rect cameraRect;
 		public List<SafeArea> surroundingSafeAreas = new List<SafeArea>();
+		public Vector2Int[] unexploredCellPositions = new Vector2Int[0];
 	}
 }

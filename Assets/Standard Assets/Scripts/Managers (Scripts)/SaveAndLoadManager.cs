@@ -31,10 +31,7 @@ namespace GridGame
 		public virtual void OnEnable ()
 		{
 			if (Application.isPlaying)
-			{
-				// displayOnSave.obj.SetActive(false);
 				return;
-			}
 			saveAndLoadObjects.Clear();
 			saveAndLoadObjects.AddRange(FindObjectsOfType<SaveAndLoadObject>());
 			foreach (SaveAndLoadObject saveAndLoadObject in saveAndLoadObjects)
@@ -123,7 +120,7 @@ namespace GridGame
 			}
 			if (!usePlayerPrefs)
 				File.WriteAllText(Application.persistentDataPath + Path.DirectorySeparatorChar + "Saved Data.txt", savedData);
-			if (displayOnSave.obj != null)
+			if (displayOnSave.go != null)
 				displayOnSave.Do ();
 		}
 		
