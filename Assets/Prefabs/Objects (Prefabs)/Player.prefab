@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rawImage: {fileID: 3403535039375204970}
-  textureSize: {x: 100, y: 100}
+  textureSize: {x: 20, y: 20}
   pixelChangeRate:
     min: -1
     max: 1
@@ -381,7 +381,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   blurRange: 1
-  scale: 0.1
+  scale: 1
 --- !u!222 &1281912265109953216
 CanvasRenderer:
   m_ObjectHideFlags: 0
