@@ -58,6 +58,16 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 10579961421132484, guid: 89b37f7eeaf768845a374f442a37271a,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10579961421132484, guid: 89b37f7eeaf768845a374f442a37271a,
+        type: 3}
+      propertyPath: m_FlipY
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 10579961421132506, guid: 89b37f7eeaf768845a374f442a37271a,
         type: 3}
       propertyPath: m_LocalPosition.x

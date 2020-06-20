@@ -38,11 +38,20 @@ namespace GridGame
 			bool removePieces = EditorGUILayout.DropdownButton(guiContent, FocusType.Passive);
 			if (removePieces)
 				RemovePieces ();
+			guiContent.text = "Activate World";
+			bool activateWorld = GameManager.GetSingleton<World>().gameObject.activeSelf;
+			if (EditorGUILayout.Toggle(guiContent.text, activateWorld))
+				GameManager.GetSingleton<World>().gameObject.SetActive(activateWorld);
+			guiContent.text = "Activate World";
+			bool activatePieces = GameManager.GetSingleton<World>().piecesParent.gameObject.activeSelf;
+			if (EditorGUILayout.Toggle(guiContent.text, activatePieces))
+				GameManager.GetSingleton<World>().piecesParent.gameObject.SetActive(activateWorld);
 		}
 
 		[MenuItem("World/Rebuild %&r")]
 		public static void Rebuild ()
 		{
+			SetWorldActive (true);
 			RemovePieces ();
 			MakePieces ();
 			SetWorldActive (false);

@@ -40,7 +40,7 @@ namespace Extensions
 				else
 					output = collider.bounds.ToRect();
 			}
-			return output.SetToPositiveSize();
+			return output.SetPositiveSize();
 		}
 
 		public static Vector2 GetCenter (this Collider2D collider)

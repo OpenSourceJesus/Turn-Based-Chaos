@@ -121,7 +121,7 @@ MonoBehaviour:
     canBePaused: 1
     finishAction: 0
   attackPoint: {fileID: 353456947608959653}
-  attackDuration: 0.2
+  attackDuration: 0.25
 --- !u!58 &7079344225287112407
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -6,12 +6,12 @@ using Extensions;
 namespace GridGame
 {
 	[Serializable]
-	public class TemporaryActiveObject
+	public class TemporaryActiveGameObject
 	{
-		public GameObject obj;
+		public GameObject go;
 		public float duration;
 		public bool realtime;
-		public static TemporaryActiveObject[] activeInstances = new TemporaryActiveObject[0];
+		public static TemporaryActiveGameObject[] activeInstances = new TemporaryActiveGameObject[0];
 
 		public virtual void Do ()
 		{
@@ -37,15 +37,15 @@ namespace GridGame
 		{
 			if (activeInstances.Contains(this))
 				return;
-			if (obj != null)
-				obj.SetActive(true);
+			if (go != null)
+				go.SetActive(true);
 			activeInstances = activeInstances.Add(this);
 		}
 
 		public virtual void Deactivate ()
 		{
-			if (obj != null)
-				obj.SetActive(false);
+			if (go != null)
+				go.SetActive(false);
 			activeInstances = activeInstances.Remove(this);
 		}
 	}

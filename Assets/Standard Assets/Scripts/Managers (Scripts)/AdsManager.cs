@@ -5,6 +5,18 @@ using GridGame;
 
 public class AdsManager : SingletonMonoBehaviour<AdsManager>
 {
+	public static bool UseAds
+	{
+		get
+		{
+			return PlayerPrefs.GetInt("Use ads", 0) == 1;
+		}
+		set
+		{
+			PlayerPrefs.SetInt("Use ads", value.GetHashCode());
+		}
+	}
+	public float timeWithoutAds;
 	string gameId = "XXXXXXX";
 	string placementId = "video";
 	Coroutine showAddRoutine;
@@ -24,18 +36,26 @@ public class AdsManager : SingletonMonoBehaviour<AdsManager>
 		Monetization.Initialize(gameId, testMode);
 	}
 
-	public void ShowAdd ()
+	public void ShowAd ()
 	{
+		if (!UseAds)
+		{
+			if (AccountManager.CurrentlyPlaying.PlayTime > timeWithoutAds)
+				UseAds = true;
+			GameManager.GetSingleton<GameManager>().PauseGame (false);
+			GameManager.initialized = true;
+			return;
+		}
 		if (GameManager.GetSingleton<AdsManager>() != this)
 		{
-			GameManager.GetSingleton<AdsManager>().ShowAdd ();
+			GameManager.GetSingleton<AdsManager>().ShowAd ();
 			return;
 		}
 		if (showAddRoutine == null)
-			showAddRoutine = StartCoroutine(ShowAddRoutine ());
+			showAddRoutine = StartCoroutine(ShowAdRoutine ());
 	}
 
-	public IEnumerator ShowAddRoutine ()
+	public IEnumerator ShowAdRoutine ()
 	{
 		GameManager.GetSingleton<GameManager>().PauseGame (true);
 		yield return new WaitUntil(() => (Monetization.IsReady(placementId)));

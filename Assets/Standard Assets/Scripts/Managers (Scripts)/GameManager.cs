@@ -114,17 +114,30 @@ namespace GridGame
 		{
 			get
 			{
-				return PlayerPrefs.GetInt("Has played before", 0) == 1;
+				return PlayerPrefs.GetInt("Has played before ", 0) == 1;
 			}
 			set
 			{
-				PlayerPrefs.SetInt("Has played before", value.GetHashCode());
+				PlayerPrefs.SetInt("Has played before ", value.GetHashCode());
 			}
 		}
+		// public static int GameplaySession
+		// {
+		// 	get
+		// 	{
+		// 		return PlayerPrefs.GetInt("Gameplay session", 0);
+		// 	}
+		// 	set
+		// 	{
+		// 		PlayerPrefs.SetInt("Gameplay session", value);
+		// 	}
+		// }
 		public static bool isFocused;
 		public Vector2[] possibleMoves = new Vector2[0];
 		public Grid grid;
 		public Tilemap[] tilemaps = new Tilemap[0];
+		public Tilemap zonesTilemap;
+		public Tilemap unexploredTilemap;
 		public const float WORLD_SCALE = .866f;
 		public const float WORLD_SCALE_SQR = WORLD_SCALE * WORLD_SCALE;
 		public LayerMask whatIsEnemy;
@@ -188,7 +201,7 @@ namespace GridGame
 		void Init ()
 		{
 			GetSingleton<Player>().OnMove ();
-			// initialized = true;
+			initialized = true;
 		}
 
 #if UNITY_EDITOR
@@ -201,10 +214,9 @@ namespace GridGame
 			}
 			List<Vector2> allPositions = new List<Vector2>();
 			List<Vector2> dangerZonePositions = new List<Vector2>();
-			Tilemap tilemap = tilemaps[0];
-			foreach (Vector3Int cellPosition in tilemap.cellBounds.allPositionsWithin)
+			foreach (Vector3Int cellPosition in zonesTilemap.cellBounds.allPositionsWithin)
 			{
-				Vector2 position = tilemap.GetCellCenterWorld(cellPosition);
+				Vector2 position = zonesTilemap.GetCellCenterWorld(cellPosition);
 				if (!ContainsPoint(dangerZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
 				{
 					allPositions.Add(position);
@@ -217,6 +229,8 @@ namespace GridGame
 						dangerArea.correspondingSafeArea.GetComponent<Transform>().SetParent(GetSingleton<World>().piecesParent);
 						List<DangerZone> dangerZones = new List<DangerZone>();
 						DangerZone dangerZone = hitCollider.GetComponent<DangerZone>();
+						dangerZone.correspondingSafeZone.spriteRenderer = dangerZone.correspondingSafeZone.GetComponent<SpriteRenderer>();
+						dangerZone.correspondingSafeZone.spriteRenderer.color = dangerZone.correspondingSafeZone.spriteRenderer.color.DivideAlpha(2);
 						dangerZone.correspondingSafeZone.safeArea = dangerArea.correspondingSafeArea;
 						dangerZone.dangerArea = dangerArea;
 						dangerZones.Add(dangerZone);
@@ -246,6 +260,8 @@ namespace GridGame
 							if (hitCollider != null)
 							{
 								dangerZone = hitCollider.GetComponent<DangerZone>();
+								dangerZone.correspondingSafeZone.spriteRenderer = dangerZone.correspondingSafeZone.GetComponent<SpriteRenderer>();
+								dangerZone.correspondingSafeZone.spriteRenderer.color = dangerZone.correspondingSafeZone.spriteRenderer.color.DivideAlpha(2);
 								dangerZone.correspondingSafeZone.safeArea = dangerArea.correspondingSafeArea;
 								dangerZone.dangerArea = dangerArea;
 								dangerZones.Add(dangerZone);
@@ -294,10 +310,9 @@ namespace GridGame
 			}
 			List<Vector2> allPositions = new List<Vector2>();
 			List<Vector2> safeZonePositions = new List<Vector2>();
-			Tilemap tilemap = tilemaps[0];
-			foreach (Vector3Int cellPosition in tilemap.cellBounds.allPositionsWithin)
+			foreach (Vector3Int cellPosition in zonesTilemap.cellBounds.allPositionsWithin)
 			{
-				Vector2 position = tilemap.GetCellCenterWorld(cellPosition);
+				Vector2 position = zonesTilemap.GetCellCenterWorld(cellPosition);
 				if (!ContainsPoint(safeZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
 				{
 					allPositions.Add(position);
@@ -373,10 +388,9 @@ namespace GridGame
 			GameObject[] gos = FindObjectsOfType<GameObject>();
 			List<Vector2> allPositions = new List<Vector2>();
 			List<Vector2> dangerZonePositions = new List<Vector2>();
-			Tilemap tilemap = tilemaps[0];
-			foreach (Vector3Int cellPosition in tilemap.cellBounds.allPositionsWithin)
+			foreach (Vector3Int cellPosition in zonesTilemap.cellBounds.allPositionsWithin)
 			{
-				Vector2 position = tilemap.GetCellCenterWorld(cellPosition);
+				Vector2 position = zonesTilemap.GetCellCenterWorld(cellPosition);
 				if (!ContainsPoint(dangerZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
 				{
 					allPositions.Add(position);
@@ -388,6 +402,8 @@ namespace GridGame
 						dangerArea.correspondingSafeArea = new GameObject().AddComponent<SafeArea>();
 						dangerArea.correspondingSafeArea.GetComponent<Transform>().SetParent(GetSingleton<World>().piecesParent);
 						List<DangerZone> dangerZones = new List<DangerZone>();
+						dangerZone.correspondingSafeZone.spriteRenderer = dangerZone.correspondingSafeZone.GetComponent<SpriteRenderer>();
+						dangerZone.correspondingSafeZone.spriteRenderer.color = dangerZone.correspondingSafeZone.spriteRenderer.color.DivideAlpha(2);
 						dangerZone.correspondingSafeZone.safeArea = dangerArea.correspondingSafeArea;
 						dangerZone.dangerArea = dangerArea;
 						dangerZones.Add(dangerZone);
@@ -416,6 +432,8 @@ namespace GridGame
 							if (GetComponent<DangerZone>(gos, position, out dangerZone, .7f))
 							{
 								dangerZone.correspondingSafeZone.safeArea = dangerArea.correspondingSafeArea;
+								dangerZone.correspondingSafeZone.spriteRenderer = dangerZone.correspondingSafeZone.GetComponent<SpriteRenderer>();
+								dangerZone.correspondingSafeZone.spriteRenderer.color = dangerZone.correspondingSafeZone.spriteRenderer.color.DivideAlpha(2);
 								dangerZone.dangerArea = dangerArea;
 								dangerZones.Add(dangerZone);
 								foreach (Vector2 possibleMove in possibleMoves)
@@ -456,10 +474,9 @@ namespace GridGame
 			GameObject[] gos = FindObjectsOfType<GameObject>();
 			List<Vector2> allPositions = new List<Vector2>();
 			List<Vector2> safeZonePositions = new List<Vector2>();
-			Tilemap tilemap = tilemaps[0];
-			foreach (Vector3Int cellPosition in tilemap.cellBounds.allPositionsWithin)
+			foreach (Vector3Int cellPosition in zonesTilemap.cellBounds.allPositionsWithin)
 			{
-				Vector2 position = tilemap.GetCellCenterWorld(cellPosition);
+				Vector2 position = zonesTilemap.GetCellCenterWorld(cellPosition);
 				if (!ContainsPoint(safeZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
 				{
 					allPositions.Add(position);
@@ -660,8 +677,7 @@ namespace GridGame
 			}
 			else
 				GetSingleton<SaveAndLoadManager>().LoadMostRecent ();
-			// yield return GetSingleton<AdsManager>().StartCoroutine(GetSingleton<AdsManager>().ShowAddRoutine ());
-			GetSingleton<AdsManager>().ShowAdd ();
+			// GetSingleton<AdsManager>().ShowAd ();
 			Init ();
 			yield break;
 		}
@@ -752,7 +768,6 @@ namespace GridGame
 
 		public virtual void OnApplicationQuit ()
 		{
-			StopAllCoroutines();
 			if (AccountManager.lastUsedAccountIndex == -1)
 				return;
 			AccountManager.CurrentlyPlaying.PlayTime += Time.time;
@@ -769,8 +784,8 @@ namespace GridGame
 				pausedUpdatables = new IUpdatable[0];
 				foreach (Timer runningTimer in Timer.runningInstances)
 					runningTimer.pauseIfCan = false;
-				foreach (TemporaryActiveObject tempActiveObject in TemporaryActiveObject.activeInstances)
-					tempActiveObject.Do ();
+				foreach (TemporaryActiveGameObject tempActiveGo in TemporaryActiveGameObject.activeInstances)
+					tempActiveGo.Do ();
 			}
 			else
 			{
@@ -787,8 +802,8 @@ namespace GridGame
 				}
 				foreach (Timer runningTimer in Timer.runningInstances)
 					runningTimer.pauseIfCan = true;
-				foreach (TemporaryActiveObject tempActiveObject in TemporaryActiveObject.activeInstances)
-					tempActiveObject.Do ();
+				foreach (TemporaryActiveGameObject tempActiveGo in TemporaryActiveGameObject.activeInstances)
+					tempActiveGo.Do ();
 			}
 		}
 
@@ -870,7 +885,12 @@ namespace GridGame
 			if (GetSingleton<GameManager>() != this)
 				return;
 			StopAllCoroutines();
-			OnApplicationQuit ();
+			for (int i = 0; i < Timer.runningInstances.Length; i ++)
+			{
+				Timer timer = Timer.runningInstances[i];
+				timer.Stop ();
+				i --;
+			}
 			hideCursorTimer.onFinished -= HideCursor;
 			// SceneManager.sceneLoaded -= OnSceneLoaded;
 		}

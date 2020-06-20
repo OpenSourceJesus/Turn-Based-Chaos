@@ -7,7 +7,7 @@ using TMPro;
 namespace GridGame
 {
 	[Serializable]
-	public class TemporaryActiveText : TemporaryActiveObject
+	public class TemporaryActiveText : TemporaryActiveGameObject
 	{
 		public TMP_Text text;
 		public float durationPerCharacter;
@@ -15,7 +15,7 @@ namespace GridGame
 		public override IEnumerator DoRoutine ()
 		{
 			duration = text.text.Length * durationPerCharacter;
-			yield return base.DoRoutine ();
+			yield return GameManager.GetSingleton<GameManager>().StartCoroutine(base.DoRoutine ());
 		}
 	}
 }

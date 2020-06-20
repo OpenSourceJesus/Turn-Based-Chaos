@@ -168,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 112505}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &112507
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -626,6 +627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 14500658}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &14500660
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -969,6 +971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 20402627}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &20402629
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1416,6 +1419,7 @@ MonoBehaviour:
     width: 12.99
     height: 11.597736
   surroundingSafeAreas: []
+  unexploredCellPositions: []
 --- !u!4 &49916799
 Transform:
   m_ObjectHideFlags: 0
@@ -1477,6 +1481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 65049329}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &65049331
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1688,6 +1693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 70916240}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &70916242
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1801,6 +1807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 74871423}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &74871425
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2489,6 +2496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 122258612}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &122258614
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2602,6 +2610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 127325340}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &127325342
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3158,6 +3167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 156704623}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &156704625
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3582,6 +3592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 179460534}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &179460536
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4023,6 +4034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 235795984}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &235795986
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4366,6 +4378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 249199966}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &249199968
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4479,6 +4492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 270642170}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &270642172
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4592,6 +4606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 287200381}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &287200383
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4705,6 +4720,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 290417359}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &290417361
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4818,6 +4834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 302987805}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &302987807
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5029,6 +5046,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 314957887}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &314957889
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5372,6 +5390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 357439440}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &357439442
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -6185,6 +6204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 362832710}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &362832712
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -6856,6 +6876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 414713563}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &414713565
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -7297,6 +7318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 425990181}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &425990183
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -7410,6 +7432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 427701838}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &427701840
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -7523,6 +7546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 447514669}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &447514671
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -8062,6 +8086,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 459147659}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &459147661
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -8175,6 +8200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 459686861}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &459686863
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -8288,6 +8314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 460949734}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &460949736
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -8401,6 +8428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 465085335}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &465085337
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -8629,6 +8657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 493707469}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &493707471
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -9242,6 +9271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 558947760}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &558947762
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -9941,6 +9971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 627621395}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &627621397
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -10284,6 +10315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 650027295}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &650027297
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -10397,6 +10429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 661742910}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &661742912
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -10510,6 +10543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 667676926}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &667676928
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -10968,6 +11002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 683110927}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &683110929
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -11524,6 +11559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 730418183}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &730418185
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -11637,6 +11673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 760906599}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &760906601
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -11750,6 +11787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 769162241}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &769162243
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -12076,6 +12114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 796169102}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &796169104
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -12378,6 +12417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 814587503}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &814587505
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -12491,6 +12531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 818880577}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &818880579
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -12604,6 +12645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 819304472}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &819304474
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -12832,6 +12874,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 835995751}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &835995753
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -13435,6 +13478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 899597017}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &899597019
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -13991,6 +14035,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 912652662}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &912652664
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -14219,6 +14264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 913452870}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &913452872
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -14332,6 +14378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 921147452}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &921147454
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -14445,6 +14492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 925696644}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &925696646
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -14558,6 +14606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 938771417}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &938771419
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -14671,6 +14720,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 943133610}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &943133612
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -14784,6 +14834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 948033056}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &948033058
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -15225,6 +15276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 972241429}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &972241431
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -15436,6 +15488,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 988872212}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &988872214
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -16010,6 +16063,7 @@ MonoBehaviour:
   - {fileID: 535649950}
   - {fileID: 149457162}
   - {fileID: 1060901420}
+  unexploredCellPositions: []
   isDefeated: 0
   correspondingSafeArea: {fileID: 49916798}
   uniqueId: 0
@@ -16172,6 +16226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1026104403}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1026104405
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -16285,6 +16340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1035858843}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1035858845
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -16613,6 +16669,11 @@ PrefabInstance:
       propertyPath: doEditorUpdates
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 802374148555066039, guid: c244991c409c74e4e80db0054f13a803,
+        type: 3}
+      propertyPath: zonesTilemap
+      value: 
+      objectReference: {fileID: 1999517366}
     - target: {fileID: 802374148555066040, guid: c244991c409c74e4e80db0054f13a803,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -17177,6 +17238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1097530431}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1097530433
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -17405,6 +17467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1115821037}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1115821039
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -17518,6 +17581,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1128263630}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1128263632
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -18057,6 +18121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1160268043}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1160268045
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -18743,6 +18808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1172448692}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1172448694
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -18856,6 +18922,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1184721803}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1184721805
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -19199,6 +19266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1195961658}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1195961660
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -19427,6 +19495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1203870503}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1203870505
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -19655,6 +19724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1217579832}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1217579834
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -19768,6 +19838,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1225849869}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1225849871
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -20669,6 +20740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1279897511}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1279897513
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -20782,6 +20854,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1283300251}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1283300253
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -20895,6 +20968,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1288497225}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1288497227
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -21008,6 +21082,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1291568383}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1291568385
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -21351,6 +21426,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1308130259}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1308130261
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -21890,6 +21966,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1358290175}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1358290177
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -22446,6 +22523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1395279985}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1395279987
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -22674,6 +22752,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1399087375}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1399087377
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -22885,6 +22964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1411689683}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1411689685
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -22998,6 +23078,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1418620038}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1418620040
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -23111,6 +23192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1419462897}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1419462899
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -23224,6 +23306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1419750511}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1419750513
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -23452,6 +23535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1420897296}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1420897298
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -23910,6 +23994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1446999237}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1446999239
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -24351,6 +24436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1472681954}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1472681956
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -24579,6 +24665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1485046330}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1485046332
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -24692,6 +24779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1490639103}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1490639105
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -25018,6 +25106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1526224025}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1526224027
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -25246,6 +25335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1538657040}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1538657042
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -25917,6 +26007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1615160420}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1615160422
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -26145,6 +26236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1637476472}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1637476474
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -26471,6 +26563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1659055102}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1659055104
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -26584,6 +26677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1668417164}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1668417166
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -26795,6 +26889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1671804641}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1671804643
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -26908,6 +27003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1674674964}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1674674966
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -27119,6 +27215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1677137249}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1677137251
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -27519,6 +27616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1688179267}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1688179269
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -27632,6 +27730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1696156037}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1696156039
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -27745,6 +27844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1697194361}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1697194363
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -28416,6 +28516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1753367850}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1753367852
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -28529,6 +28630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1771861668}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1771861670
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -28855,6 +28957,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1799448717}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1799448719
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -29083,6 +29186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1823705618}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1823705620
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -29196,6 +29300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1824564906}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1824564908
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -29309,6 +29414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1832928467}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1832928469
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -29652,6 +29758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1864808203}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1864808205
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -29880,6 +29987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1870370362}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1870370364
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -30206,6 +30314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1900414059}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1900414061
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -30434,6 +30543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1911044648}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1911044650
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -30547,6 +30657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1911197793}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1911197795
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -30775,6 +30886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1913506599}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1913506601
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -30888,6 +31000,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1918335842}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1918335844
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -30987,6 +31100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1921612398}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!4 &1921612398
 Transform:
   m_ObjectHideFlags: 0
@@ -31224,6 +31338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1939729907}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1939729909
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -31337,6 +31452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1941450519}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1941450521
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -31680,6 +31796,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1963796580}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1963796582
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -31793,6 +31910,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1971833383}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1971833385
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -32102,6 +32220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1986049097}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1986049099
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -32215,6 +32334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1986529480}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1986529482
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -32328,6 +32448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 1989877698}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &1989877700
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -33860,6 +33981,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 2001787934}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &2001787936
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -34318,6 +34440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 2019976734}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &2019976736
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -34431,6 +34554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 2021646634}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &2021646636
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -34659,6 +34783,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 2024668902}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &2024668904
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -34772,6 +34897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 2034764933}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &2034764935
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -34885,6 +35011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 2036639865}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &2036639867
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -35228,6 +35355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 2059940749}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &2059940751
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -35456,6 +35584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 2062457274}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &2062457276
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -35569,6 +35698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 2067778105}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &2067778107
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -35767,6 +35897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 2081673722}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &2081673724
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -35995,6 +36126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 2107949819}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &2107949821
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -36338,6 +36470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 2116197904}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &2116197906
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -36451,6 +36584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trs: {fileID: 2124076527}
   safeArea: {fileID: 49916798}
+  spriteRenderer: {fileID: 0}
 --- !u!58 &2124076529
 CircleCollider2D:
   m_ObjectHideFlags: 0

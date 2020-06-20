@@ -23,11 +23,16 @@ namespace GridGame
 
 		public override void OnEnable ()
 		{
-			base.OnEnable ();
+			moveTimer.onFinished += OnMoveReady;
+			moveTimer.Reset ();
+			moveTimer.Start ();
+			isDead = false;
+			hp = maxHp;
 			moveDirection = ((Vector2) trs.up).GetClosestPoint(GameManager.GetSingleton<GameManager>().possibleMoves);
 			trs.up = moveDirection;
 			rangeRemaining = range;
 			activeBullets.Add(this);
+			GameManager.updatables = GameManager.updatables.Add(this);
 		}
 
 		public override void HandleMoving ()
@@ -37,6 +42,8 @@ namespace GridGame
 
 		public override bool Move (Vector2 move)
 		{
+			if (!moveIsReady)
+				return false;
 			if (base.Move(move))
 			{
 				if (Physics2D.OverlapPoint(trs.position, whatICantMoveTo) != null)
@@ -54,7 +61,7 @@ namespace GridGame
 			}
 			else
 			{
-				// Death ();
+				Death ();
 				return false;
 			}
 		}

@@ -122,7 +122,7 @@ namespace GridGame
 					i --;
 				}
 			}
-			if (enemies.Count == 0 && Bullet.activeBullets.Count == 0)
+			if (enemies.Count == 0)// && Bullet.activeBullets.Count == 0)
 				NextWave ();
 		}
 

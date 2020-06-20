@@ -3,6 +3,7 @@ using Extensions;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using TouchPhase = UnityEngine.InputSystem.TouchPhase;
+using UnityEngine.UI;
 
 namespace GridGame
 {
@@ -48,6 +49,7 @@ namespace GridGame
 			}
 		}
 		Vector2[] possibleMoves = new Vector2[0];
+		public RectTransform cameraCanvasRectTrs;
 
 		public override void OnEnable ()
 		{
@@ -125,11 +127,10 @@ namespace GridGame
 			return false;
 		}
 
-		public virtual void OnMove ()
+		public void OnMove ()
 		{
 			if (onMoved != null)
 				onMoved ();
-			CheckForScroll ();
 			inSafeZone = CheckForSafeZone ();
 			if (inSafeZone)
 			{
@@ -140,9 +141,24 @@ namespace GridGame
 				CheckForDangerZone ();
 				CheckForBullet ();
 			}
+			GameManager.GetSingleton<GameCamera>().camera.Render();
+			Canvas.ForceUpdateCanvases();
+			CheckForScroll ();
+			HandeSafeZoneIcons ();
 		}
 
-		public virtual bool CheckForSafeZone ()
+		void HandeSafeZoneIcons ()
+		{
+			foreach (IconForSafeZone iconForSafeZone in IconForSafeZone.instances)
+			{
+				if (inSafeZone)
+					iconForSafeZone.rectTrs.localPosition = cameraCanvasRectTrs.sizeDelta.Multiply(GameManager.GetSingleton<GameCamera>().camera.WorldToViewportPoint(iconForSafeZone.trs.position)) - cameraCanvasRectTrs.sizeDelta / 2;
+				iconForSafeZone.image.enabled = inSafeZone;
+			}
+			Canvas.ForceUpdateCanvases();
+		}
+
+		bool CheckForSafeZone ()
 		{
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsSafeZone);
 			if (hitCollider != null)
@@ -178,7 +194,7 @@ namespace GridGame
 			return false;
 		}
 
-		public virtual bool CheckForDangerZone ()
+		bool CheckForDangerZone ()
 		{
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsDangerZone);
 			if (hitCollider != null)
@@ -207,7 +223,7 @@ namespace GridGame
 			return false;
 		}
 
-		public virtual bool CheckForScroll ()
+		bool CheckForScroll ()
 		{
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsScroll);
 			if (hitCollider != null)
@@ -222,7 +238,7 @@ namespace GridGame
 			return false;
 		}
 
-		public virtual bool CheckForSavePoint ()
+		bool CheckForSavePoint ()
 		{
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsSavePoint);
 			if (hitCollider != null)
@@ -240,7 +256,7 @@ namespace GridGame
 			return false;
 		}
 
-		public virtual bool CheckForBullet ()
+		bool CheckForBullet ()
 		{
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsBullet);
 			if (hitCollider != null)
@@ -262,7 +278,7 @@ namespace GridGame
 			base.TakeDamage (amount);
 		}
 
-		public virtual void FullHeal ()
+		public void FullHeal ()
 		{
 			if (hp <= 0)
 			{
@@ -286,7 +302,6 @@ namespace GridGame
 			Trap.trapsInArea = new Trap[0];
 			SaveAndLoadManager.lastUniqueId = SaveAndLoadManager.INIT_LAST_UNIQUE_ID;
 			GameManager.GetSingleton<GameOverScreen>().Open ();
-			// GameManager.GetSingleton<GameManager>().ReloadActiveScene ();
 		}
 	}
 }

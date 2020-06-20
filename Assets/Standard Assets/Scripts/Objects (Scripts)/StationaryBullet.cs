@@ -1,9 +1,11 @@
 using UnityEngine;
+using Extensions;
 
 namespace GridGame
 {
 	public class StationaryBullet : Bullet
 	{
+		public SpriteRenderer spriteRenderer;
 		public AttackPoint[] attackPoints = new AttackPoint[0];
 		public float attackDuration;
 		EventManager.Event _event;
@@ -12,6 +14,7 @@ namespace GridGame
 		{
 			base.OnEnable ();
 			trs.rotation = Quaternion.identity;
+			spriteRenderer.enabled = true;
 		}
 
 		public override bool Move (Vector2 move)
@@ -29,17 +32,18 @@ namespace GridGame
 				attackPoint.enabled = true;
 			_event = new EventManager.Event(DisableAttackPoints, Time.time + attackDuration);
 			EventManager.events.Add(_event);
+			spriteRenderer.enabled = false;
 		}
 
 		public virtual void DisableAttackPoints ()
 		{
 			foreach (AttackPoint attackPoint in attackPoints)
 				attackPoint.enabled = false;
+			GameManager.GetSingleton<ObjectPool>().Despawn (prefabIndex, gameObject, trs);
 		}
 
-		public override void OnDisable ()
+		public virtual void OnDestroy ()
 		{
-			base.OnDisable ();
 			if (_event != null)
 				_event.Remove ();
 		}

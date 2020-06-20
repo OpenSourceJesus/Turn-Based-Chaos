@@ -40,7 +40,7 @@ MonoBehaviour:
     type: 3}
   order: 0
   turnReloadRate: 0.25
-  turnCooldown: -1
+  turnCooldown: -0.75
 --- !u!1001 &5477742925443117263
 PrefabInstance:
   m_ObjectHideFlags: 0
