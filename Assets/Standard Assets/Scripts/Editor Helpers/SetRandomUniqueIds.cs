@@ -13,4 +13,10 @@ public class SetRandomUniqueIds : EditorScript
 		saveAndLoadObjects = new SaveAndLoadObject[0];
 	}
 }
+#else
+using UnityEngine;
+
+public class SetRandomUniqueIds : MonoBehaviour
+{
+}
 #endif

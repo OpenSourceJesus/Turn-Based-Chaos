@@ -101,8 +101,6 @@ namespace GridGame
 		public Timer hideCursorTimer;
 		public GameScene[] gameScenes;
 		public Canvas[] canvases = new Canvas[0];
-		public float cursorMoveSpeedPerScreenArea;
-		public static float cursorMoveSpeed;
 		Vector2 moveInput;
 		public static Vector2 previousMousePosition;
 		public delegate void OnGameScenesLoaded();
@@ -187,7 +185,7 @@ namespace GridGame
 			base.Awake ();
 			singletons.Remove(GetType());
 			singletons.Add(GetType(), this);
-			InitCursor ();
+			// InitCursor ();
 			AccountManager.lastUsedAccountIndex = 0;
 			if (SceneManager.GetActiveScene().name == "Init")
 				LoadGameScenes ();
@@ -589,7 +587,6 @@ namespace GridGame
 			foreach (GameModifier gameModifier in gameModifiers)
 				gameModifierDict.Add(gameModifier.name, gameModifier);
 			hideCursorTimer.onFinished += HideCursor;
-			cursorMoveSpeed = cursorMoveSpeedPerScreenArea * Screen.width * Screen.height;
 			if (screenEffectAnimator != null)
 				screenEffectAnimator.Play("None");
 			// GetSingleton<PauseMenu>().Hide ();
@@ -605,7 +602,7 @@ namespace GridGame
 				onGameScenesLoaded ();
 				onGameScenesLoaded = null;
 			}
-			yield return GetSingleton<GameManager>().StartCoroutine(GetSingleton<GameManager>().LoadRoutine ());
+			yield return StartCoroutine(LoadRoutine ());
 			yield break;
 		}
 
@@ -668,7 +665,7 @@ namespace GridGame
 				MakeSafeAreas ();
 			}
 #endif
-			GameManager.GetSingleton<SaveAndLoadManager>().Setup ();
+			GetSingleton<SaveAndLoadManager>().Setup ();
 			if (!HasPlayedBefore)
 			{
 				GetSingleton<SaveAndLoadManager>().DeleteAll ();
@@ -793,7 +790,7 @@ namespace GridGame
 				for (int i = 0; i < updatables.Length; i ++)
 				{
 					updatable = updatables[i];
-					if (!updatable.PauseWhileUnfocused)
+					if (updatable.PauseWhileUnfocused)
 					{
 						pausedUpdatables = pausedUpdatables.Add(updatable);
 						updatables = updatables.RemoveAt(i);

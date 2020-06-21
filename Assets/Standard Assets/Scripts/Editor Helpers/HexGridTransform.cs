@@ -11,4 +11,10 @@ public class HexGridTransform : EditorScript
 		trs.localPosition = GameManager.GetSingleton<GameManager>().grid.GetCellCenterWorld(GameManager.GetSingleton<GameManager>().grid.WorldToCell(trs.localPosition));
 	}
 }
+#else
+using UnityEngine;
+
+public class HexGridTransform : MonoBehaviour
+{
+}
 #endif
