@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 2031125162235524230}
   m_Layer: 0
   m_Name: Save And Load Manager
-  m_TagString: EditorOnly
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -213,11 +213,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df2e0162c2617340bc725c072aac953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handleMultipleInstances: 2
+  handleMultipleInstances: 1
   persistant: 1
   saveAndLoadObjects: []
   displayOnSave:
-    obj: {fileID: 4616054672422103143}
+    go: {fileID: 4616054672422103143}
     duration: 0
     realtime: 1
     text: {fileID: 2111772114516335771}
