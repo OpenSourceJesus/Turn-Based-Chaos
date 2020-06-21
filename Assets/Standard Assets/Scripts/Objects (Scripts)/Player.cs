@@ -50,6 +50,7 @@ namespace GridGame
 		}
 		Vector2[] possibleMoves = new Vector2[0];
 		public RectTransform cameraCanvasRectTrs;
+		public bool runOnMovedEvent = true;
 
 		public override void OnEnable ()
 		{
@@ -86,6 +87,8 @@ namespace GridGame
 						Vector2 move = possibleMoves[indexOfClosestPossibleMove];
 						if (Physics2D.OverlapPoint((Vector2) trs.position + move, whatICantMoveTo) == null)
 							Move (move);
+						else
+							Move (Vector2.zero);
 					}
 				}
 #endif
@@ -98,6 +101,8 @@ namespace GridGame
 						Vector2 move = possibleMoves[indexOfClosestPossibleMove];
 						if (Physics2D.OverlapPoint((Vector2) trs.position + move, whatICantMoveTo) == null)
 							Move (move);
+						else
+							Move (Vector2.zero);
 					}
 				}
 			}
@@ -129,7 +134,7 @@ namespace GridGame
 
 		public void OnMove ()
 		{
-			if (onMoved != null)
+			if (runOnMovedEvent && onMoved != null)
 				onMoved ();
 			inSafeZone = CheckForSafeZone ();
 			if (inSafeZone)
@@ -141,22 +146,23 @@ namespace GridGame
 				CheckForDangerZone ();
 				CheckForBullet ();
 			}
+			// GameManager.GetSingleton<GameCamera>().camera.Render();
+			// Canvas.ForceUpdateCanvases();
+			CheckForScroll ();
+			// HandeSafeZoneIcons ();
 			GameManager.GetSingleton<GameCamera>().camera.Render();
 			Canvas.ForceUpdateCanvases();
-			CheckForScroll ();
-			HandeSafeZoneIcons ();
 		}
 
-		void HandeSafeZoneIcons ()
-		{
-			foreach (IconForSafeZone iconForSafeZone in IconForSafeZone.instances)
-			{
-				if (inSafeZone)
-					iconForSafeZone.rectTrs.localPosition = cameraCanvasRectTrs.sizeDelta.Multiply(GameManager.GetSingleton<GameCamera>().camera.WorldToViewportPoint(iconForSafeZone.trs.position)) - cameraCanvasRectTrs.sizeDelta / 2;
-				iconForSafeZone.image.enabled = inSafeZone;
-			}
-			Canvas.ForceUpdateCanvases();
-		}
+		// void HandeSafeZoneIcons ()
+		// {
+		// 	foreach (IconForSafeZone iconForSafeZone in IconForSafeZone.instances)
+		// 	{
+		// 		if (inSafeZone)
+		// 			iconForSafeZone.rectTrs.localPosition = cameraCanvasRectTrs.sizeDelta.Multiply(GameManager.GetSingleton<GameCamera>().camera.WorldToViewportPoint(iconForSafeZone.trs.position)) - cameraCanvasRectTrs.sizeDelta / 2;
+		// 		iconForSafeZone.image.enabled = inSafeZone;
+		// 	}
+		// }
 
 		bool CheckForSafeZone ()
 		{
