@@ -157,6 +157,7 @@ namespace GridGame
 		{
 			if (wave > HighestWave)
 				HighestWave = wave;
+			GameManager.GetSingleton<Player>().onMoved -= CheckForWaveEnd;
 		}
 
 		[Serializable]

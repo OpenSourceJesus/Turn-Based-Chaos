@@ -39,13 +39,13 @@ namespace GridGame
 			if (removePieces)
 				RemovePieces ();
 			guiContent.text = "Activate World";
-			bool activateWorld = GameManager.GetSingleton<World>().gameObject.activeSelf;
-			if (EditorGUILayout.Toggle(guiContent.text, activateWorld))
-				GameManager.GetSingleton<World>().gameObject.SetActive(activateWorld);
-			guiContent.text = "Activate World";
+			bool activateWorld = GameManager.GetSingleton<World>().trs.gameObject.activeSelf;
+			activateWorld = EditorGUILayout.Toggle(guiContent.text, activateWorld);
+			GameManager.GetSingleton<World>().trs.gameObject.SetActive(activateWorld);
+			guiContent.text = "Activate Pieces";
 			bool activatePieces = GameManager.GetSingleton<World>().piecesParent.gameObject.activeSelf;
-			if (EditorGUILayout.Toggle(guiContent.text, activatePieces))
-				GameManager.GetSingleton<World>().piecesParent.gameObject.SetActive(activateWorld);
+			activatePieces = EditorGUILayout.Toggle(guiContent.text, activatePieces);
+			GameManager.GetSingleton<World>().piecesParent.gameObject.SetActive(activatePieces);
 		}
 
 		[MenuItem("World/Rebuild %&r")]
