@@ -49,6 +49,10 @@ namespace GridGame
 			gameObject.SetActive(false);
 			if (activeEnemies.Count == 0 && Player.currentDangerArea != null)
 				Player.currentDangerArea.IsDefeated = true;
+			AudioClip deathSound = GameManager.GetSingleton<AudioManager>().deathSounds[Random.Range(0, GameManager.GetSingleton<AudioManager>().deathSounds.Length)];
+			SoundEffect soundEffect = GameManager.GetSingleton<AudioManager>().PlaySoundEffect (GameManager.GetSingleton<AudioManager>().deathSoundEffectPrefab, new SoundEffect.Settings(deathSound));
+			DeathSoundEffect deathSoundEffect = soundEffect as DeathSoundEffect;
+			deathSoundEffect.killer = GameManager.GetSingleton<Player>();
 		}
 
 		public override void OnDisable ()

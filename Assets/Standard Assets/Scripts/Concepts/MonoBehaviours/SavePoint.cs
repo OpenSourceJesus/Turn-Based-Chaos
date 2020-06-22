@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GridGame
 {
-	public class SavePoint : MonoBehaviour, ISaveableAndLoadable
+	public class SavePoint : MonoBehaviour
 	{
 		public int uniqueId;
 		public int UniqueId
@@ -19,7 +19,5 @@ namespace GridGame
 			}
 		}
 		public Transform trs;
-		[SaveAndLoadValue(false)]
-		public bool hasVisited;
 	}
 }

@@ -11,7 +11,7 @@ namespace GridGame
 		public RedDoor[] redDoors = new RedDoor[0];
 		public Rect cameraRect;
 		public DangerZone[] dangerZones = new DangerZone[0];
-		public Vector2Int[] unexploredCellPositions = new Vector2Int[0];
+		public Vector3Int[] unexploredCellPositions = new Vector3Int[0];
 		public bool isDefeated;
 		[SaveAndLoadValue(false)]
 		public bool IsDefeated
@@ -80,6 +80,11 @@ namespace GridGame
 			Trap.trapsInArea = new Trap[0];
 			RedDoor.redDoorsInArea = new RedDoor[0];
 			GameManager.GetSingleton<Player>().OnMove ();
+			foreach (SafeArea surroundingSafeArea in correspondingSafeArea.surroundingSafeAreas)
+			{
+				foreach (Vector3Int cellPosition in surroundingSafeArea.unexploredCellPositions)
+					GameManager.GetSingleton<GameManager>().unexploredTilemap.SetTile(cellPosition, null);
+			}
 			Destroy(gameObject);
 		}
 	}

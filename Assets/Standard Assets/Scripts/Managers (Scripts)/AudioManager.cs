@@ -35,15 +35,18 @@ namespace GridGame
 		[SaveAndLoadValue(false)]
 		public bool mute;
 		public SoundEffect soundEffectPrefab;
-		public static SoundEffect[] soundEffects = new SoundEffect[0];
+		public DeathSoundEffect deathSoundEffectPrefab;
+		public static List<SoundEffect> soundEffects = new List<SoundEffect>();
+		public AudioClip[] deathSounds = new AudioClip[0];
+		public AudioClip[] deathResponses = new AudioClip[0];
 
-		public virtual void Awake ()
+		void Awake ()
 		{
 			UpdateAudioListener ();
-			soundEffects = new SoundEffect[0];
+			soundEffects.Clear();
 		}
 
-		public virtual void UpdateAudioListener ()
+		void UpdateAudioListener ()
 		{
 			if (mute)
 				AudioListener.volume = 0;
@@ -51,26 +54,43 @@ namespace GridGame
 				AudioListener.volume = volume;
 		}
 
-		public virtual void ToggleMute ()
+		public void SetVolume (float volume)
 		{
 			if (GameManager.GetSingleton<AudioManager>() != this)
 			{
-				GameManager.GetSingleton<AudioManager>().ToggleMute ();
+				GameManager.GetSingleton<AudioManager>().SetVolume (volume);
 				return;
 			}
-			mute = !mute;
+			this.volume = volume;
 			UpdateAudioListener ();
 		}
-		
-		public virtual SoundEffect PlaySoundEffect (SoundEffect.Settings settings, Vector2 position = new Vector2())
+
+		public void SetMute (bool mute)
 		{
-			SoundEffect output = GameManager.GetSingleton<ObjectPool>().SpawnComponent<SoundEffect>(soundEffectPrefab.prefabIndex, position);
+			if (GameManager.GetSingleton<AudioManager>() != this)
+			{
+				GameManager.GetSingleton<AudioManager>().SetMute (mute);
+				return;
+			}
+			this.mute = mute;
+			UpdateAudioListener ();
+
+		}
+
+		public void ToggleMute ()
+		{
+			SetMute (!mute);
+		}
+		
+		public SoundEffect PlaySoundEffect (SoundEffect soundEffectPrefab, SoundEffect.Settings settings, Vector2 position = default(Vector2), Quaternion rotation = default(Quaternion), Transform parent = null)
+		{
+			SoundEffect output = GameManager.GetSingleton<ObjectPool>().SpawnComponent<SoundEffect>(soundEffectPrefab.prefabIndex, position, rotation, parent);
 			output.audioSource.clip = settings.clip;
 			output.audioSource.volume = settings.volume;
 			output.audioSource.pitch = settings.pitch;
 			output.audioSource.Play();
 			GameManager.GetSingleton<ObjectPool>().DelayDespawn (output.prefabIndex, output.gameObject, output.trs, settings.clip.length);
-			soundEffects = soundEffects.Add(output);
+			soundEffects.Add(output);
 			return output;
 		}
 	}

@@ -212,8 +212,12 @@ namespace GridGame
 			}
 			List<Vector2> allPositions = new List<Vector2>();
 			List<Vector2> dangerZonePositions = new List<Vector2>();
+			List<Vector3Int> _unexploredPositions = new List<Vector3Int>();
+			Vector3Int[] unexploredPositions = new Vector3Int[0];
+			List<DangerArea> dangerAreas = new List<DangerArea>();
 			foreach (Vector3Int cellPosition in zonesTilemap.cellBounds.allPositionsWithin)
 			{
+				_unexploredPositions.Add(cellPosition);
 				Vector2 position = zonesTilemap.GetCellCenterWorld(cellPosition);
 				if (!ContainsPoint(dangerZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
 				{
@@ -294,9 +298,13 @@ namespace GridGame
 						SaveAndLoadManager.lastUniqueId ++;
 						dangerArea.uniqueId = SaveAndLoadManager.lastUniqueId;
 						dangerArea.gameObject.AddComponent<SaveAndLoadObject>();
+						dangerAreas.Add(dangerArea);
 					}
 				}
 			}
+			unexploredPositions = _unexploredPositions.ToArray();
+			for (int i = 0; i < dangerAreas.Count; i ++)
+				dangerAreas[i].unexploredCellPositions = unexploredPositions;
 		}
 		
 		public virtual void MakeSafeAreas ()
@@ -308,8 +316,12 @@ namespace GridGame
 			}
 			List<Vector2> allPositions = new List<Vector2>();
 			List<Vector2> safeZonePositions = new List<Vector2>();
+			List<Vector3Int> _unexploredPositions = new List<Vector3Int>();
+			Vector3Int[] unexploredPositions = new Vector3Int[0];
+			List<SafeArea> safeAreas = new List<SafeArea>();
 			foreach (Vector3Int cellPosition in zonesTilemap.cellBounds.allPositionsWithin)
 			{
+				_unexploredPositions.Add(cellPosition);
 				Vector2 position = zonesTilemap.GetCellCenterWorld(cellPosition);
 				if (!ContainsPoint(safeZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
 				{
@@ -366,9 +378,13 @@ namespace GridGame
 						for (int i = 0; i < dangerAreas.Count; i ++)
 							dangerAreaCameraRects[i] = dangerAreas[i].cameraRect;
 						safeArea.cameraRect = RectExtensions.Combine(dangerAreaCameraRects.Add(safeArea.cameraRect));
+						safeAreas.Add(safeArea);
 					}
 				}
 			}
+			unexploredPositions = _unexploredPositions.ToArray();
+			for (int i = 0; i < safeAreas.Count; i ++)
+				safeAreas[i].unexploredCellPositions = unexploredPositions;
 		}
 
 		public virtual bool ContainsPoint (List<Vector2> points, Vector2 point, float threshold = 0)
@@ -386,8 +402,12 @@ namespace GridGame
 			GameObject[] gos = FindObjectsOfType<GameObject>();
 			List<Vector2> allPositions = new List<Vector2>();
 			List<Vector2> dangerZonePositions = new List<Vector2>();
+			List<Vector3Int> _unexploredPositions = new List<Vector3Int>();
+			Vector3Int[] unexploredPositions = new Vector3Int[0];
+			List<DangerArea> dangerAreas = new List<DangerArea>();
 			foreach (Vector3Int cellPosition in zonesTilemap.cellBounds.allPositionsWithin)
 			{
+				_unexploredPositions.Add(cellPosition);
 				Vector2 position = zonesTilemap.GetCellCenterWorld(cellPosition);
 				if (!ContainsPoint(dangerZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
 				{
@@ -462,9 +482,13 @@ namespace GridGame
 						SaveAndLoadManager.lastUniqueId ++;
 						dangerArea.uniqueId = SaveAndLoadManager.lastUniqueId;
 						dangerArea.gameObject.AddComponent<SaveAndLoadObject>();
+						dangerAreas.Add(dangerArea);
 					}
 				}
 			}
+			unexploredPositions = _unexploredPositions.ToArray();
+			for (int i = 0; i < dangerAreas.Count; i ++)
+				dangerAreas[i].unexploredCellPositions = unexploredPositions;
 		}
 
 		void MakeSafeAreas_Editor ()
@@ -472,8 +496,12 @@ namespace GridGame
 			GameObject[] gos = FindObjectsOfType<GameObject>();
 			List<Vector2> allPositions = new List<Vector2>();
 			List<Vector2> safeZonePositions = new List<Vector2>();
+			List<Vector3Int> _unexploredPositions = new List<Vector3Int>();
+			Vector3Int[] unexploredPositions = new Vector3Int[0];
+			List<SafeArea> safeAreas = new List<SafeArea>();
 			foreach (Vector3Int cellPosition in zonesTilemap.cellBounds.allPositionsWithin)
 			{
+				_unexploredPositions.Add(cellPosition);
 				Vector2 position = zonesTilemap.GetCellCenterWorld(cellPosition);
 				if (!ContainsPoint(safeZonePositions, position, .7f) && !ContainsPoint(allPositions, position, .7f))
 				{
@@ -529,40 +557,13 @@ namespace GridGame
 						for (int i = 0; i < dangerAreas.Count; i ++)
 							dangerAreaCameraRects[i] = dangerAreas[i].cameraRect;
 						safeArea.cameraRect = RectExtensions.Combine(dangerAreaCameraRects.Add(safeArea.cameraRect));
+						safeAreas.Add(safeArea);
 					}
 				}
 			}
-		}
-
-		Component GetComponent (Type type, Vector2 position, float threshold = 0)
-		{
-			GameObject[] gos = EditorSceneManager.GetActiveScene().GetRootGameObjects();
-			foreach (GameObject go in gos)
-			{
-				if (((Vector2) go.GetComponent<Transform>().position - position).sqrMagnitude <= threshold)
-				{
-					Component output = go.GetComponent(type);
-					if (output != null)
-						return output;
-				}
-			}
-			return null;
-		}
-
-		bool GetComponent<T> (Vector2 position, out T output, float threshold = 0)
-		{
-			output = default(T);
-			GameObject[] gos = EditorSceneManager.GetActiveScene().GetRootGameObjects();
-			foreach (GameObject go in gos)
-			{
-				if (((Vector2) go.GetComponent<Transform>().position - position).sqrMagnitude <= threshold)
-				{
-					output = go.GetComponent<T>();
-					if (output != null)
-						return true;
-				}
-			}
-			return false;
+			unexploredPositions = _unexploredPositions.ToArray();
+			for (int i = 0; i < safeAreas.Count; i ++)
+				safeAreas[i].unexploredCellPositions = unexploredPositions;
 		}
 
 		bool GetComponent<T> (GameObject[] gos, Vector2 position, out T output, float threshold = 0)

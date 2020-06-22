@@ -51,6 +51,7 @@ namespace GridGame
 		Vector2[] possibleMoves = new Vector2[0];
 		public RectTransform cameraCanvasRectTrs;
 		public bool runOnMovedEvent = true;
+		public LayerMask whatIsUnexploredTile;
 
 		public override void OnEnable ()
 		{
@@ -249,14 +250,9 @@ namespace GridGame
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsSavePoint);
 			if (hitCollider != null)
 			{
-				SavePoint savePoint = hitCollider.GetComponent<SavePoint>();
-				if (!savePoint.hasVisited)
-				{
-					savePoint.hasVisited = true;
-					FullHeal ();
-					SpawnPosition = trs.position;
-					GameManager.GetSingleton<SaveAndLoadManager>().Save ();
-				}
+				FullHeal ();
+				SpawnPosition = trs.position;
+				GameManager.GetSingleton<SaveAndLoadManager>().Save ();
 				return true;
 			}
 			return false;

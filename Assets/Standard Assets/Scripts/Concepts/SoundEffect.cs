@@ -13,7 +13,7 @@ namespace GridGame
 
 		public virtual void OnDisable ()
 		{
-			AudioManager.soundEffects = AudioManager.soundEffects.Remove(this);
+			AudioManager.soundEffects.Remove(this);
 		}
 
 		[Serializable]

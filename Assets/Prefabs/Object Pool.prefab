@@ -55,3 +55,13 @@ MonoBehaviour:
     trs: {fileID: 2427630423642324452, guid: e45ebc16b887b45558b22d497f29d67d, type: 3}
     prefabIndex: 0
     preload: 10
+  - prefab: {fileID: 1374300602802551954, guid: d85a0076a929c4545897a16c1f2f0cc5,
+      type: 3}
+    trs: {fileID: 1374300602802551967, guid: d85a0076a929c4545897a16c1f2f0cc5, type: 3}
+    prefabIndex: 0
+    preload: 10
+  - prefab: {fileID: 7730680041025581368, guid: e00601e9aaf30c64992f53715313aeda,
+      type: 3}
+    trs: {fileID: 7730680041025581365, guid: e00601e9aaf30c64992f53715313aeda, type: 3}
+    prefabIndex: 0
+    preload: 10
