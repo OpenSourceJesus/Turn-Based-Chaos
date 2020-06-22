@@ -46,6 +46,7 @@ namespace GridGame
 				hp = value;
 			}
 		}
+		public SoundEffect deathResponse;
 
 		public virtual void OnEnable ()
 		{

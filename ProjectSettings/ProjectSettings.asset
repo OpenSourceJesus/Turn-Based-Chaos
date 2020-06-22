@@ -650,6 +650,7 @@ PlayerSettings:
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}
   managedStrippingLevel:
+    Android: 3
     Standalone: 3
     iPhone: 3
   incrementalIl2cppBuild: {}
