@@ -276,6 +276,7 @@ namespace GridGame
 			if (isDead)
 				return;
 			if ((int) (hp - amount) < (int) hp)
+			// for (int i = (int) (hp - amount); i < (int) hp; i ++)
 				Destroy(hpIconParent.GetChild(0).gameObject);
 			base.TakeDamage (amount);
 		}
@@ -297,8 +298,12 @@ namespace GridGame
 		{
 			GameManager.paused = true;
 			base.Death ();
-			for (int i = 0; i < EventManager.events.Count; i ++)
-				EventManager.events[i].time = Mathf.Infinity;
+			AudioClip deathSound = GameManager.GetSingleton<AudioManager>().deathSounds[Random.Range(0, GameManager.GetSingleton<AudioManager>().deathSounds.Length)];
+			SoundEffect soundEffect = GameManager.GetSingleton<AudioManager>().PlaySoundEffect (GameManager.GetSingleton<AudioManager>().deathSoundEffectPrefab, new SoundEffect.Settings(deathSound));
+			DeathSoundEffect deathSoundEffect = soundEffect as DeathSoundEffect;
+			deathSoundEffect.killer = GameManager.GetSingleton<Enemy>();
+			// for (int i = 0; i < EventManager.events.Count; i ++)
+			// 	EventManager.events[i].time = Mathf.Infinity;
 			EventManager.events.Clear();
 			Enemy.enemiesInArea = new Enemy[0];
 			Trap.trapsInArea = new Trap[0];

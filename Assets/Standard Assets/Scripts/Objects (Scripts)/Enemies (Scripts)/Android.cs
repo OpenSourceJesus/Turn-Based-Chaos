@@ -5,6 +5,7 @@ namespace GridGame
 	public class Android : Enemy
 	{
 		public AttackPoint[] attackPoints = new AttackPoint[0];
+		public AttackPointGroup attackPointGroup;
 		public float attackDuration;
 		EventManager.Event _event;
 
@@ -26,8 +27,12 @@ namespace GridGame
 
 		public virtual void Attack ()
 		{
+			attackPointGroup.enabled = true;
 			foreach (AttackPoint attackPoint in attackPoints)
-				attackPoint.enabled = true;
+			{
+				if (attackPointGroup.enabled)
+					attackPoint.enabled = true;
+			}
 			_event = new EventManager.Event(DisableAttackPoints, Time.time + attackDuration);
 			EventManager.events.Add(_event);
 		}
@@ -36,6 +41,7 @@ namespace GridGame
 		{
 			foreach (AttackPoint attackPoint in attackPoints)
 				attackPoint.enabled = false;
+			attackPointGroup.enabled = false;
 		}
 
 		public override void OnDisable ()

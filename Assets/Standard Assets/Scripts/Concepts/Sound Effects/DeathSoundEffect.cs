@@ -11,6 +11,8 @@ namespace GridGame
 
 		public override void OnDisable ()
 		{
+			if (killer == null)
+				return;
 			base.OnDisable ();
 			AudioClip deathResponse = GameManager.GetSingleton<AudioManager>().deathResponses[Random.Range(0, GameManager.GetSingleton<AudioManager>().deathResponses.Length)];
 			if (killer.deathResponse == null || !killer.deathResponse.gameObject.activeInHierarchy)

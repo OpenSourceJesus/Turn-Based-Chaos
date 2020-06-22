@@ -48,8 +48,11 @@ namespace GridGame
 				if (Time.time >= _event.time)
 				{
 					_event.onEvent ();
-					events.RemoveAt(i);
-					i --;
+					if (events.Count > i)
+					{
+						events.RemoveAt(i);
+						i --;
+					}
 				}
 			}
 		}
