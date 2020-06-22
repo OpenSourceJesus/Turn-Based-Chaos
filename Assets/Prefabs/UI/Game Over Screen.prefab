@@ -1746,7 +1746,7 @@ PrefabInstance:
     - target: {fileID: 7775583008690353525, guid: 0b49e250f4070244c9992eea9cbaa6ac,
         type: 3}
       propertyPath: m_text
-      value: Quit
+      value: Back
       objectReference: {fileID: 0}
     - target: {fileID: 7775583008690353525, guid: 0b49e250f4070244c9992eea9cbaa6ac,
         type: 3}
@@ -3114,8 +3114,8 @@ PrefabInstance:
         "Icon
         made by Freepik from www.flaticon.com"
 
-        "Icon made by Good Ware
-        from www.flaticon.com"'
+        "Icon made by Good Ware from
+        www.flaticon.com"'
       objectReference: {fileID: 0}
     - target: {fileID: 2111772114861010523, guid: b672e30a6a71146478d075cb4618a2c1,
         type: 3}

@@ -505,6 +505,7 @@ MonoBehaviour:
   maxHp: 5
   hp: 0
   isDead: 0
+  deathResponse: {fileID: 0}
   hpIconParent: {fileID: 526198111}
   whatIsSafeZone:
     serializedVersion: 2
@@ -524,6 +525,12 @@ MonoBehaviour:
   uniqueId: 2
   cameraCanvasRectTrs: {fileID: 1187477886}
   runOnMovedEvent: 1
+  whatIsUnexploredTile:
+    serializedVersion: 2
+    m_Bits: 524288
+  whatIsAttackPoint:
+    serializedVersion: 2
+    m_Bits: 1048576
 --- !u!212 &6538567050952870432
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -29,6 +29,7 @@ namespace GridGame
 				{
 					if (attackPointGroup.enabled)
 					{
+						attackPointGroup.enabled = false;
 						foreach (LineRenderer lineRenderer in attackPointGroup.lineRenderers)
 							lineRenderer.enabled = true;
 						foreach (AttackPoint attackPoint in attackPointGroup.attackPoints)
