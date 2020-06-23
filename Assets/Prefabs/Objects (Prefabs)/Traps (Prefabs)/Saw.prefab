@@ -99,23 +99,12 @@ MonoBehaviour:
   objectWithWaypoints: {fileID: 6448375020595690168}
   currentWayPoint: 0
   trs: {fileID: 330419962378619127}
-  attackInterval: 1
   order: 0
   turnReloadRate: 1
   turnCooldown: 0
   isBacktracking: 0
   wrapMode: 0
   damage: 1
-  initTimeRemaining: 0
-  moveTimer:
-    duration: 1
-    timeRemaining: 0
-    loop: 1
-    pauseIfCan: 0
-    realtime: 0
-    canBePaused: 1
-    finishAction: 0
-  useTimer: 0
 --- !u!114 &6448375020595690168
 MonoBehaviour:
   m_ObjectHideFlags: 0

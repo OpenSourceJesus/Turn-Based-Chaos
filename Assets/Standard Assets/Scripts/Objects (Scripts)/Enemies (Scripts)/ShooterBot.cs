@@ -50,8 +50,8 @@ namespace GridGame
 		public override void OnEnable ()
 		{
 			base.OnEnable ();
+			turnCooldown = -1 + turnReloadRate;
 			TakeTurn ();
-			turnCooldown = -1 - turnCooldown;
 			moveTimer.Reset ();
 			GameManager.GetSingleton<Player>().onMoved += TakeTurn;
 		}

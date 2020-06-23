@@ -193,6 +193,11 @@ namespace GridGame
                 }
 				RedDoor.redDoorsInArea = new RedDoor[0];
                 SafeArea safeArea = hitCollider.GetComponent<SafeZone>().safeArea;
+				foreach (ConveyorBelt conveyorBelt in ConveyorBelt.conveyorBeltsInArea)
+					conveyorBelt.enabled = false;
+				foreach (ConveyorBelt conveyorBelt in safeArea.conveyorBelts)
+					conveyorBelt.enabled = true;
+				ConveyorBelt.conveyorBeltsInArea = safeArea.conveyorBelts;
 				GameManager.GetSingleton<GameCamera>().trs.position = safeArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
 				GameManager.GetSingleton<GameCamera>().viewSize = safeArea.cameraRect.size;
 				GameManager.GetSingleton<GameCamera>().HandleViewSize ();
@@ -216,15 +221,18 @@ namespace GridGame
 						enemy.enabled = true;
 					Trap.trapsInArea = currentDangerArea.traps;
 					foreach (Trap trap in Trap.trapsInArea)
-					{
-						if (trap != null)
-							trap.enabled = true;
-					}
+						trap.enabled = true;
+					foreach (ConveyorBelt conveyorBelt in ConveyorBelt.conveyorBeltsInArea)
+						conveyorBelt.enabled = false;
+					foreach (ConveyorBelt conveyorBelt in currentDangerArea.conveyorBelts)
+						conveyorBelt.enabled = true;
+					ConveyorBelt.conveyorBeltsInArea = currentDangerArea.conveyorBelts;
 					RedDoor.redDoorsInArea = currentDangerArea.redDoors;
 					GameManager.GetSingleton<GameCamera>().trs.position = currentDangerArea.cameraRect.center.SetZ(GameManager.GetSingleton<GameCamera>().trs.position.z);
 					GameManager.GetSingleton<GameCamera>().viewSize = currentDangerArea.cameraRect.size;
 					GameManager.GetSingleton<GameCamera>().HandleViewSize ();
 				}
+				
 				return true;
 			}
 			return false;
@@ -296,8 +304,8 @@ namespace GridGame
 
 		public override void Death ()
 		{
-			GameManager.paused = true;
 			base.Death ();
+			GameManager.paused = true;
 			AudioClip deathSound = GameManager.GetSingleton<AudioManager>().deathSounds[Random.Range(0, GameManager.GetSingleton<AudioManager>().deathSounds.Length)];
 			SoundEffect soundEffect = GameManager.GetSingleton<AudioManager>().PlaySoundEffect (GameManager.GetSingleton<AudioManager>().deathSoundEffectPrefab, new SoundEffect.Settings(deathSound));
 			DeathSoundEffect deathSoundEffect = soundEffect as DeathSoundEffect;
