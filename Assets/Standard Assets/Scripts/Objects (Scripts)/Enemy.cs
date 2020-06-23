@@ -7,7 +7,6 @@ namespace GridGame
 	public class Enemy : Entity, IResetable
 	{
 		public Vector2 initPosition;
-		public float initRotation;
 		public static List<Enemy> activeEnemies = new List<Enemy>();
 		public static Enemy[] enemiesInArea = new Enemy[0];
 		bool initialized;
@@ -23,14 +22,12 @@ namespace GridGame
 		public virtual void Init ()
 		{
 			initPosition = trs.position;
-			initRotation = trs.eulerAngles.z;
 			initialized = true;
 		}
 
 		public virtual void Reset ()
 		{
 			trs.position = initPosition;
-			trs.eulerAngles = Vector3.forward * initRotation;
 			gameObject.SetActive(true);
 		}
 

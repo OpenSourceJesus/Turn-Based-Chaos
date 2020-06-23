@@ -58,6 +58,8 @@ namespace GridGame
 		public Color normalWaypointColor;
 		public Color nextWaypointColor;
 		Gradient gradient = new Gradient();
+		public Vector2 initPosition;
+		public int initWayPoint;
 
 		void Awake ()
 		{
@@ -79,12 +81,15 @@ namespace GridGame
 			}
 			gradient.SetKeys(gradientColorKeys, gradientAlphaKeys);
 			objectWithWaypoints.line.colorGradient = gradient;
+			initPosition = trs.position;
+			initWayPoint = currentWayPoint;
 		}
 
 		public virtual void OnEnable ()
 		{
 			isMoving = true;
 			turnCooldown = -1 + turnReloadRate;
+			TakeTurn ();
 			TakeTurn ();
 			GameManager.GetSingleton<Player>().onMoved += TakeTurn;
 		}
@@ -109,8 +114,13 @@ namespace GridGame
 
 		public virtual void HandleMoving ()
 		{
-			int previousWaypoint = currentWayPoint;
 			trs.position = objectWithWaypoints.wayPoints[currentWayPoint].position;
+			SetNextWaypoint ();
+		}
+		
+		void SetNextWaypoint ()
+		{
+			int previousWaypoint = currentWayPoint;
 			if (isBacktracking)
 			{
 				currentWayPoint --;
@@ -169,6 +179,12 @@ namespace GridGame
 		void OnDisable ()
 		{
 			GameManager.GetSingleton<Player>().onMoved -= TakeTurn;
+		}
+
+		public override void Reset ()
+		{
+			trs.position = initPosition;
+			currentWayPoint = initWayPoint;
 		}
 
 		public enum WrapMode

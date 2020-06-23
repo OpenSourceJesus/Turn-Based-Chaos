@@ -57,10 +57,7 @@ namespace GridGame
 					{
 						SpeederBot speederBot = enemy as SpeederBot;
 						if (speederBot != null)
-						{
-							speederBot.OnEnable ();
-							speederBot.OnDisable ();
-						}
+							speederBot.Init ();
 						enemy.enabled = false;
 						enemies.Add(enemy);
 					}
@@ -82,8 +79,8 @@ namespace GridGame
 						break;
 					yield return new WaitForEndOfFrame();
 				} while (true);
+				skipSpawnDelayGo.SetActive(false);
 			}
-			skipSpawnDelayGo.SetActive(false);
 			spawnInstructionsGo.SetActive(true);
 			do
 			{

@@ -32,9 +32,10 @@ MonoBehaviour:
   maxHp: 1
   hp: 0
   isDead: 0
+  deathResponse: {fileID: 0}
   initPosition: {x: 0, y: 0}
+  maxTurnAngle: 60
   initRotation: 0
-  maxTurnAngle: 0
 --- !u!1001 &4328340493821497357
 PrefabInstance:
   m_ObjectHideFlags: 0
