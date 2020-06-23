@@ -48,10 +48,12 @@ namespace GridGame
 			}
 		}
 		public LayerMask whatIMove;
+		public static ConveyorBelt[] conveyorBeltsInArea = new ConveyorBelt[0];
 
 		public virtual void OnEnable ()
 		{
-			turnCooldown = 0;
+			turnCooldown = -1 + turnReloadRate;
+			TakeTurn ();
 			GameManager.GetSingleton<Player>().onMoved += TakeTurn;
 		}
 
@@ -72,7 +74,7 @@ namespace GridGame
 			if (hitCollider != null)
 			{
 				Entity hitEntity = hitCollider.GetComponent<Entity>();
-				Vector2 desiredMove = GameManager.GetSingleton<GameCamera>().camera.ScreenToWorldPoint(InputManager.MousePosition) - trs.position;
+				Vector2 desiredMove = trs.up;
 				int indexOfClosestPossibleMove = desiredMove.GetIndexOfClosestPoint(GameManager.GetSingleton<GameManager>().possibleMoves);
 				Vector2 move = GameManager.GetSingleton<GameManager>().possibleMoves[indexOfClosestPossibleMove];
 				Player player = hitEntity as Player;

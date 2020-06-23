@@ -27,7 +27,8 @@ namespace GridGame
 
 		public virtual void Attack ()
 		{
-			attackPointGroup.enabled = true;
+			if (attackPointGroup != null)
+				attackPointGroup.enabled = true;
 			foreach (AttackPoint attackPoint in attackPoints)
 			{
 				if (attackPointGroup.enabled)
@@ -41,7 +42,8 @@ namespace GridGame
 		{
 			foreach (AttackPoint attackPoint in attackPoints)
 				attackPoint.enabled = false;
-			attackPointGroup.enabled = false;
+			if (attackPointGroup != null)
+				attackPointGroup.enabled = false;
 		}
 
 		public override void OnDisable ()

@@ -32,15 +32,17 @@ MonoBehaviour:
   maxHp: 1
   hp: 0
   isDead: 0
+  deathResponse: {fileID: 0}
   initPosition: {x: 0, y: 0}
   initRotation: 0
   attackPoints: []
+  attackPointGroup: {fileID: 0}
   attackDuration: 0
   bulletPrefab: {fileID: 1741405274686089182, guid: 25a7793d12d446d469241936aa1020bc,
     type: 3}
   order: 0
   turnReloadRate: 0.25
-  turnCooldown: -0.75
+  turnCooldown: 0
 --- !u!1001 &5477742925443117263
 PrefabInstance:
   m_ObjectHideFlags: 0

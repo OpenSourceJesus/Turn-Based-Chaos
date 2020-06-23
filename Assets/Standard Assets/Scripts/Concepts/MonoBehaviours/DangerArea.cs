@@ -9,6 +9,7 @@ namespace GridGame
 		public Enemy[] enemies = new Enemy[0];
 		public Trap[] traps = new Trap[0];
 		public RedDoor[] redDoors = new RedDoor[0];
+		public ConveyorBelt[] conveyorBelts = new ConveyorBelt[0];
 		public Rect cameraRect;
 		public DangerZone[] dangerZones = new DangerZone[0];
 		public Vector3Int[] unexploredCellPositions = new Vector3Int[0];
