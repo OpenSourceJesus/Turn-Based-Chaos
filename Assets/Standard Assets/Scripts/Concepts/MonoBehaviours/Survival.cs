@@ -17,6 +17,7 @@ namespace GridGame
 		List<Enemy> enemies = new List<Enemy>();
 		public _Text infoText;
 		public GameObject skipSpawnDelayGo;
+		public GameObject spawnInstructionsGo;
 		public float spawnDelay;
 		int gameCornersTappedCount;
 		public int HighestWave
@@ -70,15 +71,20 @@ namespace GridGame
 
 		IEnumerator SpawnPlayerRoutine ()
 		{
-			gameCornersTappedCount = 0;
-			skipSpawnDelayGo.SetActive(true);
-			float time = Time.unscaledTime;
-			do
+			if (wave > 1)
 			{
-				if (Time.unscaledTime - time >= spawnDelay || !skipSpawnDelayGo.activeSelf)
-					break;
-				yield return new WaitForEndOfFrame();
-			} while (true);
+				gameCornersTappedCount = 0;
+				skipSpawnDelayGo.SetActive(true);
+				float time = Time.unscaledTime;
+				do
+				{
+					if (Time.unscaledTime - time >= spawnDelay || !skipSpawnDelayGo.activeSelf)
+						break;
+					yield return new WaitForEndOfFrame();
+				} while (true);
+			}
+			skipSpawnDelayGo.SetActive(false);
+			spawnInstructionsGo.SetActive(true);
 			do
 			{
 				moveInput = InputManager.MoveInput;
@@ -128,6 +134,7 @@ namespace GridGame
 			GameManager.GetSingleton<Player>().gameObject.SetActive(true);
 			foreach (Enemy enemy in enemies)
 				enemy.enabled = true;
+			spawnInstructionsGo.SetActive(false);
 		}
 
 		void CheckForWaveEnd ()
