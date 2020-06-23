@@ -142,9 +142,7 @@ namespace GridGame
 						if (GetComponent<Enemy>(gos, position, out enemy, .7f))
 							enemies.Add(enemy);
 						List<Trap> traps = new List<Trap>();
-						Trap trap;
-						if (GetComponent<Trap>(gos, position, out trap, .7f))
-							traps.Add(trap);
+						traps.AddRange(GetComponents<Trap>(gos, position, .7f));
 						List<RedDoor> redDoors = new List<RedDoor>();
 						RedDoor redDoor;
 						if (GetComponent<RedDoor>(gos, position, out redDoor, .7f))
@@ -173,8 +171,7 @@ namespace GridGame
 								dangerAreaPositions.Add(position);
 								if (GetComponent<Enemy>(gos, position, out enemy, .7f))
 									enemies.Add(enemy);
-								if (GetComponent<Trap>(gos, position, out trap, .7f))
-									traps.Add(trap);
+								traps.AddRange(GetComponents<Trap>(gos, position, .7f));
 								if (GetComponent<RedDoor>(gos, position, out redDoor, .7f))
 									redDoors.Add(redDoor);
 								if (GetComponent<ConveyorBelt>(gos, position, out conveyorBelt, .7f))
@@ -310,6 +307,21 @@ namespace GridGame
 				}
 			}
 			return false;
+		}
+
+		static T[] GetComponents<T> (GameObject[] gos, Vector2 position, float threshold = 0)
+		{
+			List<T> output = new List<T>();
+			foreach (GameObject go in gos)
+			{
+				if (((Vector2) go.GetComponent<Transform>().position - position).sqrMagnitude <= threshold)
+				{
+					T t = go.GetComponent<T>();
+					if (t != null)
+						output.Add(t);
+				}
+			}
+			return output.ToArray();
 		}
 	}
 }
