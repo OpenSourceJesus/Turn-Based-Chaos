@@ -53,11 +53,39 @@ namespace GridGame
 		public WrapMode wrapMode;
 		bool isMoving = true;
 		public float damage;
+		GradientColorKey[] gradientColorKeys = new GradientColorKey[0];
+		GradientAlphaKey[] gradientAlphaKeys = new GradientAlphaKey[0];
+		public Color normalWaypointColor;
+		public Color nextWaypointColor;
+		Gradient gradient = new Gradient();
+
+		void Awake ()
+		{
+			objectWithWaypoints.line.colorGradient.mode = GradientMode.Fixed;
+			gradientColorKeys = new GradientColorKey[objectWithWaypoints.wayPoints.Length];
+			gradientAlphaKeys = new GradientAlphaKey[objectWithWaypoints.wayPoints.Length];
+			for (int i = 0; i < objectWithWaypoints.wayPoints.Length; i ++)
+			{
+				if (currentWayPoint == i)
+				{
+					gradientColorKeys[i] = new GradientColorKey(nextWaypointColor, 1f / objectWithWaypoints.wayPoints.Length * i);
+					gradientAlphaKeys[i] = new GradientAlphaKey(nextWaypointColor.a, 1f / objectWithWaypoints.wayPoints.Length * i);
+				}
+				else
+				{
+					gradientColorKeys[i] = new GradientColorKey(normalWaypointColor, 1f / objectWithWaypoints.wayPoints.Length * i);
+					gradientAlphaKeys[i] = new GradientAlphaKey(normalWaypointColor.a, 1f / objectWithWaypoints.wayPoints.Length * i);
+				}
+			}
+			gradient.SetKeys(gradientColorKeys, gradientAlphaKeys);
+			objectWithWaypoints.line.colorGradient = gradient;
+		}
 
 		public virtual void OnEnable ()
 		{
-			turnCooldown = 0;
 			isMoving = true;
+			turnCooldown = -1 + turnReloadRate;
+			TakeTurn ();
 			GameManager.GetSingleton<Player>().onMoved += TakeTurn;
 		}
 
@@ -81,6 +109,7 @@ namespace GridGame
 
 		public virtual void HandleMoving ()
 		{
+			int previousWaypoint = currentWayPoint;
 			trs.position = objectWithWaypoints.wayPoints[currentWayPoint].position;
 			if (isBacktracking)
 			{
@@ -114,6 +143,21 @@ namespace GridGame
 					}
 				}
 			}
+			for (int i = 0; i < objectWithWaypoints.wayPoints.Length; i ++)
+			{
+				if (currentWayPoint == i || previousWaypoint == i)
+				{
+					gradientColorKeys[i] = new GradientColorKey(nextWaypointColor, 1f / objectWithWaypoints.wayPoints.Length * i);
+					gradientAlphaKeys[i] = new GradientAlphaKey(nextWaypointColor.a, 1f / objectWithWaypoints.wayPoints.Length * i);
+				}
+				else
+				{
+					gradientColorKeys[i] = new GradientColorKey(normalWaypointColor, 1f / objectWithWaypoints.wayPoints.Length * i);
+					gradientAlphaKeys[i] = new GradientAlphaKey(normalWaypointColor.a, 1f / objectWithWaypoints.wayPoints.Length * i);
+				}
+			}
+			gradient.SetKeys(gradientColorKeys, gradientAlphaKeys);
+			objectWithWaypoints.line.colorGradient = gradient;
 		}
 
 		public virtual void HandleApplyDamage ()
