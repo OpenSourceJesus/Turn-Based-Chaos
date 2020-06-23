@@ -72,10 +72,10 @@ namespace GridGame
 		{
 			gameCornersTappedCount = 0;
 			skipSpawnDelayGo.SetActive(true);
-			float time = Time.time;
+			float time = Time.unscaledTime;
 			do
 			{
-				if (Time.time - time >= spawnDelay || !skipSpawnDelayGo.activeSelf)
+				if (Time.unscaledTime - time >= spawnDelay || !skipSpawnDelayGo.activeSelf)
 					break;
 				yield return new WaitForEndOfFrame();
 			} while (true);
