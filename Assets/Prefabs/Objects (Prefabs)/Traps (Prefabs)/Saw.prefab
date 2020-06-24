@@ -107,6 +107,9 @@ MonoBehaviour:
   damage: 1
   normalWaypointColor: {r: 1, g: 0, b: 1, a: 0.5019608}
   nextWaypointColor: {r: 1, g: 1, b: 0, a: 0.5019608}
+  initPosition: {x: 0, y: 0}
+  initWayPoint: 0
+  testDistanceBetweenWaypoints: 1
 --- !u!114 &6448375020595690168
 MonoBehaviour:
   m_ObjectHideFlags: 0

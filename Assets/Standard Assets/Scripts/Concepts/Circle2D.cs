@@ -68,21 +68,21 @@ public class Circle2D
 		return false;
 	}
 
-#if UNITY_EDITOR
-	public virtual void DrawGizmos (Color color)
-	{
-		GizmosManager.GizmosEntry gizmosEntry = new GizmosManager.GizmosEntry();
-		gizmosEntry.setColor = true;
-		gizmosEntry.color = color;
-		gizmosEntry.onDrawGizmos += DrawGizmos;
-		GizmosManager.gizmosEntries.Add(gizmosEntry);
-	}
+// #if UNITY_EDITOR
+// 	public virtual void DrawGizmos (Color color)
+// 	{
+// 		GizmosManager.GizmosEntry gizmosEntry = new GizmosManager.GizmosEntry();
+// 		gizmosEntry.setColor = true;
+// 		gizmosEntry.color = color;
+// 		gizmosEntry.onDrawGizmos += DrawGizmos;
+// 		GizmosManager.gizmosEntries.Add(gizmosEntry);
+// 	}
 
-	public virtual void DrawGizmos (params object[] args)
-	{
-		Gizmos.DrawSphere(center, radius);
-	}
-#endif
+// 	public virtual void DrawGizmos (params object[] args)
+// 	{
+// 		Gizmos.DrawSphere(center, radius);
+// 	}
+// #endif
 
 	// public bool DoIIntersectWithLineSegment2D (LineSegment2D lineSegment)
 	// {
