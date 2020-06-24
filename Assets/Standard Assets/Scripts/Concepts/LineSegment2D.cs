@@ -58,21 +58,21 @@ public class LineSegment2D
 		return output;
 	}
 
-#if UNITY_EDITOR
-	public virtual void DrawGizmos (Color color)
-	{
-		GizmosManager.GizmosEntry gizmosEntry = new GizmosManager.GizmosEntry();
-		gizmosEntry.setColor = true;
-		gizmosEntry.color = color;
-		gizmosEntry.onDrawGizmos += DrawGizmos;
-		GizmosManager.gizmosEntries.Add(gizmosEntry);
-	}
+// #if UNITY_EDITOR
+// 	public virtual void DrawGizmos (Color color)
+// 	{
+// 		GizmosManager.GizmosEntry gizmosEntry = new GizmosManager.GizmosEntry();
+// 		gizmosEntry.setColor = true;
+// 		gizmosEntry.color = color;
+// 		gizmosEntry.onDrawGizmos += DrawGizmos;
+// 		GizmosManager.gizmosEntries.Add(gizmosEntry);
+// 	}
 
-	public virtual void DrawGizmos (params object[] args)
-	{
-		Gizmos.DrawRay(start, end - start);
-	}
-#endif
+// 	public virtual void DrawGizmos (params object[] args)
+// 	{
+// 		Gizmos.DrawRay(start, end - start);
+// 	}
+// #endif
 
 	public virtual bool DoIIntersectWithCircle (Circle2D circle)
 	{
@@ -159,6 +159,11 @@ public class LineSegment2D
 	public virtual Vector2 GetPointWithDirectedDistance (float directedDistance)
 	{
 		return start + (GetDirection() * directedDistance);
+	}
+
+	public virtual Vector2 GetPointWithDirectedDistanceNormalized (float normalizedDirectedDistance)
+	{
+		return start + (GetDirection() * normalizedDirectedDistance * GetLength());
 	}
 
 	public virtual float GetLength ()

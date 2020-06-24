@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Extensions;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace GridGame
 {
@@ -60,6 +63,10 @@ namespace GridGame
 		Gradient gradient = new Gradient();
 		public Vector2 initPosition;
 		public int initWayPoint;
+#if UNITY_EDITOR
+		[Header("Editor Helpers")]
+		public float testDistanceBetweenWaypoints;
+#endif
 
 		void Awake ()
 		{
@@ -186,6 +193,45 @@ namespace GridGame
 			trs.position = initPosition;
 			currentWayPoint = initWayPoint;
 		}
+
+#if UNITY_EDITOR		
+		[MenuItem("\"Turn-Based\" Chaos/Teleport to current waypoint")]
+		public static void MakeWaypointsBetweenObjects ()
+		{
+			Saw saw = SelectionExtensions.GetInstance<Saw>();
+			Transform[] selectedTransforms = SelectionExtensions.GetSelected<Transform>();
+			foreach (Transform selectedTrs in selectedTransforms)
+			{
+				foreach (Transform selectedTrs2 in selectedTransforms)
+				{
+					if (selectedTrs != selectedTrs2)
+					{
+						LineSegment2D lineSegment = new LineSegment2D(selectedTrs.position, selectedTrs2.position);
+						float distance = 0;
+						do
+						{
+							Vector2 spawnPosition = lineSegment.GetPointWithDirectedDistance(distance);
+							Instantiate(saw.objectWithWaypoints.wayPointsParent.GetChild(0), spawnPosition, Quaternion.identity, saw.trs);
+							distance += saw.testDistanceBetweenWaypoints;
+						} while (distance <= lineSegment.GetLength());
+					}
+				}
+			}
+		}
+		
+		[MenuItem("\"Turn-Based\" Chaos/Unrotate and jump to current waypoint")]
+		public static void UnrotateAndJumpToCurrentWaypoint ()
+		{
+			// PrefabUtility.;
+			Saw saw = SelectionExtensions.GetInstance<Saw>();
+			foreach (Transform waypoint in saw.objectWithWaypoints.wayPoints)
+				waypoint.SetParent(null);
+			saw.trs.position = saw.objectWithWaypoints.wayPoints[saw.currentWayPoint].position;
+			saw.trs.eulerAngles = Vector3.zero;
+			foreach (Transform waypoint in saw.objectWithWaypoints.wayPoints)
+				waypoint.SetParent(saw.trs);
+		}
+#endif
 
 		public enum WrapMode
 		{

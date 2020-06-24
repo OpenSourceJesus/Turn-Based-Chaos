@@ -6,6 +6,18 @@ namespace Extensions
 {
 	public class SelectionExtensions
 	{
+		public static T GetInstance<T> () where T : Object
+		{
+			T obj;
+			foreach (Transform trs in Selection.transforms)
+			{
+				obj = trs.GetComponent<T>();
+				if (obj != null)
+					return obj;
+			}
+			return null;
+		}
+
 		public static T[] GetSelected<T> () where T : Object
 		{
 			T[] output = new T[0];

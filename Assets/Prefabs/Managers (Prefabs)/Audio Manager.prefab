@@ -96,9 +96,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d9732ac1bbf89b84a8609d19647676b5, type: 3}
   deathResponses:
   - {fileID: 8300000, guid: 7caf8af034043154daae92a56bb85732, type: 3}
-  - {fileID: 8300000, guid: 803614d8b6753244b9900460a1d5b756, type: 3}
-  - {fileID: 8300000, guid: 9c0e85204238c084fb339074f6b55afb, type: 3}
-  - {fileID: 8300000, guid: 22bc1906b3a275c44baff7ece48bf30e, type: 3}
   - {fileID: 8300000, guid: 386bb335b479982419d08f8b4bd1e65e, type: 3}
   - {fileID: 8300000, guid: 92e5c8df1e48aa549907f1694db6d142, type: 3}
   - {fileID: 8300000, guid: 10c5d949e68898b4196b16a647153719, type: 3}
@@ -118,8 +115,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 315d1a4aaca609c41bec7143899e4035, type: 3}
   - {fileID: 8300000, guid: e1023cdaef228354e963572aaf250412, type: 3}
   - {fileID: 8300000, guid: 3d21024c9bb0ad44398ca2933cbbaa23, type: 3}
-  - {fileID: 8300000, guid: 515ea115c0905ea4488a7b9f2dd76ae9, type: 3}
-  - {fileID: 8300000, guid: 7bff5d07fb2b06a40b46bf2e0ea80db7, type: 3}
   - {fileID: 8300000, guid: 402a8563fda11ed40b49b00f41ff9b35, type: 3}
   - {fileID: 8300000, guid: 02ec2ccd6e38db2439bff9a7238261fb, type: 3}
   - {fileID: 8300000, guid: 6098116bc7238f04280e4d84e3b2d3ac, type: 3}

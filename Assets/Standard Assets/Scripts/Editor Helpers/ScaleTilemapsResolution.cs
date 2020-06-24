@@ -30,10 +30,7 @@ public class ScaleTilemapsResolution : EditorScript
 		tilemaps = GetComponentsInChildren<Tilemap>();
 		BoundsInt boundsInt;
 		Tilemap newTilemap;
-		GameObject newGo;
 		TileBase tile;
-		Vector2Int fillStart = new Vector2Int();
-		Vector2Int fillEnd = new Vector2Int();
 		Transform newTrs = Instantiate(trs);
 		newTrs.localScale *= scale.GetValue();
 		Tilemap[] newTilemaps = newTrs.GetComponentsInChildren<Tilemap>();
