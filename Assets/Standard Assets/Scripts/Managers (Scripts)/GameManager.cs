@@ -219,6 +219,10 @@ namespace GridGame
 				onGameScenesLoaded ();
 				onGameScenesLoaded = null;
 			}
+			Enemy.enemiesInArea = new Enemy[0];
+			Trap.trapsInArea = new Trap[0];
+			RedDoor.redDoorsInArea = new RedDoor[0];
+			ConveyorBelt.conveyorBeltsInArea = new ConveyorBelt[0];
 			yield return StartCoroutine(LoadRoutine ());
 			yield break;
 		}
@@ -375,6 +379,7 @@ namespace GridGame
 
 		public virtual void OnApplicationQuit ()
 		{
+			PauseGame (true);
 			if (AccountManager.lastUsedAccountIndex == -1)
 				return;
 			AccountManager.CurrentlyPlaying.PlayTime += Time.time;

@@ -315,6 +315,7 @@ namespace GridGame
 			EventManager.events.Clear();
 			Enemy.enemiesInArea = new Enemy[0];
 			Trap.trapsInArea = new Trap[0];
+			ConveyorBelt.conveyorBeltsInArea = new ConveyorBelt[0];
 			SaveAndLoadManager.lastUniqueId = SaveAndLoadManager.INIT_LAST_UNIQUE_ID;
 			GameManager.GetSingleton<GameOverScreen>().Open ();
 		}

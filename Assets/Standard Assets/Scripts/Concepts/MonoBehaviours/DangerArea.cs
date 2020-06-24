@@ -77,10 +77,13 @@ namespace GridGame
 			} while (remainingSafeAreas.Count > 0);
 			Enemy.enemiesInArea = new Enemy[0];
 			foreach (Trap trap in Trap.trapsInArea)
-				trap.enabled = false;
+			{
+				if (trap != null)
+					trap.enabled = false;
+			}
 			Trap.trapsInArea = new Trap[0];
 			RedDoor.redDoorsInArea = new RedDoor[0];
-			GameManager.GetSingleton<Player>().OnMove ();
+			// GameManager.GetSingleton<Player>().OnMove ();
 			foreach (SafeArea surroundingSafeArea in correspondingSafeArea.surroundingSafeAreas)
 			{
 				foreach (Vector3Int cellPosition in surroundingSafeArea.unexploredCellPositions)
