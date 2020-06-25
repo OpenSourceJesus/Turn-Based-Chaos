@@ -79,6 +79,8 @@ namespace GridGame
 			if (!moveIsReady)
 				return false;
 			moveIsReady = false;
+			moveTimer.Reset ();
+			moveTimer.Start ();
 			Collider2D hitCollider = Physics2D.OverlapPoint((Vector2) trs.position + move, whatIDamage);
 			if (hitCollider != null)
 				hitCollider.GetComponentInParent<IDestructable>().TakeDamage (damage);

@@ -186,10 +186,11 @@ namespace GridGame
 						dangerArea.traps = traps.ToArray();
 						dangerArea.dangerZones = dangerZones.ToArray();
 						dangerArea.redDoors = redDoors.ToArray();
-						dangerArea.conveyorBelts = conveyorBelts.ToArray();
-						dangerArea.cameraRect = RectExtensions.FromPoints(dangerAreaPositions.ToArray()).Expand(Vector2.one * GameManager.WORLD_SCALE * 3);
+						ConveyorBelt[] _conveyorBelts = conveyorBelts.ToArray();
+						dangerArea.conveyorBelts = _conveyorBelts;
+						dangerArea.cameraRect = RectExtensions.FromPoints(dangerAreaPositions.ToArray()).Expand(Vector2.one * GameManager.WORLD_SCALE * 4);
 						dangerArea.correspondingSafeArea.cameraRect = dangerArea.cameraRect;
-						dangerArea.correspondingSafeArea.conveyorBelts = dangerArea.conveyorBelts;
+						dangerArea.correspondingSafeArea.conveyorBelts = _conveyorBelts;
 						SaveAndLoadManager.lastUniqueId ++;
 						dangerArea.uniqueId = SaveAndLoadManager.lastUniqueId;
 						dangerArea.gameObject.AddComponent<SaveAndLoadObject>();
@@ -269,7 +270,7 @@ namespace GridGame
 							positionsRemaining.RemoveAt(0);
 						} while (positionsRemaining.Count > 0);
 						safeZonePositions.AddRange(safeAreaPositions);
-						safeArea.cameraRect = RectExtensions.FromPoints(safeAreaPositions.ToArray()).Expand(Vector2.one * GameManager.WORLD_SCALE * 3);
+						safeArea.cameraRect = RectExtensions.FromPoints(safeAreaPositions.ToArray()).Expand(Vector2.one * GameManager.WORLD_SCALE * 4);
 						Rect[] dangerAreaCameraRects = new Rect[dangerAreas.Count];
 						for (int i = 0; i < dangerAreas.Count; i ++)
 							dangerAreaCameraRects[i] = dangerAreas[i].cameraRect;

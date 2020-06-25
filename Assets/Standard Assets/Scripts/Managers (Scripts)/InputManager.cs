@@ -47,7 +47,7 @@ namespace GridGame
 			get
 			{
 				int output = Input.touchCount;
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE
 				if (Mouse.current.leftButton.isPressed)
 					output ++;
 				if (Mouse.current.rightButton.isPressed)
