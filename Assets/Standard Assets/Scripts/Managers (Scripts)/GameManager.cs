@@ -248,7 +248,7 @@ namespace GridGame
 				GetSingleton<GameCamera>().DoUpdate ();
 				acceleration = InputManager.Acceleration;
 				lowPassValue = Vector3.Lerp(lowPassValue, acceleration, lowPassFilterFactor);
-				if ((acceleration - lowPassValue).sqrMagnitude >= shakeDetectionThreshold || Input.GetKeyDown(KeyCode.Escape))
+				if (((acceleration - lowPassValue).sqrMagnitude >= shakeDetectionThreshold || Input.GetKeyDown(KeyCode.Escape)) && !paused)
 					GetSingleton<PauseMenu>().Open ();
 				framesSinceLoadedScene ++;
 				previousMousePosition = InputManager.MousePosition;
