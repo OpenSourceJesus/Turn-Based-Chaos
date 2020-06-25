@@ -9,6 +9,5 @@ namespace GridGame
 		public Transform trs;
 		[Multiline(15)]
 		public string text;
-		public _Text displayText;
 	}
 }

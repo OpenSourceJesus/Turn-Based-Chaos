@@ -308,7 +308,6 @@ MonoBehaviour:
   isDead: 0
   deathResponse: {fileID: 0}
   initPosition: {x: 0, y: 0}
-  initRotation: 0
   attackPoints:
   - {fileID: 6593121550931262639}
   - {fileID: 3621565419214458235}

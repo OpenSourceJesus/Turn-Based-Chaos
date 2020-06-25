@@ -147,6 +147,8 @@ namespace GridGame
 		static float lowPassFilterFactor;
 		static Vector3 lowPassValue;
 		Vector3 acceleration;
+		public GameObject textPanelGo;
+		public _Text textPanelText;
 
 		public override void Awake ()
 		{
@@ -212,6 +214,7 @@ namespace GridGame
 				// GetSingleton<AccountSelectMenu>().gameObject.SetActive(false);
 				PauseGame (false);
 			}
+			canvases = FindObjectsOfType<Canvas>();
 			foreach (Canvas canvas in canvases)
 				canvas.worldCamera = GetSingleton<GameCamera>().camera;
 			if (onGameScenesLoaded != null)

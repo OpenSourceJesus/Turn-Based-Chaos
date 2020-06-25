@@ -20,7 +20,6 @@ namespace GridGame
 		public LayerMask whatIsScroll;
 		public LayerMask whatIsSavePoint;
 		public LayerMask whatIsBullet;
-		Scroll currentlyReading;
 		public static DangerArea currentDangerArea;
 		bool inSafeZone;
 		public int uniqueId;
@@ -78,7 +77,7 @@ namespace GridGame
 		{
 			if (moveInput > previousMoveInput)
 			{
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE
 				if (InputManager.LeftClickInput || InputManager.RightClickInput)
 				{
 					for (int i = 0; i < moveInput - previousMoveInput; i ++)
@@ -243,13 +242,13 @@ namespace GridGame
 			Collider2D hitCollider = Physics2D.OverlapPoint(trs.position, whatIsScroll);
 			if (hitCollider != null)
 			{
-				currentlyReading = hitCollider.GetComponent<Scroll>();
-				currentlyReading.displayText.text.text = currentlyReading.text;
-				currentlyReading.displayText.text.enabled = true;
+				Scroll currentlyReading = hitCollider.GetComponent<Scroll>();
+				GameManager.GetSingleton<GameManager>().textPanelText.text.text = currentlyReading.text;
+				GameManager.GetSingleton<GameManager>().textPanelGo.SetActive(true);
 				return true;
 			}
-			else if (currentlyReading != null)
-				currentlyReading.displayText.text.enabled = false;
+			else if (GameManager.GetSingleton<GameManager>().textPanelGo != null)
+				GameManager.GetSingleton<GameManager>().textPanelGo.SetActive(false);
 			return false;
 		}
 

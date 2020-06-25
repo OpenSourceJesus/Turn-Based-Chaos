@@ -195,7 +195,7 @@ namespace GridGame
 		}
 
 #if UNITY_EDITOR		
-		[MenuItem("\"Turn-Based\" Chaos/Teleport to current waypoint")]
+		[MenuItem("\"Turn-Based\" Chaos/Make waypoints between objects")]
 		public static void MakeWaypointsBetweenObjects ()
 		{
 			Saw saw = SelectionExtensions.GetInstance<Saw>();

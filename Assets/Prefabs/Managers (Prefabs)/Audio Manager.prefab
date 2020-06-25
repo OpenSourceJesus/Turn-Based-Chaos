@@ -90,11 +90,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 455ebcbd97bd6fd4d93c6e2dcbb1154b, type: 3}
   - {fileID: 8300000, guid: c416a1aaebd55e24992716966ece22f4, type: 3}
   - {fileID: 8300000, guid: feb10b3d57c08054abfb411186bd8859, type: 3}
+  - {fileID: 8300000, guid: badff002a99253f45a69dd47b42ced89, type: 3}
   - {fileID: 8300000, guid: 078944b6b0746da45a7eb96bb5289344, type: 3}
   - {fileID: 8300000, guid: 863b3921e795a044483a402672ac393c, type: 3}
   - {fileID: 8300000, guid: 0484bfbbd262fb8449ef97e357837a82, type: 3}
   - {fileID: 8300000, guid: d9732ac1bbf89b84a8609d19647676b5, type: 3}
   deathResponses:
+  - {fileID: 8300000, guid: 61568b411a2413b43b17b3d569e5f1d3, type: 3}
+  - {fileID: 8300000, guid: 2213348d8696c6445a69bc22bd8e4538, type: 3}
+  - {fileID: 8300000, guid: 65ca2eb3f65992d4fab62da17b2a0258, type: 3}
   - {fileID: 8300000, guid: 7caf8af034043154daae92a56bb85732, type: 3}
   - {fileID: 8300000, guid: 386bb335b479982419d08f8b4bd1e65e, type: 3}
   - {fileID: 8300000, guid: 92e5c8df1e48aa549907f1694db6d142, type: 3}
